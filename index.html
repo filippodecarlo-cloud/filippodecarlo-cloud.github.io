@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2f4a3a">
+  <title>Le mie app</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232f4a3a'/><g fill='%23f4efe4'><rect x='22' y='22' width='24' height='24' rx='6'/><rect x='54' y='22' width='24' height='24' rx='6'/><rect x='22' y='54' width='24' height='24' rx='6'/><rect x='54' y='54' width='24' height='24' rx='6'/></g></svg>">
+  <style>
+    :root {
+      --sfondo: #f4efe4;
+      --carta: #fffdf8;
+      --testo: #22261f;
+      --tenue: #6b6a5e;
+      --bordo: #e2dccd;
+      --accento: #2f4a3a;
+      --ombra: 0 1px 2px rgba(40, 35, 20, .06), 0 4px 14px rgba(40, 35, 20, .06);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --sfondo: #171a17;
+        --carta: #212521;
+        --testo: #ece8dd;
+        --tenue: #a19f92;
+        --bordo: #343933;
+        --accento: #9cc5a8;
+        --ombra: none;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--sfondo);
+      color: var(--testo);
+      font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; }
+    header { margin-bottom: 28px; }
+    h1 {
+      margin: 0;
+      font: 600 clamp(1.8rem, 5vw, 2.4rem)/1.1 Georgia, "Times New Roman", serif;
+      letter-spacing: -.01em;
+    }
+    header p { margin: 6px 0 0; color: var(--tenue); }
+    section { margin-top: 28px; }
+    h2 {
+      margin: 0 0 10px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accento);
+    }
+    .griglia {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    a.app {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--carta);
+      border: 1px solid var(--bordo);
+      border-radius: 14px;
+      box-shadow: var(--ombra);
+      color: inherit;
+      text-decoration: none;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    a.app:hover { transform: translateY(-1px); border-color: var(--accento); }
+    a.app:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
+    .icona {
+      flex: none;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      border-radius: 11px;
+      background: var(--sfondo);
+    }
+    .nome { font-weight: 600; }
+    .cosa { display: block; font-size: .86rem; color: var(--tenue); }
+    footer { margin-top: 40px; font-size: .85rem; color: var(--tenue); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Le mie app</h1>
+    <p>Filippo De Carlo · tutte le app in un posto solo</p>
+  </header>
+
+  <section>
+    <h2>Fede</h2>
+    <div class="griglia">
+      <a class="app" href="https://filippodecarlo-cloud.github.io/canti/"><span class="icona">🎵</span><span><span class="nome">Canti</span><span class="cosa">Chi canta prega due volte</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/lectio/"><span class="icona">📖</span><span><span class="nome">Lectio</span><span class="cosa">Vangelo e Valtorta</span></span></a>
+      <a class="app" href="https://labarena.github.io/natale/"><span class="icona">🎄</span><span><span class="nome">Canti di Natale</span><span class="cosa">Testi dei canti natalizi</span></span></a>
+      <a class="app" href="https://labarena.github.io/inno/"><span class="icona">🎺</span><span><span class="nome">Inno</span><span class="cosa">Riproduttore con volume progressivo</span></span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lavoro e ricerca</h2>
+    <div class="griglia">
+      <a class="app" href="https://oestar.github.io/"><span class="icona">📈</span><span><span class="nome">OE+</span><span class="cosa">Monitor OEE</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/"><span class="icona">🏭</span><span><span class="nome">OMLP</span><span class="cosa">Simulatore linea lean CONWIP</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/lab/"><span class="icona">🧪</span><span><span class="nome">Factory Flow Lab</span><span class="cosa">Laboratorio di flusso</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/Kanban/"><span class="icona">🗂️</span><span><span class="nome">Kanban</span><span class="cosa">Simulazione dinamica</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/5s/"><span class="icona">🧹</span><span><span class="nome">5S</span><span class="cosa">Serious game</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/esame/"><span class="icona">📝</span><span><span class="nome">Esame</span><span class="cosa">Scanner dei compiti</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/LLM-RUL-CMAPSS/"><span class="icona">✈️</span><span><span class="nome">LLM-RUL-CMAPSS</span><span class="cosa">Studio sulla manutenzione predittiva</span></span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Casa e giochi</h2>
+    <div class="griglia">
+      <a class="app" href="https://filippodecarlo-cloud.github.io/lente/"><span class="icona">🔍</span><span><span class="nome">Lente</span><span class="cosa">Lente di ingrandimento</span></span></a>
+      <a class="app" href="https://labarena.github.io/Bagagli/"><span class="icona">🧳</span><span><span class="nome">Bagagli</span><span class="cosa">Lista per fare le valigie</span></span></a>
+      <a class="app" href="https://labarena.github.io/ContaAuto/"><span class="icona">🚗</span><span><span class="nome">ContaAuto</span><span class="cosa">Contatore marche auto</span></span></a>
+      <a class="app" href="https://labarena.github.io/tombola/"><span class="icona">🎲</span><span><span class="nome">Tombola</span><span class="cosa">La Smorfia napoletana</span></span></a>
+      <a class="app" href="https://tressette-video.onrender.com/"><span class="icona">🃏</span><span><span class="nome">Tressette</span><span class="cosa">Video; la prima apertura è lenta</span></span></a>
+    </div>
+  </section>
+
+  <footer>filippodecarlo-cloud.github.io</footer>
+</main>
+</body>
+</html>
