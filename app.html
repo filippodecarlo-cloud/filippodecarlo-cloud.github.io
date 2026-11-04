@@ -84,6 +84,28 @@
     }
     .nome { font-weight: 600; }
     .cosa { display: block; font-size: .86rem; color: var(--tenue); }
+    .schede {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--carta);
+      border: 1px solid var(--bordo);
+      border-radius: 999px;
+    }
+    .schede button {
+      font: inherit;
+      font-weight: 600;
+      font-size: .92rem;
+      padding: 8px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--tenue);
+      cursor: pointer;
+    }
+    .schede button[aria-selected="true"] { background: var(--accento); color: var(--carta); }
+    .schede button:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
+    [role="tabpanel"] > section:first-child { margin-top: 20px; }
     footer { margin-top: 40px; font-size: .85rem; color: var(--tenue); }
   </style>
 </head>
@@ -91,21 +113,16 @@
 <main>
   <header>
     <h1>Le mie app</h1>
-    <p>Filippo De Carlo · tutte le app in un posto solo</p>
+    <p>Filippo De Carlo</p>
   </header>
 
-  <section>
-    <h2>Fede</h2>
-    <div class="griglia">
-      <a class="app" href="https://labarena.github.io/canti/dtqg-7fcv-9sqz"><span class="icona">🎵</span><span><span class="nome">Canti</span><span class="cosa">Chi canta prega due volte</span></span></a>
-      <a class="app" href="https://labarena.github.io/lectio/emv"><span class="icona">📖</span><span><span class="nome">Lectio</span><span class="cosa">Vangelo e Valtorta</span></span></a>
-      <a class="app" href="https://labarena.github.io/natale/"><span class="icona">🎄</span><span><span class="nome">Canti di Natale</span><span class="cosa">Testi dei canti natalizi</span></span></a>
-      <a class="app" href="https://labarena.github.io/inno/"><span class="icona">🎺</span><span><span class="nome">Inno</span><span class="cosa">Riproduttore con volume progressivo</span></span></a>
-    </div>
-  </section>
+  <nav class="schede" role="tablist">
+    <button type="button" role="tab" id="tab-lavoro" aria-controls="lavoro" aria-selected="true">Lavoro e ricerca</button>
+    <button type="button" role="tab" id="tab-personale" aria-controls="personale" aria-selected="false">Personale</button>
+  </nav>
 
+  <div id="lavoro" role="tabpanel" aria-labelledby="tab-lavoro">
   <section>
-    <h2>Lavoro e ricerca</h2>
     <div class="griglia">
       <a class="app" href="https://oestar.github.io/"><span class="icona">📈</span><span><span class="nome">OE+</span><span class="cosa">Monitor OEE</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/"><span class="icona">🏭</span><span><span class="nome">OMLP</span><span class="cosa">Simulatore linea lean CONWIP</span></span></a>
@@ -114,6 +131,18 @@
       <a class="app" href="https://filippodecarlo-cloud.github.io/5s/"><span class="icona">🧹</span><span><span class="nome">5S</span><span class="cosa">Serious game</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/esame/"><span class="icona">📝</span><span><span class="nome">Esame</span><span class="cosa">Scanner dei compiti</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/LLM-RUL-CMAPSS/"><span class="icona">✈️</span><span><span class="nome">LLM-RUL-CMAPSS</span><span class="cosa">Studio sulla manutenzione predittiva</span></span></a>
+    </div>
+  </section>
+  </div>
+
+  <div id="personale" role="tabpanel" aria-labelledby="tab-personale" hidden>
+  <section>
+    <h2>Fede</h2>
+    <div class="griglia">
+      <a class="app" href="https://labarena.github.io/canti/dtqg-7fcv-9sqz"><span class="icona">🎵</span><span><span class="nome">Canti</span><span class="cosa">Chi canta prega due volte</span></span></a>
+      <a class="app" href="https://labarena.github.io/lectio/emv"><span class="icona">📖</span><span><span class="nome">Lectio</span><span class="cosa">Vangelo e Valtorta</span></span></a>
+      <a class="app" href="https://labarena.github.io/natale/"><span class="icona">🎄</span><span><span class="nome">Canti di Natale</span><span class="cosa">Testi dei canti natalizi</span></span></a>
+      <a class="app" href="https://labarena.github.io/inno/"><span class="icona">🎺</span><span><span class="nome">Inno</span><span class="cosa">Riproduttore con volume progressivo</span></span></a>
     </div>
   </section>
 
@@ -127,8 +156,20 @@
       <a class="app" href="https://tressette-video.onrender.com/"><span class="icona">🃏</span><span><span class="nome">Tressette</span><span class="cosa">Video; la prima apertura è lenta</span></span></a>
     </div>
   </section>
+  </div>
 
   <footer>filippodecarlo-cloud.github.io/app.html</footer>
 </main>
+<script>
+  // Si apre sempre su "Lavoro e ricerca": "Personale" si vede solo dopo averlo toccato.
+  const schede = document.querySelectorAll('[role="tab"]');
+  schede.forEach(scheda => scheda.addEventListener('click', () => {
+    schede.forEach(s => {
+      const attiva = s === scheda;
+      s.setAttribute('aria-selected', attiva);
+      document.getElementById(s.getAttribute('aria-controls')).hidden = !attiva;
+    });
+  }));
+</script>
 </body>
 </html>
