@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2f4a3a">
+  <title>Monitoraggio PSD DIEF</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232f4a3a'/><g fill='%23f4efe4'><rect x='22' y='22' width='24' height='24' rx='6'/><rect x='54' y='22' width='24' height='24' rx='6'/><rect x='22' y='54' width='24' height='24' rx='6'/><rect x='54' y='54' width='24' height='24' rx='6'/></g></svg>">
+  <style>
+    :root {
+      --sfondo: #f4efe4;
+      --carta: #fffdf8;
+      --testo: #22261f;
+      --tenue: #6b6a5e;
+      --bordo: #e2dccd;
+      --accento: #2f4a3a;
+      --avviso: #8a5a12;
+      --avviso-sfondo: #f7ecd6;
+      --ombra: 0 1px 2px rgba(40, 35, 20, .06), 0 4px 14px rgba(40, 35, 20, .06);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --sfondo: #171a17;
+        --carta: #212521;
+        --testo: #ece8dd;
+        --tenue: #a19f92;
+        --bordo: #343933;
+        --accento: #9cc5a8;
+        --avviso: #e8c27a;
+        --avviso-sfondo: #2c2719;
+        --ombra: none;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--sfondo);
+      color: var(--testo);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+    .indietro { display: inline-block; margin-bottom: 18px; color: var(--accento); text-decoration: none; font-weight: 600; font-size: .92rem; }
+    .indietro:hover { text-decoration: underline; }
+    header { margin-bottom: 24px; }
+    h1 {
+      margin: 0;
+      font: 600 clamp(1.7rem, 5vw, 2.3rem)/1.1 Georgia, "Times New Roman", serif;
+      letter-spacing: -.01em;
+    }
+    header p { margin: 6px 0 0; color: var(--tenue); }
+    section { margin-top: 30px; }
+    h2 {
+      margin: 0 0 10px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accento);
+    }
+    .griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    a.app {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: var(--carta); border: 1px solid var(--bordo); border-radius: 14px; box-shadow: var(--ombra);
+      color: inherit; text-decoration: none;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    a.app:hover { transform: translateY(-1px); border-color: var(--accento); }
+    a.app:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
+    .icona { flex: none; width: 42px; height: 42px; display: grid; place-items: center; font-size: 1.4rem; border-radius: 11px; background: var(--sfondo); }
+    .nome { font-weight: 600; }
+    .cosa { display: block; font-size: .86rem; color: var(--tenue); }
+    .scheda { background: var(--carta); border: 1px solid var(--bordo); border-radius: 14px; box-shadow: var(--ombra); padding: 16px 18px; }
+    .scheda p { margin: 0 0 10px; }
+    .scheda p:last-child { margin-bottom: 0; }
+    ol, ul { margin: 0; padding-left: 1.3em; }
+    li { margin-bottom: 6px; }
+    li:last-child { margin-bottom: 0; }
+    .avviso { background: var(--avviso-sfondo); color: var(--avviso); border-radius: 10px; padding: 10px 14px; font-size: .92rem; margin-top: 12px; }
+    .colonne { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+    .colonne h3 { margin: 0 0 8px; font-size: 1rem; }
+    code { font: .88em ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--sfondo); padding: 1px 5px; border-radius: 5px; overflow-wrap: anywhere; }
+    footer { margin-top: 40px; font-size: .85rem; color: var(--tenue); }
+  </style>
+</head>
+<body>
+<main>
+  <a class="indietro" href="app.html">← Le mie app</a>
+
+  <header>
+    <h1>Monitoraggio PSD DIEF</h1>
+    <p>Web app per il monitoraggio delle azioni del Piano di Sviluppo Dipartimentale · Referente AQ del DIEF, Università di Firenze</p>
+  </header>
+
+  <section>
+    <h2>Collegamenti</h2>
+    <div class="griglia">
+      <a class="app" href="https://script.google.com/a/macros/unifi.it/s/AKfycbwA_AIwhoQCWNWj7bu15pf5HemzRcoLb5EtfmnXaOyW-WR6BT1UEUGuavIdFNTsks6H/exec"><span class="icona">📋</span><span><span class="nome">App pubblicata</span><span class="cosa">Il link da dare ai colleghi; accesso con account @unifi.it</span></span></a>
+      <a class="app" href="https://script.google.com/a/macros/unifi.it/s/AKfycbz3RsXSifIzDdRpjo81iyUR2GQ3I7IEVAwoHOoOGdY/dev"><span class="icona">🧪</span><span><span class="nome">App di test</span><span class="cosa">Solo per lo sviluppatore: mostra sempre l'ultimo codice, senza ripubblicare</span></span></a>
+      <a class="app" href="https://script.google.com/d/1R7zp3xUF9yIJFwtKOqC8RBN7bRuP-CR9quThGHoqlicNFqLmAOi0Lhj4/edit"><span class="icona">🛠️</span><span><span class="nome">Editor Apps Script</span><span class="cosa">Codice, deployment e trigger</span></span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Aggiornare l'app pubblicata</h2>
+    <div class="scheda">
+      <p>Dopo ogni modifica del codice caricata con <code>clasp push</code>, l'app pubblicata continua a mostrare la versione precedente finché non se ne pubblica una nuova:</p>
+      <ol>
+        <li>Apri l'<strong>Editor Apps Script</strong> con l'account <strong>@unifi.it</strong>.</li>
+        <li><strong>Deploy → Gestisci deployment</strong>, poi la matita ✏️ sul deployment esistente.</li>
+        <li>In <strong>Versione</strong> scegli <strong>«Nuova versione»</strong> e premi <strong>Salva</strong>.</li>
+        <li>Se Google chiede di autorizzare di nuovo, accetta.</li>
+      </ol>
+      <div class="avviso">Modifica il deployment esistente, non crearne uno nuovo: così il link dato ai colleghi resta lo stesso. La pubblicazione va fatta dall'account @unifi.it, altrimenti l'app non riconosce chi la apre e ognuno smette di vedere le proprie azioni.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cosa fa</h2>
+    <div class="colonne">
+      <div class="scheda">
+        <h3>Per i referenti</h3>
+        <ul>
+          <li>Ognuno vede solo le proprie azioni (e quelle in cui collabora).</li>
+          <li>Avanzamento con un clic (0–100%), nota e attività divise per fasi PDCA.</li>
+          <li>Scadenze in arrivo e attività in ritardo sempre in evidenza.</li>
+          <li>Collaboratori assegnabili alle singole azioni.</li>
+          <li>Report personale stampabile.</li>
+        </ul>
+      </div>
+      <div class="scheda">
+        <h3>Per il Referente AQ</h3>
+        <ul>
+          <li>Quadro sinottico: KPI, avanzamento per ambito strategico, mappa per referente, andamento nel tempo, tabella filtrabile ed esportabile.</li>
+          <li><strong>Criticità e solleciti</strong>: istruttoria delle azioni a rischio (budget, scadenze, azioni ferme), nota istruttoria stampabile, solleciti personalizzati con il Direttore in copia, registro del riesame.</li>
+          <li>Bozza della RADip Sezione B generata dai dati.</li>
+          <li>Pannello di configurazione: referenti, email, solleciti, parametri.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Email automatiche</h2>
+    <div class="scheda">
+      <ul>
+        <li><strong>Riepilogo mensile</strong> a ciascun referente, con saluto personalizzato e stato delle sue azioni.</li>
+        <li><strong>Solleciti automatici</strong> solo a chi ha azioni ferme o attività scadute.</li>
+        <li><strong>Archivio mensile</strong> al Referente AQ con lo stato di tutte le azioni, per garantire lo storico.</li>
+      </ul>
+      <p style="margin-top:10px">Giorni, orari, testi e destinatari si gestiscono dal pannello Configurazione dell'app. Ogni invio manuale chiede una doppia conferma.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Note tecniche</h2>
+    <div class="scheda">
+      <ul>
+        <li>Google Apps Script collegato al foglio «Monitoraggio»; i dati restano nel foglio.</li>
+        <li>L'app gira con le credenziali del proprietario e accesso limitato al dominio unifi.it: i colleghi non devono autorizzare nulla.</li>
+        <li>Codice nella cartella <code>Codice</code>, caricato con <code>clasp push --force</code>; i dettagli di sviluppo sono in <code>DEVNOTES.md</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>filippodecarlo-cloud.github.io/psd-dief.html</footer>
+</main>
+</body>
+</html>
