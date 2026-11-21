@@ -105,6 +105,7 @@
     }
     .schede button[aria-selected="true"] { background: var(--accento); color: var(--carta); }
     .schede button:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
+    @media (max-width: 440px) { .schede button { padding: 8px 10px; font-size: .84rem; } }
     [role="tabpanel"] > section:first-child { margin-top: 20px; }
     footer { margin-top: 40px; font-size: .85rem; color: var(--tenue); }
   </style>
@@ -118,6 +119,7 @@
 
   <nav class="schede" role="tablist">
     <button type="button" role="tab" id="tab-lavoro" aria-controls="lavoro" aria-selected="true">Lavoro e ricerca</button>
+    <button type="button" role="tab" id="tab-giochi" aria-controls="giochi" aria-selected="false">Giochi didattici</button>
     <button type="button" role="tab" id="tab-personale" aria-controls="personale" aria-selected="false">Personale</button>
   </nav>
 
@@ -127,20 +129,27 @@
       <a class="app" href="https://oestar.github.io/"><span class="icona">📈</span><span><span class="nome">OE+</span><span class="cosa">Monitor OEE</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/"><span class="icona">🏭</span><span><span class="nome">OMLP</span><span class="cosa">Simulatore linea lean CONWIP</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/lab/"><span class="icona">🧪</span><span><span class="nome">Factory Flow Lab</span><span class="cosa">Laboratorio di flusso</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/Kanban/"><span class="icona">🗂️</span><span><span class="nome">Kanban</span><span class="cosa">Simulazione dinamica</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/esame/"><span class="icona">📝</span><span><span class="nome">Esame</span><span class="cosa">Scanner dei compiti</span></span></a>
+      <a class="app" href="psd-dief.html"><span class="icona">📋</span><span><span class="nome">Monitoraggio PSD DIEF</span><span class="cosa">App AQ: link, aggiornamento e funzioni</span></span></a>
+      <a class="app" href="https://filippodecarlo-cloud.github.io/LLM-RUL-CMAPSS/"><span class="icona">✈️</span><span><span class="nome">LLM-RUL-CMAPSS</span><span class="cosa">Studio sulla manutenzione predittiva</span></span></a>
+      <a class="app" href="https://labarena.github.io/inno/"><span class="icona">🎺</span><span><span class="nome">Inno</span><span class="cosa">Riproduttore con volume progressivo</span></span></a>
+    </div>
+  </section>
+  </div>
+
+  <div id="giochi" role="tabpanel" aria-labelledby="tab-giochi" hidden>
+  <section>
+    <div class="griglia">
       <a class="app" href="https://factory-challenge-live.onrender.com/"><span class="icona">🚲</span><span><span class="nome">Factory Challenge Live</span><span class="cosa">Sfida della cella e-bike a squadre, con turno dal vivo, imprevisti e riepilogo PDF; la prima apertura è lenta</span></span></a>
       <a class="app" href="https://factory-challenge-live.onrender.com/?docente=lean"><span class="icona">🎛️</span><span><span class="nome">Factory Challenge Live · regia</span><span class="cosa">Pagina del docente: fasi, orologio del turno, imprevisti, Spegni</span></span></a>
       <a class="app" href="https://spaghetti-zero-v2.onrender.com/"><span class="icona">🍝</span><span><span class="nome">Spaghetti Zero</span><span class="cosa">Sfida di Lean Layout a squadre, con scenario e riepilogo PDF; la prima apertura è lenta</span></span></a>
       <a class="app" href="https://spaghetti-zero-v2.onrender.com/?docente=lean"><span class="icona">🎛️</span><span><span class="nome">Spaghetti Zero · regia</span><span class="cosa">Pagina del docente: fasi, squadre dal vivo, Spegni</span></span></a>
-      <a class="app" href="https://filippodecarlo-cloud.github.io/Kanban/"><span class="icona">🗂️</span><span><span class="nome">Kanban</span><span class="cosa">Simulazione dinamica</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/KanbanGame/"><span class="icona">🧱</span><span><span class="nome">KanbanGame</span><span class="cosa">Fattoria LEGO a doppio kanban</span></span></a>
       <a class="app" href="https://kanban-game-kisp.onrender.com/"><span class="icona">👥</span><span><span class="nome">KanbanGame a squadre</span><span class="cosa">Multigiocatore; la prima apertura è lenta</span></span></a>
       <a class="app" href="https://kanban-game-kisp.onrender.com/?docente=lean"><span class="icona">🎛️</span><span><span class="nome">KanbanGame · regia</span><span class="cosa">Pagina del docente: apri e chiudi il gioco, classifica</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/5s/"><span class="icona">🧹</span><span><span class="nome">5S</span><span class="cosa">Serious game</span></span></a>
       <a class="app" href="https://filippodecarlo-cloud.github.io/OMLP/kando/"><span class="icona">🛒</span><span><span class="nome">KanDo · segnapunti</span><span class="cosa">Serious game KanDo: cronometro, consegne e qualità, report PDF, classifica in diretta sul proiettore; il primo invio al proiettore è lento</span></span></a>
-      <a class="app" href="https://filippodecarlo-cloud.github.io/esame/"><span class="icona">📝</span><span><span class="nome">Esame</span><span class="cosa">Scanner dei compiti</span></span></a>
-      <a class="app" href="psd-dief.html"><span class="icona">📋</span><span><span class="nome">Monitoraggio PSD DIEF</span><span class="cosa">App AQ: link, aggiornamento e funzioni</span></span></a>
-      <a class="app" href="https://filippodecarlo-cloud.github.io/LLM-RUL-CMAPSS/"><span class="icona">✈️</span><span><span class="nome">LLM-RUL-CMAPSS</span><span class="cosa">Studio sulla manutenzione predittiva</span></span></a>
-      <a class="app" href="https://labarena.github.io/inno/"><span class="icona">🎺</span><span><span class="nome">Inno</span><span class="cosa">Riproduttore con volume progressivo</span></span></a>
     </div>
   </section>
   </div>
@@ -170,7 +179,7 @@
   <footer>filippodecarlo-cloud.github.io/app.html</footer>
 </main>
 <script>
-  // Si apre sempre su "Lavoro e ricerca": "Personale" si vede solo dopo averlo toccato.
+  // Si apre sempre su "Lavoro e ricerca": le altre schede si vedono solo dopo averle toccate.
   const schede = document.querySelectorAll('[role="tab"]');
   schede.forEach(scheda => scheda.addEventListener('click', () => {
     schede.forEach(s => {
