@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Parquet Trasversale)</title>
+  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Progetto Luci)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #16181d;
+      background: #12141a;
       color: #f0f2f5;
       user-select: none;
     }
@@ -19,12 +19,12 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      width: 318px;
-      background: rgba(18, 21, 28, 0.92);
+      width: 336px;
+      background: rgba(18, 21, 28, 0.93);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 14px;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
       z-index: 10;
       transition: transform 0.25s ease;
       max-height: calc(100vh - 24px);
@@ -32,7 +32,7 @@
       flex-direction: column;
       overflow: hidden;
     }
-    #ui-panel.collapsed { transform: translateX(-338px); }
+    #ui-panel.collapsed { transform: translateX(-356px); }
 
     #toggle-ui {
       position: absolute;
@@ -53,11 +53,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 14px 10px;
+      padding: 11px 14px 9px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .panel-header h1 { font-size: 13.5px; font-weight: 700; color: #fff; }
-    .panel-header span { font-size: 11px; color: #e2a04f; display: block; margin-top: 2px; }
+    .panel-header span { font-size: 10.5px; color: #e2a04f; display: block; margin-top: 2px; }
     .close-btn {
       background: transparent; border: none; color: #9aa3b2;
       font-size: 20px; cursor: pointer; padding: 0 6px; line-height: 1;
@@ -66,7 +66,7 @@
 
     .tabs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       border-bottom: 1px solid rgba(255,255,255,0.1);
       background: rgba(255,255,255,0.03);
     }
@@ -75,8 +75,8 @@
       border: none;
       border-bottom: 2px solid transparent;
       color: #9ba5b7;
-      padding: 9px 4px;
-      font-size: 12px;
+      padding: 8px 2px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s;
@@ -85,12 +85,12 @@
     .tab-btn.active {
       color: #f4a259;
       border-bottom-color: #f4a259;
-      background: rgba(244, 162, 89, 0.08);
+      background: rgba(244, 162, 89, 0.09);
     }
 
     .tab-content {
       display: none;
-      padding: 10px 14px 14px;
+      padding: 10px 13px 14px;
       overflow-y: auto;
       flex: 1;
     }
@@ -101,18 +101,18 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #8f9bb0;
-      margin: 12px 0 6px;
+      margin: 11px 0 6px;
       font-weight: 700;
     }
     .section-title:first-child { margin-top: 2px; }
 
-    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
     .btn-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
     .btn {
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.11);
       color: #e6eaf2;
-      padding: 7px 8px;
+      padding: 6.5px 7px;
       border-radius: 8px;
       font-size: 11.5px;
       cursor: pointer;
@@ -137,6 +137,47 @@
     }
     .toggle-row input[type="checkbox"] { accent-color: #d97736; width: 15px; height: 15px; cursor: pointer; }
 
+    /* Schede circuiti luce */
+    .light-card {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 9px;
+      padding: 7px 9px;
+      margin-bottom: 6px;
+      transition: border-color 0.15s;
+    }
+    .light-card.on { border-color: rgba(244, 178, 89, 0.45); background: rgba(244, 162, 89, 0.06); }
+    .light-card.fixture-hidden { opacity: 0.45; }
+    .light-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .light-title {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 600;
+      color: #edf0f7;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .light-title input { accent-color: #f4a259; width: 15px; height: 15px; cursor: pointer; }
+    .light-sliders {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 10.5px;
+      color: #a6b0c3;
+    }
+    .light-sliders label { display: flex; flex-direction: column; gap: 2px; }
+    .light-sliders input[type="range"] { width: 100%; accent-color: #f4a259; cursor: pointer; height: 14px; }
+    .val-badge { color: #f6bd78; font-weight: 600; }
+
+    /* Arredi & Colori */
     .selected-box {
       background: rgba(217, 119, 54, 0.14);
       border: 1px solid rgba(242, 153, 90, 0.45);
@@ -145,128 +186,65 @@
       margin-bottom: 10px;
     }
     .selected-box .sel-name {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: #ffc894;
-      margin-bottom: 7px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-size: 12.5px; font-weight: 700; color: #ffc894;
+      margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center;
     }
     .furniture-list { display: flex; flex-direction: column; gap: 4px; }
     .furn-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 7px;
-      padding: 5px 7px;
-      font-size: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 7px; padding: 5px 7px; font-size: 12px;
     }
-    .furn-item.selected {
-      background: rgba(217, 119, 54, 0.25);
-      border-color: #f2995a;
-    }
+    .furn-item.selected { background: rgba(217, 119, 54, 0.25); border-color: #f2995a; }
     .furn-item.hidden-item { opacity: 0.45; }
-    .furn-name {
-      flex: 1;
-      cursor: pointer;
-      padding-right: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .furn-name { flex: 1; cursor: pointer; padding-right: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .eye-btn {
-      background: rgba(255,255,255,0.09);
-      border: none;
-      color: #fff;
-      border-radius: 6px;
-      width: 28px;
-      height: 24px;
-      cursor: pointer;
-      font-size: 13px;
+      background: rgba(255,255,255,0.09); border: none; color: #fff;
+      border-radius: 6px; width: 26px; height: 22px; cursor: pointer; font-size: 12px;
     }
     .eye-btn:hover { background: rgba(255,255,255,0.22); }
 
     .color-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 12px;
     }
     .color-right { display: flex; align-items: center; gap: 5px; }
     .color-row input[type="color"] {
-      width: 36px; height: 24px;
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 6px;
-      background: transparent;
-      cursor: pointer;
-      padding: 1px;
+      width: 36px; height: 24px; border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px; background: transparent; cursor: pointer; padding: 1px;
     }
     .reset-col-btn {
-      width: 24px; height: 24px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.07);
-      color: #d7dde8;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 24px; height: 24px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.07);
+      color: #d7dde8; font-size: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
     }
     .reset-col-btn:hover { background: #d97736; color: #fff; border-color: #f2995a; }
 
     #help-bar {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(18, 21, 28, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      color: #cfd6e4;
-      pointer-events: none;
-      text-align: center;
-      white-space: nowrap;
+      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+      background: rgba(18, 21, 28, 0.85); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12); padding: 7px 15px; border-radius: 999px;
+      font-size: 11.5px; color: #cfd6e4; pointer-events: none; text-align: center; white-space: nowrap;
     }
 
     #fp-pad {
-      position: absolute;
-      bottom: 58px;
-      right: 18px;
-      display: none;
-      grid-template-columns: repeat(3, 42px);
-      gap: 5px;
-      z-index: 10;
+      position: absolute; bottom: 58px; right: 18px; display: none;
+      grid-template-columns: repeat(3, 42px); gap: 5px; z-index: 10;
     }
     #fp-pad.visible { display: grid; }
     .pad-btn {
       width: 42px; height: 42px; border-radius: 10px;
-      background: rgba(20, 23, 30, 0.85);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(20, 23, 30, 0.85); border: 1px solid rgba(255,255,255,0.2);
       color: #fff; font-size: 16px; cursor: pointer;
     }
     .pad-btn:active { background: #d97736; }
 
     .label-3d {
-      position: absolute;
-      background: rgba(18, 21, 28, 0.82);
-      border: 1px solid rgba(226, 160, 79, 0.65);
-      color: #fff;
-      padding: 3px 7px;
-      border-radius: 6px;
-      font-size: 10.5px;
-      font-weight: 600;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
+      position: absolute; background: rgba(18, 21, 28, 0.82);
+      border: 1px solid rgba(226, 160, 79, 0.65); color: #fff;
+      padding: 3px 7px; border-radius: 6px; font-size: 10.5px; font-weight: 600;
+      pointer-events: none; transform: translate(-50%, -50%); white-space: nowrap;
       box-shadow: 0 4px 10px rgba(0,0,0,0.35);
     }
     .label-3d small { display: block; font-size: 9px; color: #e2a04f; font-weight: 400; }
@@ -289,19 +267,20 @@
     <div class="panel-header">
       <div>
         <h1>P.zza S. Spirito 3 – Firenze</h1>
-        <span>Soluzione D • Parquet Trasversale 19 cm</span>
+        <span>Soluzione D • Studio Illuminotecnico 3D</span>
       </div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
 
     <div class="tabs">
-      <button class="tab-btn active" data-tab="tab-nav">🧭 Naviga</button>
+      <button class="tab-btn" data-tab="tab-nav">🧭 Naviga</button>
+      <button class="tab-btn active" data-tab="tab-lights">💡 Luci</button>
       <button class="tab-btn" data-tab="tab-furn">🛋️ Arredi</button>
       <button class="tab-btn" data-tab="tab-colors">🎨 Colori</button>
     </div>
 
     <!-- TAB 1: NAVIGAZIONE -->
-    <div class="tab-content active" id="tab-nav">
+    <div class="tab-content" id="tab-nav">
       <div class="section-title">Modalità</div>
       <div class="btn-grid">
         <button class="btn active" id="mode-orbit">🔄 Orbita 3D</button>
@@ -343,15 +322,34 @@
       </label>
       <label class="toggle-row">
         <span>Etichette e Quote</span>
-        <input type="checkbox" id="chk-labels" checked />
-      </label>
-      <label class="toggle-row">
-        <span>Luce Calda Serale</span>
-        <input type="checkbox" id="chk-evening" />
+        <input type="checkbox" id="chk-labels" />
       </label>
     </div>
 
-    <!-- TAB 2: ARREDI -->
+    <!-- TAB 2: STUDIO ILLUMINAZIONE -->
+    <div class="tab-content active" id="tab-lights">
+      <div class="section-title">Luce Naturale Esterna</div>
+      <div class="btn-grid-3">
+        <button class="btn active" data-env="real" title="Soggiorno cieco, poca luce solo dalle finestre in corte sul soppalco">🌑 Reale</button>
+        <button class="btn" data-env="night" title="Buio totale fuori">🌙 Notte</button>
+        <button class="btn" data-env="tech" title="Luce tecnica per ispezionare lo spazio">☀️ Tecnica</button>
+      </div>
+
+      <div class="section-title">Scenari Consigliati (Personalizzabili)</div>
+      <div class="btn-grid">
+        <button class="btn active" data-lpreset="architettonico">🏛️ Bilanciato</button>
+        <button class="btn" data-lpreset="diurno">☀️ Effetto Giorno</button>
+        <button class="btn" data-lpreset="cena">🍷 Cena Intima</button>
+        <button class="btn" data-lpreset="relax">🎬 Relax / TV</button>
+        <button class="btn" data-lpreset="operativo">🍳 Cucina / Lavoro</button>
+        <button class="btn danger" data-lpreset="buio">🔦 Tutto Spento</button>
+      </div>
+
+      <div class="section-title">Circuiti & Corpi Illuminanti (👁️ = mostra/rimuovi)</div>
+      <div id="lights-mixer"></div>
+    </div>
+
+    <!-- TAB 3: ARREDI -->
     <div class="tab-content" id="tab-furn">
       <div id="sel-panel" class="selected-box" style="display:none;">
         <div class="sel-name">
@@ -385,7 +383,7 @@
       <div class="furniture-list" id="furniture-list"></div>
     </div>
 
-    <!-- TAB 3: COLORI & MATERIALI -->
+    <!-- TAB 4: COLORI & MATERIALI -->
     <div class="tab-content" id="tab-colors">
       <div class="section-title">Pavimento Piano Terra</div>
       <div class="btn-grid" style="margin-bottom:6px;">
@@ -426,7 +424,7 @@
   </div>
 
   <div id="help-bar">
-    Clicca un mobile per spostarlo • Clicca una porta per aprirla • Trascina per ruotare
+    Usa la scheda 💡 Luci per confrontare gli scenari • Clicca mobili per spostarli • Clicca porte per aprirle
   </div>
 
   <script type="module">
@@ -439,10 +437,10 @@
     // =========================================================
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1b1e26);
+    scene.background = new THREE.Color(0x101319);
 
-    const camera = new THREE.PerspectiveCamera(56, window.innerWidth / window.innerHeight, 0.08, 65);
-    camera.position.set(7.4, 7.2, 3.0);
+    const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.08, 65);
+    camera.position.set(2.25, 1.65, 0.45);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -450,13 +448,13 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.08;
+    renderer.toneMappingExposure = 1.12;
     container.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.07;
-    controls.target.set(0.6, 1.4, 5.4);
+    controls.target.set(0.95, 1.45, 3.8);
     controls.maxDistance = 22;
     controls.minDistance = 0.35;
 
@@ -470,52 +468,35 @@
     });
 
     // =========================================================
-    // 2. TEXTURE PROCEDURALI (INCLUSO PARQUET TRASVERSALE 19 CM!)
+    // 2. TEXTURE PROCEDURALI (PARQUET TRASVERSALE 19 CM + MATERIALI)
     // =========================================================
-    // Texture a listoni larghi posati ORIZZONTALMENTE (trasversali rispetto alla casa = asse X!)
-    // 8 file per 512px -> se repeatY = depthZ / 1.52m, ogni listone è largo esattamente 19 cm!
     function makeTransverseParquetCanvas() {
       const c = document.createElement('canvas');
       c.width = 512; c.height = 512;
       const ctx = c.getContext('2d');
       ctx.fillStyle = '#efefef';
       ctx.fillRect(0, 0, 512, 512);
-
-      const rows = 8;
-      const rh = 512 / rows;
-      // Giunti di testa sfalsati per ogni fila
+      const rows = 8, rh = 512 / rows;
       const splits = [110, 340, 210, 430, 80, 290, 165, 385];
-
       for (let r = 0; r < rows; r++) {
-        const y = r * rh;
-        const sp = splits[r];
-        // Doga sinistra e doga destra con leggera differenza tonale naturale
+        const y = r * rh, sp = splits[r];
         const s1 = 224 + ((r * 17) % 24);
         const s2 = 222 + (((r + 3) * 19) % 26);
-
         ctx.fillStyle = `rgb(${s1},${s1},${s1})`;
         ctx.fillRect(0, y + 1, sp - 1, rh - 2);
         ctx.fillStyle = `rgb(${s2},${s2},${s2})`;
         ctx.fillRect(sp + 1, y + 1, 512 - sp - 1, rh - 2);
-
-        // Venature orizzontali lungo la doga (asse X)
         for (let g = 0; g < 14; g++) {
           const gy = y + 3 + Math.random() * (rh - 6);
           ctx.fillStyle = g % 3 === 0 ? 'rgba(90,90,90,0.11)' : 'rgba(130,130,130,0.08)';
           ctx.fillRect(0, gy, 512, 1.2 + Math.random() * 1.4);
         }
-        // Sottile nodo/fiammatura naturale
         ctx.fillStyle = 'rgba(110,110,110,0.09)';
         ctx.beginPath();
         ctx.ellipse(((r * 137 + 60) % 440) + 36, y + rh * 0.5, 22, 4, 0, 0, Math.PI * 2);
         ctx.fill();
-
-        // Bisellatura orizzontale (fuga tra listoni larghi)
-        ctx.fillStyle = '#9c9c9c';
-        ctx.fillRect(0, y, 512, 2);
-        // Giunto di testa verticale tra le doghe
-        ctx.fillStyle = '#a8a8a8';
-        ctx.fillRect(sp, y, 2, rh);
+        ctx.fillStyle = '#9c9c9c'; ctx.fillRect(0, y, 512, 2);
+        ctx.fillStyle = '#a8a8a8'; ctx.fillRect(sp, y, 2, rh);
       }
       return c;
     }
@@ -524,8 +505,7 @@
     function makeSizedParquetTex(wX, dZ) {
       const tex = new THREE.CanvasTexture(parquetCanvas);
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      // 8 file = 1.52 m -> 0.19 m (19 cm) per listone! Lunghezza pattern lungo X ~ 2.10 m
-      tex.repeat.set(wX / 2.10, dZ / 1.52);
+      tex.repeat.set(wX / 2.10, dZ / 1.52); // 19 cm per listone trasversale!
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.anisotropy = 8;
       return tex;
@@ -620,14 +600,12 @@
     const texBathTile = makeNeutralTileTex(5, 5, 190, 10); texBathTile.repeat.set(2, 2);
     const texWood = makeNeutralWoodTex(5);
 
-    // Materiali parquet trasversali con scala UV esatta per ciascuna superficie (listoni ~19 cm ovunque!)
     const matParquetSogg = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(2.78, 3.44), color: 0xc49a6c, roughness: 0.52 });
     const matParquetCuc  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.15, 3.60), color: 0xc49a6c, roughness: 0.52 });
     const matParquetRip  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(4.70, 2.55), color: 0xc49a6c, roughness: 0.52 });
     const matParquetSop1 = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.87, 2.50), color: 0xc49a6c, roughness: 0.52 });
     const matParquetSop2 = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(0.83, 1.30), color: 0xc49a6c, roughness: 0.52 });
 
-    // Materiali originali (Cotto + Piastrelle Rosse) per confronto 1-click
     const matOrigCotto = new THREE.MeshStandardMaterial({ map: texCotto, color: 0xb05f42, roughness: 0.72 });
     const matOrigRed   = new THREE.MeshStandardMaterial({ map: texKitchenFloor, color: 0x872329, roughness: 0.36 });
 
@@ -637,31 +615,28 @@
       travi:       new THREE.MeshStandardMaterial({ map: texWood, color: 0x3b2416, roughness: 0.68 }),
       infissi:     new THREE.MeshStandardMaterial({ map: texWood, color: 0x452b1b, roughness: 0.62 }),
       scala:       new THREE.MeshStandardMaterial({ map: texWood, color: 0x3a2417, roughness: 0.6 }),
-      pavParquet:  matParquetSogg, // sincronizzato con tutti i parquet
-      pavCotto:    matOrigCotto,
-      pavRosso:    matOrigRed,
+      pavParquet:  matParquetSogg,
       bagnoTile:   new THREE.MeshStandardMaterial({ map: texBathTile, color: 0xefeae0, roughness: 0.35 }),
       cucinaMob:   new THREE.MeshStandardMaterial({ color: 0x7ea4b3, roughness: 0.48 }),
       divano:      new THREE.MeshStandardMaterial({ color: 0x4b709c, roughness: 0.85 }),
       legnoMobili: new THREE.MeshStandardMaterial({ map: texWood, color: 0x8f562e, roughness: 0.52 })
     };
-
     const allParquetMats = [matParquetSogg, matParquetCuc, matParquetRip, matParquetSop1, matParquetSop2];
 
     const matBrick = new THREE.MeshStandardMaterial({ map: makeBrickTexture(), roughness: 0.85 });
     const matLightWood = new THREE.MeshStandardMaterial({ color: 0xd9c2a3, roughness: 0.62 });
     const matWhite = new THREE.MeshStandardMaterial({ color: 0xf8f8f6, roughness: 0.42 });
     const matCeramic = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.05 });
-    const matMetal = new THREE.MeshStandardMaterial({ color: 0x262930, roughness: 0.4, metalness: 0.75 });
+    const matMetal = new THREE.MeshStandardMaterial({ color: 0x22252c, roughness: 0.38, metalness: 0.78 });
+    const matBrass = new THREE.MeshStandardMaterial({ color: 0xc9a058, roughness: 0.32, metalness: 0.82 });
     const matChrome = new THREE.MeshStandardMaterial({ color: 0xd8dde3, roughness: 0.2, metalness: 0.9 });
-    const matGlass = new THREE.MeshStandardMaterial({ color: 0x9fc7de, transparent: true, opacity: 0.36, roughness: 0.1 });
+    const matGlassDark = new THREE.MeshStandardMaterial({ color: 0x46525e, transparent: true, opacity: 0.55, roughness: 0.15 }); // finestra vano scale (buia!)
+    const matGlassCorte = new THREE.MeshStandardMaterial({ color: 0xa6cbe3, emissive: 0x3b5870, emissiveIntensity: 0.45, transparent: true, opacity: 0.55, roughness: 0.1 });
     const matMajolica = new THREE.MeshStandardMaterial({ map: makeMajolicaTexture(), roughness: 0.3 });
-    const matLampShade = new THREE.MeshStandardMaterial({ color: 0xf7e7c8, emissive: 0x553b16, emissiveIntensity: 0.35, roughness: 0.7 });
 
     const ceilingGroup = new THREE.Group();
     const wallEastGroup = new THREE.Group();
     const wallWestGroup = new THREE.Group();
-    const eveningLights = [];
     const doors = {};
     const doorList = [];
     const furnitureList = [];
@@ -719,7 +694,7 @@
     const Z_STAIR_START = 5.45;
     const Z_STAIR_END = 8.20;
 
-    // --- PAVIMENTI PIANO TERRA (Di default: Parquet Trasversale a listoni 19 cm!) ---
+    // --- PAVIMENTI ---
     const floorSoggMesh = addBox(2.78, 0.12, 3.44, 1.37, -0.06, 1.72, matParquetSogg);
     const floorCucMesh  = addBox(3.15, 0.12, 3.60, 1.18, -0.06, 5.24, matParquetCuc);
     const floorRipMesh  = addBox(4.70, 0.12, 2.55, 0.40, -0.06, 8.25, matParquetRip);
@@ -733,31 +708,28 @@
       document.getElementById('floor-orig').classList.toggle('active', !isParq);
     }
 
-    // --- SOLAIO SOPPALCO CON VUOTO SCALA ESATTO ---
+    // --- SOLAIO SOPPALCO CON VUOTO SCALA ---
     addBox(3.87, 0.14, 2.50, -0.015, Y_SOP - 0.07, 8.25, customMaterials.scala);
     addBox(0.83, 0.14, 1.30, 2.335, Y_SOP - 0.07, 8.85, customMaterials.scala);
     addBox(1.57, 0.14, 1.20, -1.165, Y_SOP - 0.07, 6.40, customMaterials.scala);
 
-    // Finiture Soppalco (Parquet Trasversale 19 cm), Bagno e Lavatoio
     addBox(3.87, 0.02, 2.50, -0.015, Y_SOP + 0.01, 8.25, matParquetSop1);
     addBox(0.83, 0.02, 1.30, 2.335, Y_SOP + 0.01, 8.85, matParquetSop2);
     addBox(1.45, 0.025, 1.10, (X_SOP_W + X_BATH_E) / 2, Y_SOP + 0.012, (Z_BATH_N + Z_BATH_S) / 2, customMaterials.bagnoTile);
     addBox(0.58, 0.14, 0.88, 3.04, Y_SOP - 0.07, 9.02, customMaterials.bagnoTile);
 
-    // Chiusura frontale sotto-soppalco con sportello ripostiglio
+    // Chiusura sotto-soppalco + ripostiglio
     addBox(1.10, Y_SOP - 0.14, 0.08, 0.15, (Y_SOP - 0.14) / 2, 7.00, customMaterials.pareti);
     addBox(0.35, Y_SOP - 0.14, 0.08, 1.74, (Y_SOP - 0.14) / 2, 7.00, customMaterials.pareti);
     addBox(0.86, 0.24, 0.08, 1.13, Y_SOP - 0.26, 7.00, customMaterials.pareti);
     createDoor({
       id: 'ripostiglio', label: 'Ripostiglio',
       w: 0.84, h: 1.18, t: 0.04,
-      pivotPos: [0.71, 0, 6.98],
-      panelOffset: [0.42, 0.60, 0],
-      openAngle: Math.PI * 0.48,
-      mat: customMaterials.infissi
+      pivotPos: [0.71, 0, 6.98], panelOffset: [0.42, 0.60, 0],
+      openAngle: Math.PI * 0.48, mat: customMaterials.infissi
     });
 
-    // --- PARETE NORD (INGRESSO, Z = 0) ---
+    // --- PARETE NORD (INGRESSO: finestra sul vano scala, non fa luce!) ---
     addBox(1.26, H_SOG, T_WALL, 0.63, H_SOG / 2, -T_WALL / 2, customMaterials.pareti);
     addBox(0.60, H_SOG, T_WALL, 2.45, H_SOG / 2, -T_WALL / 2, customMaterials.pareti);
     addBox(0.90, 0.26, T_WALL, 1.71, 2.27, -T_WALL / 2, customMaterials.pareti);
@@ -765,87 +737,71 @@
     createDoor({
       id: 'ingresso', label: 'Ingresso',
       w: 0.88, h: 2.13, t: 0.05,
-      pivotPos: [2.15, 0, -0.02],
-      panelOffset: [-0.44, 1.07, 0],
-      openAngle: Math.PI * 0.45,
-      mat: customMaterials.infissi
+      pivotPos: [2.15, 0, -0.02], panelOffset: [-0.44, 1.07, 0],
+      openAngle: Math.PI * 0.45, mat: customMaterials.infissi
     });
     addBox(0.90, 0.85, 0.08, 1.71, 2.825, -0.02, customMaterials.infissi);
-    addBox(0.36, 0.73, 0.09, 1.51, 2.825, -0.02, matGlass);
-    addBox(0.36, 0.73, 0.09, 1.91, 2.825, -0.02, matGlass);
+    addBox(0.36, 0.73, 0.09, 1.51, 2.825, -0.02, matGlassDark);
+    addBox(0.36, 0.73, 0.09, 1.91, 2.825, -0.02, matGlassDark);
     addBox(0.28, 0.18, 0.04, 2.42, 1.75, 0.02, matWhite);
 
-    // --- PARETE EST (X = 2.75) ---
+    // --- PARETE EST ---
     addBox(T_WALL, H_SOG, 3.40, X_EST + T_WALL / 2, H_SOG / 2, 1.70, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, H_CUC, 5.25, X_EST + T_WALL / 2, H_CUC / 2, 6.025, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, Y_SOP, 0.85, X_EST + T_WALL / 2, Y_SOP / 2, 9.075, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, 0.40, 0.85, X_EST + T_WALL / 2, H_CUC - 0.20, 9.075, customMaterials.pareti, wallEastGroup);
 
-    // --- NICCHIA AD ARCO CON DUE COLONNE DI MATTONCINI ROSSI ---
+    // --- NICCHIA AD ARCO CON 2 COLONNE DI MATTONCINI ROSSI ---
     {
       const nz = 4.46, ny = 1.15, nr = 0.70;
       const nicheGrp = new THREE.Group();
       const backDisk = new THREE.Mesh(new THREE.CircleGeometry(nr, 32, 0, Math.PI), customMaterials.pareti);
-      backDisk.rotation.y = -Math.PI / 2;
-      backDisk.position.set(2.742, ny, nz);
+      backDisk.rotation.y = -Math.PI / 2; backDisk.position.set(2.742, ny, nz);
       nicheGrp.add(backDisk);
 
       const archRim = new THREE.Mesh(new THREE.TorusGeometry(nr, 0.036, 12, 32, Math.PI), customMaterials.infissi);
-      archRim.rotation.y = -Math.PI / 2;
-      archRim.position.set(2.69, ny, nz);
-      archRim.castShadow = true;
+      archRim.rotation.y = -Math.PI / 2; archRim.position.set(2.69, ny, nz); archRim.castShadow = true;
       nicheGrp.add(archRim);
 
       addBox(0.24, 0.045, nr * 2 + 0.14, 2.64, ny - 0.02, nz, customMaterials.infissi, nicheGrp);
-
       addBox(0.19, 0.56, 0.20, 2.66, ny + 0.28, nz - 0.34, matBrick, nicheGrp);
       addBox(0.19, 0.62, 0.20, 2.66, ny + 0.31, nz + 0.28, matBrick, nicheGrp);
-
       addBox(0.16, 0.028, 0.44, 2.66, ny + 0.22, nz - 0.03, customMaterials.infissi, nicheGrp);
       addBox(0.16, 0.028, 0.44, 2.66, ny + 0.46, nz - 0.03, customMaterials.infissi, nicheGrp);
       const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.033, 0.21, 10), new THREE.MeshStandardMaterial({ color: 0x1e4a28, roughness: 0.2 }));
-      bottle.position.set(2.65, ny + 0.58, nz - 0.08);
-      nicheGrp.add(bottle);
+      bottle.position.set(2.65, ny + 0.58, nz - 0.08); nicheGrp.add(bottle);
       addBox(0.11, 0.16, 0.13, 2.65, ny + 0.09, nz + 0.50, matMetal, nicheGrp);
-
       wallEastGroup.add(nicheGrp);
     }
 
-    // --- NICCHIA LAVATOIO CON OBLÒ (0,55 × 0,85 m, pilozzo 0,34 × 0,56 m) ---
+    // --- NICCHIA LAVATOIO CON OBLÒ (0,55 × 0,85 m) ---
     {
       const lavGrp = new THREE.Group();
       addBox(0.62, 2.25, 0.10, 3.06, Y_SOP + 1.125, 8.60, customMaterials.pareti, lavGrp);
       addBox(0.62, 2.25, 0.12, 3.06, Y_SOP + 1.125, 9.48, customMaterials.pareti, lavGrp);
       addBox(0.12, 1.18, 0.94, 3.34, Y_SOP + 0.59, 9.04, customMaterials.pareti, lavGrp);
       addBox(0.12, 0.42, 0.94, 3.34, Y_SOP + 2.04, 9.04, customMaterials.pareti, lavGrp);
-      addBox(0.04, 0.65, 0.72, 3.30, Y_SOP + 1.50, 9.04, matGlass, lavGrp);
+      addBox(0.04, 0.65, 0.72, 3.30, Y_SOP + 1.50, 9.04, matGlassCorte, lavGrp);
       addBox(0.05, 0.68, 0.04, 3.29, Y_SOP + 1.50, 8.68, customMaterials.infissi, lavGrp);
       addBox(0.05, 0.68, 0.04, 3.29, Y_SOP + 1.50, 9.40, customMaterials.infissi, lavGrp);
       const oculo = new THREE.Mesh(new THREE.TorusGeometry(0.20, 0.038, 12, 28), customMaterials.infissi);
-      oculo.rotation.y = Math.PI / 2;
-      oculo.position.set(3.28, Y_SOP + 1.50, 9.04);
-      lavGrp.add(oculo);
+      oculo.rotation.y = Math.PI / 2; oculo.position.set(3.28, Y_SOP + 1.50, 9.04); lavGrp.add(oculo);
 
       addBox(0.34, 0.78, 0.56, 3.10, Y_SOP + 0.39, 9.04, matCeramic, lavGrp);
       addBox(0.26, 0.03, 0.48, 3.10, Y_SOP + 0.77, 9.04, matChrome, lavGrp);
       const tap = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.14, 8), matChrome);
-      tap.rotation.z = Math.PI / 2;
-      tap.position.set(3.22, Y_SOP + 0.94, 9.04);
-      lavGrp.add(tap);
+      tap.rotation.z = Math.PI / 2; tap.position.set(3.22, Y_SOP + 0.94, 9.04); lavGrp.add(tap);
 
       createDoor({
         id: 'lavatoio', label: 'Lavatoio',
         w: 0.045, h: 1.85, t: 0.74,
-        pivotPos: [2.75, Y_SOP, 9.40],
-        panelOffset: [0, 0.925, -0.37],
-        openAngle: Math.PI * 0.48,
-        mat: customMaterials.infissi,
-        parent: lavGrp
+        pivotPos: [2.75, Y_SOP, 9.40], panelOffset: [0, 0.925, -0.37],
+        openAngle: Math.PI * 0.48, mat: customMaterials.infissi, parent: lavGrp
       });
       wallEastGroup.add(lavGrp);
     }
 
-    // --- PARETE OVEST ---
+    // --- PARETE OVEST (finestra sulla corte solo al soppalco) ---
     addBox(T_WALL, H_SOG, 3.64, -T_WALL / 2, H_SOG / 2, 1.82, customMaterials.pareti, wallWestGroup);
     addBox(0.40, H_CUC, 2.20, -0.20, H_CUC / 2, 4.72, customMaterials.pareti, wallWestGroup);
     addBox(0.15, H_CUC, 1.24, -0.425, H_CUC / 2, 6.40, customMaterials.pareti, wallWestGroup);
@@ -854,44 +810,34 @@
     addBox(T_WALL, Y_SOP + 0.78, 0.86, X_SOP_W - T_WALL / 2, (Y_SOP + 0.78) / 2, 7.49, customMaterials.pareti, wallWestGroup);
     addBox(T_WALL, 0.42, 0.86, X_SOP_W - T_WALL / 2, H_CUC - 0.21, 7.49, customMaterials.pareti, wallWestGroup);
     addBox(0.08, 1.05, 0.86, X_SOP_W - 0.02, Y_SOP + 1.305, 7.49, customMaterials.infissi, wallWestGroup);
-    addBox(0.04, 0.94, 0.37, X_SOP_W - 0.02, Y_SOP + 1.305, 7.28, matGlass, wallWestGroup);
-    addBox(0.04, 0.94, 0.37, X_SOP_W - 0.02, Y_SOP + 1.305, 7.70, matGlass, wallWestGroup);
+    addBox(0.04, 0.94, 0.37, X_SOP_W - 0.02, Y_SOP + 1.305, 7.28, matGlassCorte, wallWestGroup);
+    addBox(0.04, 0.94, 0.37, X_SOP_W - 0.02, Y_SOP + 1.305, 7.70, matGlassCorte, wallWestGroup);
     addBox(T_WALL, H_CUC, 1.66, X_SOP_W - T_WALL / 2, H_CUC / 2, 8.75, customMaterials.pareti, wallWestGroup);
 
     // --- PARETE SUD ---
     addBox(4.95, H_CUC, T_WALL, 0.40, H_CUC / 2, Z_SUD + T_WALL / 2, customMaterials.pareti);
 
-    // --- ARCO A TUTTO SESTO AMPIO TRA SOGGIORNO E CUCINA ---
+    // --- ARCO A TUTTO SESTO ---
     {
       const archShape = new THREE.Shape();
-      archShape.moveTo(-0.08, 0);
-      archShape.lineTo(2.75, 0);
-      archShape.lineTo(2.75, H_SOG);
-      archShape.lineTo(-0.08, H_SOG);
-      archShape.lineTo(-0.08, 0);
-
+      archShape.moveTo(-0.08, 0); archShape.lineTo(2.75, 0);
+      archShape.lineTo(2.75, H_SOG); archShape.lineTo(-0.08, H_SOG); archShape.lineTo(-0.08, 0);
       const archHole = new THREE.Path();
       const cx = 1.34, r = 1.14, imposta = 1.96;
-      archHole.moveTo(cx - r, 0);
-      archHole.lineTo(cx - r, imposta);
+      archHole.moveTo(cx - r, 0); archHole.lineTo(cx - r, imposta);
       archHole.absarc(cx, imposta, r, Math.PI, 0, true);
-      archHole.lineTo(cx + r, 0);
-      archHole.closePath();
+      archHole.lineTo(cx + r, 0); archHole.closePath();
       archShape.holes.push(archHole);
-
       const archMesh = new THREE.Mesh(
         new THREE.ExtrudeGeometry(archShape, { depth: 0.40, bevelEnabled: false, curveSegments: 32 }),
         customMaterials.pareti
       );
       archMesh.position.set(0, 0, 3.24);
-      archMesh.castShadow = true;
-      archMesh.receiveShadow = true;
+      archMesh.castShadow = true; archMesh.receiveShadow = true;
       scene.add(archMesh);
 
       const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 2.40, 12), customMaterials.infissi);
-      rod.rotation.z = Math.PI / 2;
-      rod.position.set(1.34, 3.28, 3.20);
-      scene.add(rod);
+      rod.rotation.z = Math.PI / 2; rod.position.set(1.34, 3.28, 3.20); scene.add(rod);
       addBox(0.24, 0.34, 0.16, 1.34, 3.34, 3.72, matLightWood);
     }
 
@@ -913,7 +859,7 @@
     addBox(4.78, 0.22, 0.20, 0.40, H_CUC - 0.12, Z_SOP_N, customMaterials.travi, ceilingGroup);
 
     // =========================================================
-    // 4. SCALA (NEL VUOTO DEDICATO) E BALAUSTRA SOPPALCO
+    // 4. SCALA E BALAUSTRA SOPPALCO
     // =========================================================
     {
       const steps = 10;
@@ -928,14 +874,11 @@
       const railAngle = Math.atan2(Y_SOP, Z_STAIR_END - Z_STAIR_START);
       const handrail = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.05, railLen + 0.12), customMaterials.scala);
       handrail.position.set(1.93, Y_SOP / 2 + 0.86, (Z_STAIR_START + Z_STAIR_END) / 2);
-      handrail.rotation.x = -railAngle;
-      handrail.castShadow = true;
-      scene.add(handrail);
+      handrail.rotation.x = -railAngle; handrail.castShadow = true; scene.add(handrail);
 
       for (let i = 0; i <= steps; i++) {
         const post = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.028, 0.88, 10), customMaterials.scala);
-        post.position.set(1.93, i * stepH + 0.44, Z_STAIR_START + i * stepD);
-        scene.add(post);
+        post.position.set(1.93, i * stepH + 0.44, Z_STAIR_START + i * stepD); scene.add(post);
       }
 
       const balLenN = 1.93 - (-0.45);
@@ -943,21 +886,20 @@
       addBox(balLenN, 0.05, 0.07, (-0.45 + 1.93) / 2, Y_SOP + 0.03, Z_SOP_N + 0.02, customMaterials.scala);
       for (let x = -0.35; x <= 1.93; x += 0.16) {
         const bal = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.032, 0.84, 10), customMaterials.scala);
-        bal.position.set(x, Y_SOP + 0.46, Z_SOP_N + 0.02);
-        scene.add(bal);
+        bal.position.set(x, Y_SOP + 0.46, Z_SOP_N + 0.02); scene.add(bal);
       }
 
       addBox(0.07, 0.06, Z_STAIR_END - Z_SOP_N, 1.93, Y_SOP + 0.88, (Z_SOP_N + Z_STAIR_END) / 2, customMaterials.scala);
       for (let z = Z_SOP_N + 0.16; z <= Z_STAIR_END - 0.08; z += 0.17) {
         const bal = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.032, 0.84, 10), customMaterials.scala);
-        bal.position.set(1.93, Y_SOP + 0.46, z);
-        scene.add(bal);
+        bal.position.set(1.93, Y_SOP + 0.46, z); scene.add(bal);
       }
     }
 
     // =========================================================
-    // 5. BAGNO SOPPALCO (1,45 × 1,10 m ESATTI)
+    // 5. BAGNO SOPPALCO (1,45 × 1,10 m)
     // =========================================================
+    const matBathMirrorHalo = new THREE.MeshStandardMaterial({ color: 0xffe4b8, emissive: 0xffd28a, emissiveIntensity: 0.9 });
     {
       const bathH = H_CUC - Y_SOP;
       addBox(0.18, bathH, 0.10, -1.86, Y_SOP + bathH / 2, 6.95, customMaterials.pareti);
@@ -967,14 +909,12 @@
       createDoor({
         id: 'bagno', label: 'Bagno',
         w: 0.60, h: 1.88, t: 0.04,
-        pivotPos: [-1.78, Y_SOP, 6.96],
-        panelOffset: [0.30, 0.94, 0],
-        openAngle: -Math.PI * 0.46,
-        mat: customMaterials.infissi
+        pivotPos: [-1.78, Y_SOP, 6.96], panelOffset: [0.30, 0.94, 0],
+        openAngle: -Math.PI * 0.46, mat: customMaterials.infissi
       });
 
       addBox(0.70, 0.06, 1.10, -0.85, Y_SOP + 0.04, 6.35, matCeramic);
-      addBox(0.02, 1.82, 1.06, -1.20, Y_SOP + 0.94, 6.35, matGlass);
+      addBox(0.02, 1.82, 1.06, -1.20, Y_SOP + 0.94, 6.35, matGlassCorte);
       const shPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.15, 8), matChrome);
       shPipe.position.set(-0.56, Y_SOP + 1.40, 6.35); scene.add(shPipe);
       const shHead = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.05, 0.04, 14), matChrome);
@@ -988,17 +928,18 @@
       addBox(0.31, 0.13, 0.27, -1.79, Y_SOP + 0.82, 6.62, matCeramic);
       const lTap = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.10, 8), matChrome);
       lTap.position.set(-1.89, Y_SOP + 0.92, 6.62); scene.add(lTap);
-      const mFrame = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.025, 10, 24), new THREE.MeshStandardMaterial({ color: 0xdfb482, roughness: 0.4 }));
-      mFrame.rotation.y = Math.PI / 2;
-      mFrame.position.set(-1.93, Y_SOP + 1.38, 6.62); scene.add(mFrame);
-      const mGlass = new THREE.Mesh(new THREE.CircleGeometry(0.17, 24), new THREE.MeshStandardMaterial({ color: 0xcbd9e6, metalness: 0.85, roughness: 0.1 }));
-      mGlass.rotation.y = Math.PI / 2;
-      mGlass.position.set(-1.925, Y_SOP + 1.38, 6.62); scene.add(mGlass);
+      // Specchio tondo con retroilluminazione LED calda!
+      const mHalo = new THREE.Mesh(new THREE.TorusGeometry(0.205, 0.014, 10, 28), matBathMirrorHalo);
+      mHalo.rotation.y = Math.PI / 2; mHalo.position.set(-1.938, Y_SOP + 1.38, 6.62); scene.add(mHalo);
+      const mGlass = new THREE.Mesh(new THREE.CircleGeometry(0.19, 24), new THREE.MeshStandardMaterial({ color: 0xcbd9e6, metalness: 0.85, roughness: 0.1 }));
+      mGlass.rotation.y = Math.PI / 2; mGlass.position.set(-1.928, Y_SOP + 1.38, 6.62); scene.add(mGlass);
     }
 
     // =========================================================
     // 6. ARREDI INTERATTIVI
     // =========================================================
+    const matAbatJour = new THREE.MeshStandardMaterial({ color: 0xf7e7c8, emissive: 0xffb35c, emissiveIntensity: 0.8, roughness: 0.65 });
+
     function registerFurniture(id, name, pos, builderFn) {
       const grp = new THREE.Group();
       grp.position.set(...pos);
@@ -1016,13 +957,13 @@
       addBox(0.02, 0.16, 0.03, 0.31, 1.25, -0.04, matChrome, g);
     });
 
-    registerFurniture('mensoladivano', 'Mensola Retro-Divano + Lampade', [0.24, 0, 1.98], g => {
+    registerFurniture('mensoladivano', 'Mensola Retro-Divano + Abat-Jour', [0.24, 0, 1.98], g => {
       addBox(0.46, 0.78, 2.46, 0, 0.39, 0, customMaterials.legnoMobili, g);
       [-1.02, 1.02].forEach(lz => {
-        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.16, 12), matMetal);
-        base.position.set(0, 0.86, lz); g.add(base);
-        const shade = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.13, 0.18, 14), matLampShade);
-        shade.position.set(0, 1.02, lz); g.add(shade);
+        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.18, 12), matBrass);
+        base.position.set(0, 0.87, lz); g.add(base);
+        const shade = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.14, 0.21, 16), matAbatJour);
+        shade.position.set(0, 1.05, lz); g.add(shade);
       });
     });
 
@@ -1053,10 +994,8 @@
         addBox(0.04, 0.74, 0.04, dx, 0.37, dz, customMaterials.legnoMobili, g);
       });
       [
-        { x: -0.20, z: -0.35, rot: 0 },
-        { x:  0.34, z: -0.35, rot: 0 },
-        { x: -0.20, z:  0.35, rot: Math.PI },
-        { x:  0.34, z:  0.35, rot: Math.PI }
+        { x: -0.20, z: -0.35, rot: 0 }, { x: 0.34, z: -0.35, rot: 0 },
+        { x: -0.20, z:  0.35, rot: Math.PI }, { x: 0.34, z: 0.35, rot: Math.PI }
       ].forEach(c => {
         const ch = new THREE.Group();
         addBox(0.38, 0.04, 0.36, 0, 0.45, 0, customMaterials.legnoMobili, ch);
@@ -1116,7 +1055,455 @@
     });
 
     // =========================================================
-    // 7. SELEZIONE, SPOSTAMENTO E LISTA ARREDI
+    // 7. PROGETTO ILLUMINOTECNICO AVANZATO (8 CIRCUITI + CORPI 3D)
+    // =========================================================
+    function kelvinToColor(k) {
+      // Mappatura realistica 2200K (ambra) -> 3000K (calda) -> 4000K (neutra) -> 5000K (diurna)
+      const t = THREE.MathUtils.clamp((k - 2200) / (5000 - 2200), 0, 1);
+      const cWarm = new THREE.Color(0xff9c42);   // 2200K
+      const cSoft = new THREE.Color(0xffd7a1);   // 3000K
+      const cNeut = new THREE.Color(0xfff4e6);   // 4000K
+      const cDay  = new THREE.Color(0xeef5ff);   // 5000K
+      if (t < 0.30) return cWarm.clone().lerp(cSoft, t / 0.30);
+      if (t < 0.65) return cSoft.clone().lerp(cNeut, (t - 0.30) / 0.35);
+      return cNeut.clone().lerp(cDay, (t - 0.65) / 0.35);
+    }
+
+    // Luce ambientale base (controllata da Reale / Notte / Tecnica)
+    const hemiLight = new THREE.HemisphereLight(0xdce6f5, 0x3b312a, 0.22);
+    scene.add(hemiLight);
+
+    // Luce naturale direzionale (usata in Vista Tecnica o debole dalla corte in Reale)
+    const dirLight = new THREE.DirectionalLight(0xf2f7ff, 0.18);
+    dirLight.position.set(-6, 9, 8); // direzione dalla corte Ovest
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.set(2048, 2048);
+    dirLight.shadow.camera.left = -7; dirLight.shadow.camera.right = 8;
+    dirLight.shadow.camera.top = 11; dirLight.shadow.camera.bottom = -6;
+    dirLight.shadow.bias = -0.0008;
+    scene.add(dirLight);
+
+    // Debole rimbalzo diurno naturale SOLO dalla finestra sulla corte (Soppalco)
+    const corteWindowLight = new THREE.PointLight(0xd9ecff, 0.75, 4.2, 1.8);
+    corteWindowLight.position.set(-1.55, Y_SOP + 1.35, 7.50);
+    scene.add(corteWindowLight);
+
+    const lightCircuits = {};
+    const circuitOrder = [];
+
+    function registerCircuit({ id, name, maxIntensity, defaultOn, defaultPct, defaultKelvin, buildFn }) {
+      const fixtureGroup = new THREE.Group();
+      const lights = [];
+      const emissives = [];
+      buildFn(fixtureGroup, lights, emissives);
+      scene.add(fixtureGroup);
+
+      const circuit = {
+        id, name, fixtureGroup, lights, emissives, maxIntensity,
+        on: defaultOn, pct: defaultPct, kelvin: defaultKelvin, fixtureVisible: true
+      };
+      lightCircuits[id] = circuit;
+      circuitOrder.push(circuit);
+      return circuit;
+    }
+
+    function applyCircuitState(c) {
+      const col = kelvinToColor(c.kelvin);
+      const active = c.on && c.fixtureVisible;
+      const factor = active ? (c.pct / 100) : 0;
+      c.fixtureGroup.visible = c.fixtureVisible;
+
+      c.lights.forEach(item => {
+        item.light.color.copy(col);
+        item.light.intensity = c.maxIntensity * (item.weight ?? 1) * factor;
+      });
+      c.emissives.forEach(mat => {
+        mat.emissive.copy(col);
+        mat.emissiveIntensity = active ? (0.35 + factor * 1.45) : 0.0;
+      });
+    }
+
+    // 1) STRIP LED INDIRETTA SOFFITTO / TRAVI + ARCO (Up-Light anti-buio!)
+    registerCircuit({
+      id: 'uplight', name: '✨ LED Indiretto Soffitto & Arco',
+      maxIntensity: 3.4, defaultOn: true, defaultPct: 80, defaultKelvin: 3000,
+      buildFn: (grp, lights, emissives) => {
+        const stripMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffd7a1, emissiveIntensity: 1.2 });
+        emissives.push(stripMat);
+        // Velette LED laterali Soggiorno (a Y=3.40 sparano luce sul soffitto bianco tra le travi!)
+        addBox(0.05, 0.03, 2.90, 0.04, 3.42, 1.62, matWhite, grp);
+        addBox(0.03, 0.015, 2.86, 0.05, 3.44, 1.62, stripMat, grp);
+        addBox(0.05, 0.03, 2.90, 2.71, 3.42, 1.62, matWhite, grp);
+        addBox(0.03, 0.015, 2.86, 2.70, 3.44, 1.62, stripMat, grp);
+        // Veletta LED Cucina lato Est e Ovest
+        addBox(0.05, 0.03, 2.80, 2.71, 3.28, 5.25, matWhite, grp);
+        addBox(0.03, 0.015, 2.76, 2.70, 3.30, 5.25, stripMat, grp);
+        // Striscia LED curva lungo l'intradosso dell'arco divisorio!
+        const archLed = new THREE.Mesh(new THREE.TorusGeometry(1.13, 0.012, 8, 36, Math.PI), stripMat);
+        archLed.position.set(1.34, 1.96, 3.44);
+        grp.add(archLed);
+
+        // 2 PointLight alte che lavano soffitto e travi con luce diffusa morbida
+        const l1 = new THREE.PointLight(0xffd7a1, 3.0, 8.5, 1.35);
+        l1.position.set(1.35, 3.68, 1.65); grp.add(l1);
+        const l2 = new THREE.PointLight(0xffd7a1, 2.6, 8.5, 1.35);
+        l2.position.set(1.30, 3.50, 5.05); grp.add(l2);
+        lights.push({ light: l1, weight: 1.0 }, { light: l2, weight: 0.85 });
+      }
+    });
+
+    // 2) SOSPENSIONI SUL TAVOLO STRETTO SOTTO L'ARCO
+    registerCircuit({
+      id: 'pendant', name: '🏮 Sospensioni Tavolo Arco',
+      maxIntensity: 2.8, defaultOn: true, defaultPct: 80, defaultKelvin: 2700,
+      buildFn: (grp, lights, emissives) => {
+        const bulbMat = new THREE.MeshStandardMaterial({ color: 0xfff5e4, emissive: 0xffcc88, emissiveIntensity: 1.5 });
+        emissives.push(bulbMat);
+        // Due campane minimaliste in ottone/nero scese sopra il tavolo (X=0.62 e X=1.28, Z=3.55)
+        [0.62, 1.28].forEach(px => {
+          // Cavetto sottile fino all'intradosso dell'arco
+          const topY = 1.96 + Math.sqrt(Math.max(0.05, 1.14 * 1.14 - Math.pow(px - 1.34, 2)));
+          const dropY = 1.92;
+          const cordLen = topY - dropY;
+          const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.004, cordLen, 8), matMetal);
+          cord.position.set(px, dropY + cordLen / 2, 3.55); grp.add(cord);
+          // Campana
+          const shade = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.16, 20, 1, true), matBrass);
+          shade.position.set(px, dropY, 3.55); grp.add(shade);
+          const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), bulbMat);
+          bulb.position.set(px, dropY - 0.03, 3.55); grp.add(bulb);
+        });
+        const l = new THREE.PointLight(0xffcc88, 2.4, 5.5, 1.5);
+        l.position.set(0.95, 1.72, 3.55); grp.add(l);
+        lights.push({ light: l, weight: 1.0 });
+      }
+    });
+
+    // 3) BINARIO SOSPESO CON FARETTI ORIENTABILI (Soggiorno + Cucina)
+    registerCircuit({
+      id: 'track', name: '💡 Binario Sospeso Faretti',
+      maxIntensity: 3.2, defaultOn: false, defaultPct: 75, defaultKelvin: 3200,
+      buildFn: (grp, lights, emissives) => {
+        const lensMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffe4be, emissiveIntensity: 1.2 });
+        emissives.push(lensMat);
+        // Binario Soggiorno sospeso a Y=3.30 (lungo Z da 0.65 a 2.85)
+        addBox(0.035, 0.035, 2.25, 1.34, 3.30, 1.75, matMetal, grp);
+        [0.85, 2.65].forEach(z => {
+          const w = new THREE.Mesh(new THREE.CylinderGeometry(0.003, 0.003, 0.70, 6), matChrome);
+          w.position.set(1.34, 3.65, z); grp.add(w);
+        });
+        // 4 faretti cilindrici orientati
+        [0.85, 1.45, 2.05, 2.65].forEach((z, idx) => {
+          const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.042, 0.13, 12), matMetal);
+          spot.position.set(1.34, 3.21, z);
+          spot.rotation.z = idx % 2 === 0 ? 0.35 : -0.35;
+          grp.add(spot);
+          const lens = new THREE.Mesh(new THREE.CircleGeometry(0.035, 12), lensMat);
+          lens.rotation.x = Math.PI / 2;
+          lens.position.set(1.34 + (idx % 2 === 0 ? 0.02 : -0.02), 3.145, z);
+          grp.add(lens);
+        });
+        // Binario Cucina sospeso a Y=3.22 (lungo Z da 4.10 a 6.20)
+        addBox(0.035, 0.035, 2.10, 1.25, 3.22, 5.15, matMetal, grp);
+        [4.30, 6.00].forEach(z => {
+          const w = new THREE.Mesh(new THREE.CylinderGeometry(0.003, 0.003, 0.60, 6), matChrome);
+          w.position.set(1.25, 3.52, z); grp.add(w);
+        });
+        [4.35, 5.15, 5.95].forEach(z => {
+          const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.042, 0.13, 12), matMetal);
+          spot.position.set(1.25, 3.13, z); spot.rotation.z = -0.38; grp.add(spot);
+        });
+
+        const l1 = new THREE.PointLight(0xffe4be, 2.6, 7.5, 1.45);
+        l1.position.set(1.34, 2.95, 1.75); grp.add(l1);
+        const l2 = new THREE.PointLight(0xffe4be, 2.4, 7.5, 1.45);
+        l2.position.set(1.15, 2.90, 5.20); grp.add(l2);
+        lights.push({ light: l1, weight: 1.0 }, { light: l2, weight: 0.9 });
+      }
+    });
+
+    // 4) APPLIQUE PARETI UP & DOWN (Spezzano l'altezza da 4 m)
+    registerCircuit({
+      id: 'sconces', name: '🕯️ Applique Up & Down Pareti',
+      maxIntensity: 2.2, defaultOn: true, defaultPct: 60, defaultKelvin: 2800,
+      buildFn: (grp, lights, emissives) => {
+        const glowMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffcf91, emissiveIntensity: 1.3 });
+        emissives.push(glowMat);
+        // 2 Applique parete Est Soggiorno (ai lati della TV) + 2 Applique Cucina
+        const coords = [
+          { x: 2.71, y: 2.15, z: 0.95, side: -1 },
+          { x: 2.71, y: 2.15, z: 2.85, side: -1 },
+          { x: 0.04, y: 2.25, z: 4.55, side: 1 },
+          { x: 2.71, y: 2.25, z: 5.55, side: -1 }
+        ];
+        coords.forEach(p => {
+          addBox(0.07, 0.22, 0.10, p.x, p.y, p.z, matWhite, grp);
+          addBox(0.05, 0.012, 0.08, p.x, p.y + 0.112, p.z, glowMat, grp);
+          addBox(0.05, 0.012, 0.08, p.x, p.y - 0.112, p.z, glowMat, grp);
+        });
+        const l1 = new THREE.PointLight(0xffcf91, 1.5, 5.5, 1.6);
+        l1.position.set(2.35, 2.20, 1.90); grp.add(l1);
+        const l2 = new THREE.PointLight(0xffcf91, 1.3, 5.5, 1.6);
+        l2.position.set(1.35, 2.30, 5.10); grp.add(l2);
+        lights.push({ light: l1, weight: 1.0 }, { light: l2, weight: 0.85 });
+      }
+    });
+
+    // 5) LED SOTTO-MENSOLA CUCINA (Luce tecnica piano lavoro)
+    registerCircuit({
+      id: 'kitchenled', name: '🍳 LED Sotto-Mensola Cucina',
+      maxIntensity: 2.2, defaultOn: true, defaultPct: 85, defaultKelvin: 3300,
+      buildFn: (grp, lights, emissives) => {
+        const ledMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffe8c8, emissiveIntensity: 1.5 });
+        emissives.push(ledMat);
+        addBox(0.025, 0.012, 1.22, -0.10, 1.54, 6.25, ledMat, grp);
+        addBox(0.025, 0.012, 0.56, 0.05, 1.61, 5.27, ledMat, grp); // luce cappa
+        const l = new THREE.PointLight(0xffe8c8, 2.0, 3.6, 1.7);
+        l.position.set(0.28, 1.44, 5.95); grp.add(l);
+        lights.push({ light: l, weight: 1.0 });
+      }
+    });
+
+    // 6) MICRO-FARETTO NICCHIA MATTONI ROSSI
+    registerCircuit({
+      id: 'niche', name: '🧱 Luce d\'Accento Nicchia Mattoni',
+      maxIntensity: 1.4, defaultOn: true, defaultPct: 90, defaultKelvin: 2700,
+      buildFn: (grp, lights, emissives) => {
+        const dotMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffc77d, emissiveIntensity: 1.5 });
+        emissives.push(dotMat);
+        const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.02, 10), dotMat);
+        spot.position.set(2.65, 1.81, 4.46); grp.add(spot);
+        const l = new THREE.PointLight(0xffc77d, 1.2, 2.6, 1.8);
+        l.position.set(2.50, 1.68, 4.46); grp.add(l);
+        lights.push({ light: l, weight: 1.0 });
+      }
+    });
+
+    // 7) ABAT-JOUR RETRO-DIVANO (Atmosfera & Relax)
+    registerCircuit({
+      id: 'lamps', name: '🛋️ Abat-Jour Mensola Divano',
+      maxIntensity: 1.8, defaultOn: true, defaultPct: 70, defaultKelvin: 2500,
+      buildFn: (grp, lights, emissives) => {
+        emissives.push(matAbatJour);
+        const l = new THREE.PointLight(0xffb563, 1.5, 4.8, 1.6);
+        l.position.set(0.50, 1.22, 1.98); grp.add(l);
+        lights.push({ light: l, weight: 1.0 });
+      }
+    });
+
+    // 8) SEGNAPASSO SCALA + SOPPALCO + BAGNO
+    registerCircuit({
+      id: 'upper', name: '🛏️ Scala, Soppalco & Bagno',
+      maxIntensity: 2.3, defaultOn: true, defaultPct: 75, defaultKelvin: 2800,
+      buildFn: (grp, lights, emissives) => {
+        const stepMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffcf8f, emissiveIntensity: 1.4 });
+        emissives.push(stepMat, matBathMirrorHalo);
+        // 5 Segnapasso LED radenti lungo la scala (parete Est)
+        for (let i = 0; i < 5; i++) {
+          const z = Z_STAIR_START + 0.35 + i * 0.55;
+          const y = 0.25 + (i / 4.5) * Y_SOP;
+          addBox(0.015, 0.035, 0.075, 2.735, y, z, stepMat, grp);
+        }
+        // Applique zona letto soppalco + plafoniera bagno
+        addBox(0.07, 0.16, 0.24, -1.91, Y_SOP + 1.35, 8.73, matWhite, grp);
+        addBox(0.05, 0.015, 0.22, -1.91, Y_SOP + 1.435, 8.73, stepMat, grp);
+        const bathPlaf = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.03, 16), stepMat);
+        bathPlaf.position.set(-1.18, H_CUC - 0.14, 6.35); grp.add(bathPlaf);
+
+        const lSop = new THREE.PointLight(0xffcf8f, 2.0, 6.5, 1.5);
+        lSop.position.set(0.15, Y_SOP + 1.75, 8.35); grp.add(lSop);
+        const lBath = new THREE.PointLight(0xffdfba, 1.7, 3.8, 1.6);
+        lBath.position.set(-1.20, Y_SOP + 1.80, 6.35); grp.add(lBath);
+        lights.push({ light: lSop, weight: 1.0 }, { light: lBath, weight: 0.8 });
+      }
+    });
+
+    // --- SCENARI AMBIENTE ESTERNO (Reale / Notte / Tecnica) ---
+    let envMode = 'real';
+    function setEnvMode(mode) {
+      envMode = mode;
+      document.querySelectorAll('[data-env]').forEach(b => b.classList.toggle('active', b.dataset.env === mode));
+      if (mode === 'real') {
+        // Soggiorno cieco: luce ambiente molto bassa, solo un filo di luce diurna dalla corte in fondo!
+        scene.background.set(0x11141c);
+        hemiLight.intensity = 0.16;
+        dirLight.intensity = 0.12;
+        corteWindowLight.intensity = 0.85;
+        matGlassCorte.emissiveIntensity = 0.65;
+      } else if (mode === 'night') {
+        scene.background.set(0x090b10);
+        hemiLight.intensity = 0.06;
+        dirLight.intensity = 0.0;
+        corteWindowLight.intensity = 0.0;
+        matGlassCorte.emissiveIntensity = 0.04;
+      } else {
+        // Tecnica: luce chiara uniforme per studiare il plastico e i mobili
+        scene.background.set(0x1e222b);
+        hemiLight.intensity = 1.05;
+        dirLight.intensity = 1.15;
+        corteWindowLight.intensity = 0.4;
+        matGlassCorte.emissiveIntensity = 0.5;
+      }
+    }
+
+    // --- 6 PRESET ILLUMINOTECNICI CONSIGLIATI ---
+    const lightPresets = {
+      architettonico: {
+        uplight:    { on: true,  pct: 80, k: 3000, vis: true },
+        pendant:    { on: true,  pct: 80, k: 2700, vis: true },
+        track:      { on: false, pct: 60, k: 3000, vis: false },
+        sconces:    { on: true,  pct: 60, k: 2800, vis: true },
+        kitchenled: { on: true,  pct: 85, k: 3200, vis: true },
+        niche:      { on: true,  pct: 90, k: 2700, vis: true },
+        lamps:      { on: true,  pct: 65, k: 2600, vis: true },
+        upper:      { on: true,  pct: 75, k: 2800, vis: true }
+      },
+      diurno: {
+        uplight:    { on: true,  pct: 100, k: 4200, vis: true },
+        pendant:    { on: true,  pct: 75,  k: 3600, vis: true },
+        track:      { on: true,  pct: 90,  k: 4000, vis: true },
+        sconces:    { on: true,  pct: 70,  k: 3800, vis: true },
+        kitchenled: { on: true,  pct: 100, k: 4000, vis: true },
+        niche:      { on: true,  pct: 70,  k: 3200, vis: true },
+        lamps:      { on: false, pct: 40,  k: 3000, vis: true },
+        upper:      { on: true,  pct: 90,  k: 3800, vis: true }
+      },
+      cena: {
+        uplight:    { on: true,  pct: 32, k: 2600, vis: true },
+        pendant:    { on: true,  pct: 95, k: 2400, vis: true },
+        track:      { on: false, pct: 0,  k: 2700, vis: false },
+        sconces:    { on: true,  pct: 35, k: 2500, vis: true },
+        kitchenled: { on: true,  pct: 40, k: 2700, vis: true },
+        niche:      { on: true,  pct: 100,k: 2500, vis: true },
+        lamps:      { on: true,  pct: 75, k: 2400, vis: true },
+        upper:      { on: true,  pct: 45, k: 2500, vis: true }
+      },
+      relax: {
+        uplight:    { on: true,  pct: 25, k: 2500, vis: true },
+        pendant:    { on: false, pct: 30, k: 2400, vis: true },
+        track:      { on: false, pct: 0,  k: 2700, vis: false },
+        sconces:    { on: true,  pct: 45, k: 2400, vis: true },
+        kitchenled: { on: false, pct: 20, k: 2700, vis: true },
+        niche:      { on: true,  pct: 80, k: 2400, vis: true },
+        lamps:      { on: true,  pct: 85, k: 2300, vis: true },
+        upper:      { on: true,  pct: 50, k: 2500, vis: true }
+      },
+      operativo: {
+        uplight:    { on: true,  pct: 75,  k: 3500, vis: true },
+        pendant:    { on: true,  pct: 90,  k: 3300, vis: true },
+        track:      { on: true,  pct: 100, k: 3500, vis: true },
+        sconces:    { on: false, pct: 50,  k: 3200, vis: true },
+        kitchenled: { on: true,  pct: 100, k: 3800, vis: true },
+        niche:      { on: true,  pct: 80,  k: 3000, vis: true },
+        lamps:      { on: false, pct: 40,  k: 2800, vis: true },
+        upper:      { on: true,  pct: 95,  k: 3400, vis: true }
+      },
+      buio: {
+        uplight:    { on: false, pct: 0, k: 3000, vis: true },
+        pendant:    { on: false, pct: 0, k: 2700, vis: true },
+        track:      { on: false, pct: 0, k: 3000, vis: true },
+        sconces:    { on: false, pct: 0, k: 2800, vis: true },
+        kitchenled: { on: false, pct: 0, k: 3200, vis: true },
+        niche:      { on: false, pct: 0, k: 2700, vis: true },
+        lamps:      { on: false, pct: 0, k: 2600, vis: true },
+        upper:      { on: false, pct: 0, k: 2800, vis: true }
+      }
+    };
+
+    // Costruzione UI Mixer Luci
+    const mixerEl = document.getElementById('lights-mixer');
+    const mixerWidgets = {};
+
+    circuitOrder.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'light-card';
+      card.innerHTML = `
+        <div class="light-card-top">
+          <label class="light-title">
+            <input type="checkbox" class="l-on" />
+            <span>${c.name}</span>
+          </label>
+          <button class="eye-btn l-vis" title="Mostra/Rimuovi corpo illuminante">👁️</button>
+        </div>
+        <div class="light-sliders">
+          <label>
+            <span>Intensità <span class="val-badge l-pct-val"></span></span>
+            <input type="range" class="l-pct" min="0" max="100" step="5" />
+          </label>
+          <label>
+            <span>Tonalità <span class="val-badge l-k-val"></span></span>
+            <input type="range" class="l-k" min="2200" max="5000" step="100" />
+          </label>
+        </div>
+      `;
+      const chkOn = card.querySelector('.l-on');
+      const btnVis = card.querySelector('.l-vis');
+      const rngPct = card.querySelector('.l-pct');
+      const rngK = card.querySelector('.l-k');
+      const valPct = card.querySelector('.l-pct-val');
+      const valK = card.querySelector('.l-k-val');
+
+      function syncCard() {
+        chkOn.checked = c.on;
+        rngPct.value = c.pct;
+        rngK.value = c.kelvin;
+        valPct.textContent = c.on ? `${c.pct}%` : 'OFF';
+        valK.textContent = `${c.kelvin}K`;
+        btnVis.textContent = c.fixtureVisible ? '👁️' : '🚫';
+        card.classList.toggle('on', c.on && c.fixtureVisible);
+        card.classList.toggle('fixture-hidden', !c.fixtureVisible);
+        applyCircuitState(c);
+      }
+
+      chkOn.onchange = () => {
+        c.on = chkOn.checked;
+        if (c.on && c.pct === 0) c.pct = 75;
+        if (c.on && !c.fixtureVisible) c.fixtureVisible = true;
+        clearPresetHighlight();
+        syncCard();
+      };
+      btnVis.onclick = () => {
+        c.fixtureVisible = !c.fixtureVisible;
+        clearPresetHighlight();
+        syncCard();
+      };
+      rngPct.oninput = () => {
+        c.pct = Number(rngPct.value);
+        c.on = c.pct > 0;
+        clearPresetHighlight();
+        syncCard();
+      };
+      rngK.oninput = () => {
+        c.kelvin = Number(rngK.value);
+        clearPresetHighlight();
+        syncCard();
+      };
+
+      mixerWidgets[c.id] = { syncCard };
+      mixerEl.appendChild(card);
+    });
+
+    function clearPresetHighlight() {
+      document.querySelectorAll('[data-lpreset]').forEach(b => b.classList.remove('active'));
+    }
+
+    function applyLightPreset(name) {
+      const p = lightPresets[name];
+      if (!p) return;
+      document.querySelectorAll('[data-lpreset]').forEach(b => b.classList.toggle('active', b.dataset.lpreset === name));
+      Object.entries(p).forEach(([id, cfg]) => {
+        const c = lightCircuits[id];
+        if (!c) return;
+        c.on = cfg.on;
+        c.pct = cfg.pct;
+        c.kelvin = cfg.k;
+        c.fixtureVisible = cfg.vis;
+        mixerWidgets[id].syncCard();
+      });
+    }
+
+    // =========================================================
+    // 8. SELEZIONE, SPOSTAMENTO E LISTA ARREDI
     // =========================================================
     let selectedItem = null;
     const selectionBox = new THREE.BoxHelper(new THREE.Object3D(), 0xf4a259);
@@ -1192,7 +1579,7 @@
     refreshFurnitureListUI();
 
     // =========================================================
-    // 8. RAYCASTING (Click su Porte o Mobili)
+    // 9. RAYCASTING (Click su Porte o Mobili)
     // =========================================================
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
@@ -1229,7 +1616,7 @@
     });
 
     // =========================================================
-    // 9. PERSONALIZZAZIONE COLORI + RIPRISTINO SINGOLO E TOTALE
+    // 10. PERSONALIZZAZIONE COLORI + RIPRISTINO
     // =========================================================
     function setColorByKey(key, hex) {
       if (key === 'pavParquet') {
@@ -1302,54 +1689,16 @@
       Object.entries(p).forEach(([k, hex]) => setColorByKey(k, hex));
     }
 
-    document.getElementById('floor-parquet').onclick = () => setGroundFloorMode('parquet');
-    document.getElementById('floor-orig').onclick = () => setGroundFloorMode('orig');
-    document.querySelectorAll('[data-wood]').forEach(b => {
-      b.onclick = () => {
-        setGroundFloorMode('parquet');
-        setColorByKey('pavParquet', b.dataset.wood);
-      };
-    });
-    document.getElementById('btn-reset-colors').onclick = () => {
-      setGroundFloorMode('parquet');
-      applyPalette('originale');
-    };
-
     // =========================================================
-    // 10. ILLUMINAZIONE & ETICHETTE 3D
+    // 11. ETICHETTE 3D, VISTE RAPIDE & PRIMA PERSONA
     // =========================================================
-    const hemiLight = new THREE.HemisphereLight(0xfffaf0, 0x453b34, 1.15);
-    scene.add(hemiLight);
-
-    const dirLight = new THREE.DirectionalLight(0xfff5e4, 1.2);
-    dirLight.position.set(6, 11, 4);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize.set(2048, 2048);
-    dirLight.shadow.camera.left = -7; dirLight.shadow.camera.right = 8;
-    dirLight.shadow.camera.top = 11; dirLight.shadow.camera.bottom = -6;
-    dirLight.shadow.bias = -0.0008;
-    scene.add(dirLight);
-
-    function addLamp(x, y, z, intensity = 1.6, dist = 6.5) {
-      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.06, 10, 10), new THREE.MeshBasicMaterial({ color: 0xffe6b3 }));
-      bulb.position.set(x, y, z); scene.add(bulb);
-      const l = new THREE.PointLight(0xffd699, intensity, dist, 1.5);
-      l.position.set(x, y - 0.1, z); scene.add(l);
-      eveningLights.push(l);
-    }
-    addLamp(1.34, 3.65, 1.65, 2.2, 7.5);
-    addLamp(0.45, 2.45, 4.45, 1.8, 6.0);
-    addLamp(0.35, 1.75, 5.90, 1.4, 4.5);
-    addLamp(0.25, 3.35, 8.20, 2.0, 6.5);
-    addLamp(-1.20, 3.45, 6.35, 1.5, 4.0);
-
     const labelsData = [
-      { text: 'Soggiorno', sub: '2,67 × 3,24 m • Parquet trasv. 19 cm', pos: new THREE.Vector3(1.50, 1.4, 1.8) },
-      { text: 'Tavolo Sotto Arco', sub: '150 × 55 cm (a parete)', pos: new THREE.Vector3(0.95, 1.55, 3.55) },
+      { text: 'Soggiorno (Cieco)', sub: '2,67 × 3,24 m • H 4,01 m', pos: new THREE.Vector3(1.50, 1.4, 1.8) },
+      { text: 'Tavolo Sotto Arco', sub: '150 × 55 cm', pos: new THREE.Vector3(0.95, 1.55, 3.55) },
       { text: 'Cucina', sub: 'L 2,75 m • H 3,83 m', pos: new THREE.Vector3(0.95, 1.5, 5.4) },
       { text: 'Scala (Vuoto)', sub: 'L 0,81 m', pos: new THREE.Vector3(2.34, 1.5, 6.8) },
-      { text: 'Soppalco / Letto 150×200', sub: '4,80 × 2,50 m • H 1,96/2,25 m', pos: new THREE.Vector3(-0.35, 2.55, 8.70) },
-      { text: 'Fan Coil + Finestra', sub: 'Spazio libero 1,00 m', pos: new THREE.Vector3(-1.60, 2.55, 7.50) },
+      { text: 'Soppalco / Letto 150×200', sub: '4,80 × 2,50 m', pos: new THREE.Vector3(-0.35, 2.55, 8.70) },
+      { text: 'Finestra Corte + Fan Coil', sub: 'Unica luce naturale', pos: new THREE.Vector3(-1.60, 2.55, 7.50) },
       { text: 'Bagno', sub: '1,45 × 1,10 m', pos: new THREE.Vector3(-1.20, 2.8, 6.35) },
       { text: 'Lavatoio Oblò', sub: 'Pilozzo 34×56 cm', pos: new THREE.Vector3(3.12, 2.65, 9.04) }
     ];
@@ -1361,7 +1710,7 @@
       return { el, pos: item.pos };
     });
 
-    let showLabels = true;
+    let showLabels = false;
     function updateLabels() {
       for (const item of labelEls) {
         if (!showLabels) { item.el.style.display = 'none'; continue; }
@@ -1375,14 +1724,11 @@
       }
     }
 
-    // =========================================================
-    // 11. VISTE RAPIDE & PRIMA PERSONA
-    // =========================================================
     const presets = {
       plastico:  { pos: [7.5, 7.3, 3.0],  target: [0.5, 1.4, 5.5],  cutE: true,  cutW: false, ceil: false },
-      soggiorno: { pos: [2.25, 1.65, 0.45], target: [0.95, 1.20, 3.6], cutE: false, cutW: false, ceil: true },
-      arco:      { pos: [2.10, 1.65, 2.05], target: [0.85, 1.15, 4.3], cutE: false, cutW: false, ceil: true },
-      cucina:    { pos: [2.05, 1.65, 4.45], target: [0.15, 1.25, 5.85], cutE: false, cutW: false, ceil: true },
+      soggiorno: { pos: [2.32, 1.70, 0.42], target: [0.95, 1.55, 3.8], cutE: false, cutW: false, ceil: true },
+      arco:      { pos: [2.15, 1.68, 2.05], target: [0.90, 1.35, 4.4], cutE: false, cutW: false, ceil: true },
+      cucina:    { pos: [2.05, 1.68, 4.45], target: [0.15, 1.30, 5.85], cutE: false, cutW: false, ceil: true },
       nicchia:   { pos: [0.75, 1.55, 4.46], target: [2.70, 1.45, 4.46], cutE: false, cutW: false, ceil: true },
       soppalco:  { pos: [1.95, 3.05, 8.20], target: [-0.85, 2.25, 8.35], cutE: false, cutW: false, ceil: true },
       bagno:     { pos: [-1.10, 3.05, 7.65], target: [-1.25, 2.40, 6.25], cutE: false, cutW: false, ceil: true },
@@ -1442,7 +1788,7 @@
         const dir = new THREE.Vector3();
         camera.getWorldDirection(dir);
         controls.target.copy(camera.position).add(dir.multiplyScalar(2.5));
-        help.textContent = 'Clicca un mobile per spostarlo • Clicca una porta per aprirla • Trascina per ruotare';
+        help.textContent = 'Usa la scheda 💡 Luci per confrontare gli scenari • Clicca mobili per spostarli • Clicca porte per aprirle';
       }
     }
 
@@ -1495,13 +1841,10 @@
       }
       const x = camera.position.x, z = camera.position.z;
       let floorY = 0.0;
-      if (z >= Z_STAIR_END) {
-        floorY = Y_SOP;
-      } else if (x >= 1.85 && x <= 2.75 && z >= Z_STAIR_START - 0.1 && z < Z_STAIR_END) {
+      if (z >= Z_STAIR_END) floorY = Y_SOP;
+      else if (x >= 1.85 && x <= 2.75 && z >= Z_STAIR_START - 0.1 && z < Z_STAIR_END) {
         floorY = THREE.MathUtils.clamp((z - Z_STAIR_START) / (Z_STAIR_END - Z_STAIR_START), 0, 1) * Y_SOP;
-      } else if (z >= Z_BATH_N && camera.position.y > 2.30) {
-        floorY = Y_SOP;
-      }
+      } else if (z >= Z_BATH_N && camera.position.y > 2.30) floorY = Y_SOP;
       const eyeOffset = floorY > 0.8 ? 1.48 : 1.60;
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, floorY + eyeOffset, 0.14);
     }
@@ -1519,19 +1862,24 @@
     document.getElementById('mode-fp').onclick = () => setMode('fp');
     document.querySelectorAll('[data-view]').forEach(b => { b.onclick = () => goToView(b.dataset.view); });
     document.querySelectorAll('[data-door]').forEach(b => { b.onclick = () => toggleDoor(b.dataset.door); });
+    document.querySelectorAll('[data-env]').forEach(b => { b.onclick = () => setEnvMode(b.dataset.env); });
+    document.querySelectorAll('[data-lpreset]').forEach(b => { b.onclick = () => applyLightPreset(b.dataset.lpreset); });
     document.querySelectorAll('[data-palette]').forEach(b => { b.onclick = () => applyPalette(b.dataset.palette); });
+
+    document.getElementById('floor-parquet').onclick = () => setGroundFloorMode('parquet');
+    document.getElementById('floor-orig').onclick = () => setGroundFloorMode('orig');
+    document.querySelectorAll('[data-wood]').forEach(b => {
+      b.onclick = () => { setGroundFloorMode('parquet'); setColorByKey('pavParquet', b.dataset.wood); };
+    });
+    document.getElementById('btn-reset-colors').onclick = () => {
+      setGroundFloorMode('parquet');
+      applyPalette('originale');
+    };
 
     document.getElementById('chk-ceiling').onchange = e => { ceilingGroup.visible = e.target.checked; };
     document.getElementById('chk-cut-east').onchange = e => { wallEastGroup.visible = !e.target.checked; };
     document.getElementById('chk-cut-west').onchange = e => { wallWestGroup.visible = !e.target.checked; };
     document.getElementById('chk-labels').onchange = e => { showLabels = e.target.checked; };
-    document.getElementById('chk-evening').onchange = e => {
-      const ev = e.target.checked;
-      scene.background.set(ev ? 0x0e1016 : 0x1b1e26);
-      hemiLight.intensity = ev ? 0.42 : 1.15;
-      dirLight.intensity = ev ? 0.25 : 1.20;
-      eveningLights.forEach(l => { l.intensity = ev ? 3.2 : 1.6; });
-    };
 
     document.getElementById('btn-deselect').onclick = deselectFurniture;
     document.getElementById('gizmo-translate').onclick = () => setGizmoMode('translate');
@@ -1575,7 +1923,10 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    goToView('plastico');
+    // Avvio direttamente DENTRO il soggiorno con simulazione luce "Reale (Soggiorno Cieco)" + scenario Bilanciato!
+    setEnvMode('real');
+    applyLightPreset('architettonico');
+    goToView('soggiorno');
 
     // =========================================================
     // 13. LOOP DI RENDERING
