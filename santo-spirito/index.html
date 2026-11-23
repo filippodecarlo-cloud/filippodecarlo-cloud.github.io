@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Soluzione D)</title>
+  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Parquet Trasversale)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -19,7 +19,7 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      width: 315px;
+      width: 318px;
       background: rgba(18, 21, 28, 0.92);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.13);
@@ -32,7 +32,7 @@
       flex-direction: column;
       overflow: hidden;
     }
-    #ui-panel.collapsed { transform: translateX(-335px); }
+    #ui-panel.collapsed { transform: translateX(-338px); }
 
     #toggle-ui {
       position: absolute;
@@ -197,11 +197,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
       font-size: 12px;
     }
-    .color-right {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+    .color-right { display: flex; align-items: center; gap: 5px; }
     .color-row input[type="color"] {
       width: 36px; height: 24px;
       border: 1px solid rgba(255,255,255,0.25);
@@ -293,7 +289,7 @@
     <div class="panel-header">
       <div>
         <h1>P.zza S. Spirito 3 – Firenze</h1>
-        <span>Soluzione D • Interattivo 3D</span>
+        <span>Soluzione D • Parquet Trasversale 19 cm</span>
       </div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
@@ -391,9 +387,23 @@
 
     <!-- TAB 3: COLORI & MATERIALI -->
     <div class="tab-content" id="tab-colors">
+      <div class="section-title">Pavimento Piano Terra</div>
+      <div class="btn-grid" style="margin-bottom:6px;">
+        <button class="btn active" id="floor-parquet">🪵 Parquet 19 cm</button>
+        <button class="btn" id="floor-orig">🧱 Cotto + Rosso</button>
+      </div>
+
+      <div class="section-title">Tonalità Parquet Rapide</div>
+      <div class="btn-grid" style="margin-bottom:6px;">
+        <button class="btn" data-wood="#d8c3a5">Rovere Chiaro</button>
+        <button class="btn" data-wood="#c49a6c">Rovere Naturale</button>
+        <button class="btn" data-wood="#b07b47">Miele Caldo</button>
+        <button class="btn" data-wood="#7d5638">Noce Scuro</button>
+      </div>
+
       <div class="section-title">Stili Rapidi</div>
       <div class="btn-grid" style="margin-bottom:8px;">
-        <button class="btn" data-palette="originale">🏛️ Firenze Orig.</button>
+        <button class="btn" data-palette="originale">🏛️ Progetto Parquet</button>
         <button class="btn" data-palette="chiaro">☀️ Chiaro Caldo</button>
         <button class="btn" data-palette="salvia">🌿 Salvia & Rovere</button>
         <button class="btn" data-palette="minimal">⬜ Bianco Moderno</button>
@@ -460,8 +470,67 @@
     });
 
     // =========================================================
-    // 2. TEXTURE PROCEDURALI NEUTRE (TINTEGGIABILI IN TEMPO REALE)
+    // 2. TEXTURE PROCEDURALI (INCLUSO PARQUET TRASVERSALE 19 CM!)
     // =========================================================
+    // Texture a listoni larghi posati ORIZZONTALMENTE (trasversali rispetto alla casa = asse X!)
+    // 8 file per 512px -> se repeatY = depthZ / 1.52m, ogni listone è largo esattamente 19 cm!
+    function makeTransverseParquetCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#efefef';
+      ctx.fillRect(0, 0, 512, 512);
+
+      const rows = 8;
+      const rh = 512 / rows;
+      // Giunti di testa sfalsati per ogni fila
+      const splits = [110, 340, 210, 430, 80, 290, 165, 385];
+
+      for (let r = 0; r < rows; r++) {
+        const y = r * rh;
+        const sp = splits[r];
+        // Doga sinistra e doga destra con leggera differenza tonale naturale
+        const s1 = 224 + ((r * 17) % 24);
+        const s2 = 222 + (((r + 3) * 19) % 26);
+
+        ctx.fillStyle = `rgb(${s1},${s1},${s1})`;
+        ctx.fillRect(0, y + 1, sp - 1, rh - 2);
+        ctx.fillStyle = `rgb(${s2},${s2},${s2})`;
+        ctx.fillRect(sp + 1, y + 1, 512 - sp - 1, rh - 2);
+
+        // Venature orizzontali lungo la doga (asse X)
+        for (let g = 0; g < 14; g++) {
+          const gy = y + 3 + Math.random() * (rh - 6);
+          ctx.fillStyle = g % 3 === 0 ? 'rgba(90,90,90,0.11)' : 'rgba(130,130,130,0.08)';
+          ctx.fillRect(0, gy, 512, 1.2 + Math.random() * 1.4);
+        }
+        // Sottile nodo/fiammatura naturale
+        ctx.fillStyle = 'rgba(110,110,110,0.09)';
+        ctx.beginPath();
+        ctx.ellipse(((r * 137 + 60) % 440) + 36, y + rh * 0.5, 22, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bisellatura orizzontale (fuga tra listoni larghi)
+        ctx.fillStyle = '#9c9c9c';
+        ctx.fillRect(0, y, 512, 2);
+        // Giunto di testa verticale tra le doghe
+        ctx.fillStyle = '#a8a8a8';
+        ctx.fillRect(sp, y, 2, rh);
+      }
+      return c;
+    }
+
+    const parquetCanvas = makeTransverseParquetCanvas();
+    function makeSizedParquetTex(wX, dZ) {
+      const tex = new THREE.CanvasTexture(parquetCanvas);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      // 8 file = 1.52 m -> 0.19 m (19 cm) per listone! Lunghezza pattern lungo X ~ 2.10 m
+      tex.repeat.set(wX / 2.10, dZ / 1.52);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 8;
+      return tex;
+    }
+
     function makeNeutralTileTex(tilesX, tilesY, groutShade = 165, variation = 16) {
       const c = document.createElement('canvas');
       c.width = 512; c.height = 512;
@@ -482,7 +551,7 @@
       return tex;
     }
 
-    function makeNeutralWoodTex(planks = 6) {
+    function makeNeutralWoodTex(planks = 5) {
       const c = document.createElement('canvas');
       c.width = 512; c.height = 512;
       const ctx = c.getContext('2d');
@@ -495,10 +564,6 @@
         ctx.fillRect(i * pw, 0, pw - 2, 512);
         ctx.fillStyle = '#b4b4b4';
         ctx.fillRect(i * pw, 0, 2, 512);
-        for (let g = 0; g < 18; g++) {
-          ctx.fillStyle = 'rgba(130,130,130,0.12)';
-          ctx.fillRect(i * pw + Math.random() * pw, 0, 1.5, 512);
-        }
       }
       const tex = new THREE.CanvasTexture(c);
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
@@ -552,9 +617,19 @@
 
     const texCotto = makeNeutralTileTex(4, 4, 150, 24); texCotto.repeat.set(3.2, 3.8);
     const texKitchenFloor = makeNeutralTileTex(5, 5, 145, 14); texKitchenFloor.repeat.set(3.2, 4.5);
-    const texParquet = makeNeutralWoodTex(8); texParquet.repeat.set(4, 3);
     const texBathTile = makeNeutralTileTex(5, 5, 190, 10); texBathTile.repeat.set(2, 2);
     const texWood = makeNeutralWoodTex(5);
+
+    // Materiali parquet trasversali con scala UV esatta per ciascuna superficie (listoni ~19 cm ovunque!)
+    const matParquetSogg = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(2.78, 3.44), color: 0xc49a6c, roughness: 0.52 });
+    const matParquetCuc  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.15, 3.60), color: 0xc49a6c, roughness: 0.52 });
+    const matParquetRip  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(4.70, 2.55), color: 0xc49a6c, roughness: 0.52 });
+    const matParquetSop1 = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.87, 2.50), color: 0xc49a6c, roughness: 0.52 });
+    const matParquetSop2 = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(0.83, 1.30), color: 0xc49a6c, roughness: 0.52 });
+
+    // Materiali originali (Cotto + Piastrelle Rosse) per confronto 1-click
+    const matOrigCotto = new THREE.MeshStandardMaterial({ map: texCotto, color: 0xb05f42, roughness: 0.72 });
+    const matOrigRed   = new THREE.MeshStandardMaterial({ map: texKitchenFloor, color: 0x872329, roughness: 0.36 });
 
     const customMaterials = {
       pareti:      new THREE.MeshStandardMaterial({ color: 0xf4f1ea, roughness: 0.9 }),
@@ -562,14 +637,16 @@
       travi:       new THREE.MeshStandardMaterial({ map: texWood, color: 0x3b2416, roughness: 0.68 }),
       infissi:     new THREE.MeshStandardMaterial({ map: texWood, color: 0x452b1b, roughness: 0.62 }),
       scala:       new THREE.MeshStandardMaterial({ map: texWood, color: 0x3a2417, roughness: 0.6 }),
-      pavSogg:     new THREE.MeshStandardMaterial({ map: texCotto, color: 0xb05f42, roughness: 0.72 }),
-      pavCucina:   new THREE.MeshStandardMaterial({ map: texKitchenFloor, color: 0x872329, roughness: 0.36 }),
-      pavSoppalco: new THREE.MeshStandardMaterial({ map: texParquet, color: 0xc2905a, roughness: 0.55 }),
+      pavParquet:  matParquetSogg, // sincronizzato con tutti i parquet
+      pavCotto:    matOrigCotto,
+      pavRosso:    matOrigRed,
       bagnoTile:   new THREE.MeshStandardMaterial({ map: texBathTile, color: 0xefeae0, roughness: 0.35 }),
       cucinaMob:   new THREE.MeshStandardMaterial({ color: 0x7ea4b3, roughness: 0.48 }),
       divano:      new THREE.MeshStandardMaterial({ color: 0x4b709c, roughness: 0.85 }),
       legnoMobili: new THREE.MeshStandardMaterial({ map: texWood, color: 0x8f562e, roughness: 0.52 })
     };
+
+    const allParquetMats = [matParquetSogg, matParquetCuc, matParquetRip, matParquetSop1, matParquetSop2];
 
     const matBrick = new THREE.MeshStandardMaterial({ map: makeBrickTexture(), roughness: 0.85 });
     const matLightWood = new THREE.MeshStandardMaterial({ color: 0xd9c2a3, roughness: 0.62 });
@@ -642,19 +719,28 @@
     const Z_STAIR_START = 5.45;
     const Z_STAIR_END = 8.20;
 
-    // --- PAVIMENTI PIANO TERRA ---
-    addBox(2.78, 0.12, 3.44, 1.37, -0.06, 1.72, customMaterials.pavSogg);
-    addBox(3.15, 0.12, 3.60, 1.18, -0.06, 5.24, customMaterials.pavCucina);
-    addBox(4.70, 0.12, 2.55, 0.40, -0.06, 8.25, customMaterials.pavSogg);
+    // --- PAVIMENTI PIANO TERRA (Di default: Parquet Trasversale a listoni 19 cm!) ---
+    const floorSoggMesh = addBox(2.78, 0.12, 3.44, 1.37, -0.06, 1.72, matParquetSogg);
+    const floorCucMesh  = addBox(3.15, 0.12, 3.60, 1.18, -0.06, 5.24, matParquetCuc);
+    const floorRipMesh  = addBox(4.70, 0.12, 2.55, 0.40, -0.06, 8.25, matParquetRip);
+
+    function setGroundFloorMode(mode) {
+      const isParq = mode === 'parquet';
+      floorSoggMesh.material = isParq ? matParquetSogg : matOrigCotto;
+      floorCucMesh.material  = isParq ? matParquetCuc  : matOrigRed;
+      floorRipMesh.material  = isParq ? matParquetRip  : matOrigCotto;
+      document.getElementById('floor-parquet').classList.toggle('active', isParq);
+      document.getElementById('floor-orig').classList.toggle('active', !isParq);
+    }
 
     // --- SOLAIO SOPPALCO CON VUOTO SCALA ESATTO ---
     addBox(3.87, 0.14, 2.50, -0.015, Y_SOP - 0.07, 8.25, customMaterials.scala);
     addBox(0.83, 0.14, 1.30, 2.335, Y_SOP - 0.07, 8.85, customMaterials.scala);
     addBox(1.57, 0.14, 1.20, -1.165, Y_SOP - 0.07, 6.40, customMaterials.scala);
 
-    // Finiture Soppalco, Bagno e Lavatoio
-    addBox(3.87, 0.02, 2.50, -0.015, Y_SOP + 0.01, 8.25, customMaterials.pavSoppalco);
-    addBox(0.83, 0.02, 1.30, 2.335, Y_SOP + 0.01, 8.85, customMaterials.pavSoppalco);
+    // Finiture Soppalco (Parquet Trasversale 19 cm), Bagno e Lavatoio
+    addBox(3.87, 0.02, 2.50, -0.015, Y_SOP + 0.01, 8.25, matParquetSop1);
+    addBox(0.83, 0.02, 1.30, 2.335, Y_SOP + 0.01, 8.85, matParquetSop2);
     addBox(1.45, 0.025, 1.10, (X_SOP_W + X_BATH_E) / 2, Y_SOP + 0.012, (Z_BATH_N + Z_BATH_S) / 2, customMaterials.bagnoTile);
     addBox(0.58, 0.14, 0.88, 3.04, Y_SOP - 0.07, 9.02, customMaterials.bagnoTile);
 
@@ -712,7 +798,6 @@
 
       addBox(0.24, 0.045, nr * 2 + 0.14, 2.64, ny - 0.02, nz, customMaterials.infissi, nicheGrp);
 
-      // DUE COLONNE DI MATTONCINI ROSSI A VISTA
       addBox(0.19, 0.56, 0.20, 2.66, ny + 0.28, nz - 0.34, matBrick, nicheGrp);
       addBox(0.19, 0.62, 0.20, 2.66, ny + 0.31, nz + 0.28, matBrick, nicheGrp);
 
@@ -785,7 +870,6 @@
       archShape.lineTo(-0.08, H_SOG);
       archShape.lineTo(-0.08, 0);
 
-      // Spalle laterali snelle come da zoom (lascia ampio spazio per tavolo a sx + passaggio a dx)
       const archHole = new THREE.Path();
       const cx = 1.34, r = 1.14, imposta = 1.96;
       archHole.moveTo(cx - r, 0);
@@ -913,7 +997,7 @@
     }
 
     // =========================================================
-    // 6. ARREDI INTERATTIVI (ALLINEATI ALLO ZOOM SOGGIORNO & ARCO)
+    // 6. ARREDI INTERATTIVI
     // =========================================================
     function registerFurniture(id, name, pos, builderFn) {
       const grp = new THREE.Group();
@@ -926,18 +1010,14 @@
       return item;
     }
 
-    // --- SOGGIORNO (come da zoom!) ---
-    // Armadio nell'angolo in alto a sinistra vicino ingresso
     registerFurniture('armadio', 'Armadio Ingresso', [0.32, 0, 0.36], g => {
       addBox(0.60, 2.38, 0.65, 0, 1.19, 0, customMaterials.legnoMobili, g);
       addBox(0.64, 0.07, 0.68, 0, 2.40, 0, customMaterials.legnoMobili, g);
       addBox(0.02, 0.16, 0.03, 0.31, 1.25, -0.04, matChrome, g);
     });
 
-    // Mensola / Mobile retro-divano lungo parete Ovest con 2 lampade alle estremità
     registerFurniture('mensoladivano', 'Mensola Retro-Divano + Lampade', [0.24, 0, 1.98], g => {
       addBox(0.46, 0.78, 2.46, 0, 0.39, 0, customMaterials.legnoMobili, g);
-      // Due lampade da appoggio alle estremità (come i 2 quadrati con X in pianta!)
       [-1.02, 1.02].forEach(lz => {
         const base = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.16, 12), matMetal);
         base.position.set(0, 0.86, lz); g.add(base);
@@ -946,7 +1026,6 @@
       });
     });
 
-    // Divano Letto appoggiato davanti alla mensola
     registerFurniture('divano', 'Divano Letto', [0.80, 0, 1.98], g => {
       addBox(0.72, 0.42, 1.80, 0, 0.21, 0, customMaterials.divano, g);
       addBox(0.16, 0.78, 1.80, -0.28, 0.39, 0, customMaterials.divano, g);
@@ -956,7 +1035,6 @@
       addBox(0.13, 0.32, 0.44, -0.14, 0.56,  0.40, matWhite, g);
     });
 
-    // Tavolino tondo davanti al divano
     registerFurniture('tavolino', 'Tavolino Tondo', [1.48, 0, 1.72], g => {
       const top = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.04, 24), matLightWood);
       top.position.y = 0.46; top.castShadow = true; g.add(top);
@@ -964,20 +1042,16 @@
       leg.position.y = 0.22; g.add(leg);
     });
 
-    // TV a parete sulla destra (parete Est)
     registerFurniture('tvparete', 'TV a Parete', [2.70, 1.32, 1.92], g => {
       addBox(0.04, 0.62, 1.08, 0, 0, 0, matMetal, g);
       addBox(0.05, 0.56, 1.02, -0.005, 0, 0, new THREE.MeshStandardMaterial({ color: 0x111419, roughness: 0.15 }), g);
     });
 
-    // --- TAVOLO STRETTO E LUNGO APPOGGIATO ALLA PARETE SINISTRA SOTTO L'ARCO (1,50 × 0,55 m) ---
     registerFurniture('tavolo', 'Tavolo Stretto Sotto Arco (150×55)', [0.95, 0, 3.55], g => {
-      // Piano stretto e lungo (1,50 m lungo X, 0,55 m lungo Z), lato sinistro appoggiato a X = 0.20 (spalla sinistra arco)
       addBox(1.50, 0.045, 0.55, 0, 0.75, 0, matLightWood, g);
       [[-0.68, -0.22], [0.68, -0.22], [-0.68, 0.22], [0.68, 0.22]].forEach(([dx, dz]) => {
         addBox(0.04, 0.74, 0.04, dx, 0.37, dz, customMaterials.legnoMobili, g);
       });
-      // 4 sedie: 2 sul lato Soggiorno (-Z) e 2 sul lato Cucina (+Z) come nello zoom!
       [
         { x: -0.20, z: -0.35, rot: 0 },
         { x:  0.34, z: -0.35, rot: 0 },
@@ -994,7 +1068,6 @@
       });
     });
 
-    // --- CUCINA ---
     registerFurniture('frigo', 'Colonna Frigo / Dispensa', [0.30, 0, 4.55], g => {
       addBox(0.60, 1.92, 0.68, 0, 0.96, 0, customMaterials.cucinaMob, g);
       addBox(0.62, 1.92, 0.03, 0, 0.96, -0.34, customMaterials.legnoMobili, g);
@@ -1017,7 +1090,6 @@
       addBox(0.16, 0.03, 1.25, -0.23, 1.56, 0.30, customMaterials.legnoMobili, g);
     });
 
-    // --- SOPPALCO ---
     registerFurniture('letto', 'Letto 1 Piazza e Mezzo (150×200)', [-0.62, Y_SOP, 8.73], g => {
       addBox(2.00, 0.26, 1.50, 0, 0.22, 0, matMetal, g);
       addBox(1.94, 0.24, 1.44, 0, 0.42, 0, matWhite, g);
@@ -1159,41 +1231,48 @@
     // =========================================================
     // 9. PERSONALIZZAZIONE COLORI + RIPRISTINO SINGOLO E TOTALE
     // =========================================================
+    function setColorByKey(key, hex) {
+      if (key === 'pavParquet') {
+        allParquetMats.forEach(m => m.color.set(hex));
+      } else if (customMaterials[key]) {
+        customMaterials[key].color.set(hex);
+      }
+      if (colorInputs[key]) colorInputs[key].value = hex;
+    }
+
     const colorConfig = [
-      { key: 'pareti',      label: 'Pareti (Intonaco)',   def: '#f4f1ea' },
-      { key: 'soffitto',    label: 'Soffitto (Tavolato)', def: '#f6f4ef' },
-      { key: 'travi',       label: 'Travi e Travicelli',  def: '#3b2416' },
-      { key: 'infissi',     label: 'Infissi e Porte',     def: '#452b1b' },
-      { key: 'scala',       label: 'Scala e Balaustra',   def: '#3a2417' },
-      { key: 'pavSogg',     label: 'Pavimento Soggiorno', def: '#b05f42' },
-      { key: 'pavCucina',   label: 'Pavimento Cucina',    def: '#872329' },
-      { key: 'pavSoppalco', label: 'Pavimento Soppalco',  def: '#c2905a' },
-      { key: 'bagnoTile',   label: 'Piastrelle Bagno',    def: '#efeae0' },
-      { key: 'cucinaMob',   label: 'Mobili Cucina',       def: '#7ea4b3' },
-      { key: 'divano',      label: 'Divano Letto',        def: '#4b709c' },
-      { key: 'legnoMobili', label: 'Armadio e Legni',     def: '#8f562e' }
+      { key: 'pavParquet',  label: 'Parquet (Listoni 19 cm)', def: '#c49a6c' },
+      { key: 'pareti',      label: 'Pareti (Intonaco)',       def: '#f4f1ea' },
+      { key: 'soffitto',    label: 'Soffitto (Tavolato)',     def: '#f6f4ef' },
+      { key: 'travi',       label: 'Travi e Travicelli',      def: '#3b2416' },
+      { key: 'infissi',     label: 'Infissi e Porte',         def: '#452b1b' },
+      { key: 'scala',       label: 'Scala e Balaustra',       def: '#3a2417' },
+      { key: 'bagnoTile',   label: 'Piastrelle Bagno',        def: '#efeae0' },
+      { key: 'cucinaMob',   label: 'Mobili Cucina',           def: '#7ea4b3' },
+      { key: 'divano',      label: 'Divano Letto',            def: '#4b709c' },
+      { key: 'legnoMobili', label: 'Armadio e Legni',         def: '#8f562e' }
     ];
 
     const palettes = {
       originale: {
-        pareti: '#f4f1ea', soffitto: '#f6f4ef', travi: '#3b2416', infissi: '#452b1b',
-        scala: '#3a2417', pavSogg: '#b05f42', pavCucina: '#872329', pavSoppalco: '#c2905a',
-        bagnoTile: '#efeae0', cucinaMob: '#7ea4b3', divano: '#4b709c', legnoMobili: '#8f562e'
+        pavParquet: '#c49a6c', pareti: '#f4f1ea', soffitto: '#f6f4ef', travi: '#3b2416',
+        infissi: '#452b1b', scala: '#3a2417', bagnoTile: '#efeae0',
+        cucinaMob: '#7ea4b3', divano: '#4b709c', legnoMobili: '#8f562e'
       },
       chiaro: {
-        pareti: '#f7f3eb', soffitto: '#ffffff', travi: '#a88763', infissi: '#e8e2d8',
-        scala: '#9a7a56', pavSogg: '#d6bfa3', pavCucina: '#d6bfa3', pavSoppalco: '#d8be98',
-        bagnoTile: '#f4f0e6', cucinaMob: '#dfd6c7', divano: '#9c8b78', legnoMobili: '#b8946c'
+        pavParquet: '#d8c3a5', pareti: '#f7f3eb', soffitto: '#ffffff', travi: '#a88763',
+        infissi: '#e8e2d8', scala: '#9a7a56', bagnoTile: '#f4f0e6',
+        cucinaMob: '#dfd6c7', divano: '#9c8b78', legnoMobili: '#b8946c'
       },
       salvia: {
-        pareti: '#f2f0e8', soffitto: '#f8f8f5', travi: '#6b533e', infissi: '#5c4b3b',
-        scala: '#6b533e', pavSogg: '#c4a889', pavCucina: '#b8a99a', pavSoppalco: '#cfa97a',
-        bagnoTile: '#e3e8e1', cucinaMob: '#8da38e', divano: '#4f6356', legnoMobili: '#a87e51'
+        pavParquet: '#c79f72', pareti: '#f2f0e8', soffitto: '#f8f8f5', travi: '#6b533e',
+        infissi: '#5c4b3b', scala: '#6b533e', bagnoTile: '#e3e8e1',
+        cucinaMob: '#8da38e', divano: '#4f6356', legnoMobili: '#a87e51'
       },
       minimal: {
-        pareti: '#ffffff', soffitto: '#ffffff', travi: '#eaeae6', infissi: '#f0f0ed',
-        scala: '#d4c3ad', pavSogg: '#d9d6d0', pavCucina: '#d9d6d0', pavSoppalco: '#decbb3',
-        bagnoTile: '#f2f2f2', cucinaMob: '#f5f5f3', divano: '#6c737d', legnoMobili: '#c7b299'
+        pavParquet: '#decbb3', pareti: '#ffffff', soffitto: '#ffffff', travi: '#eaeae6',
+        infissi: '#f0f0ed', scala: '#d4c3ad', bagnoTile: '#f2f2f2',
+        cucinaMob: '#f5f5f3', divano: '#6c737d', legnoMobili: '#c7b299'
       }
     };
 
@@ -1211,11 +1290,8 @@
       `;
       const inp = row.querySelector('input');
       const rst = row.querySelector('.reset-col-btn');
-      inp.addEventListener('input', e => { customMaterials[c.key].color.set(e.target.value); });
-      rst.addEventListener('click', () => {
-        customMaterials[c.key].color.set(c.def);
-        inp.value = c.def;
-      });
+      inp.addEventListener('input', e => setColorByKey(c.key, e.target.value));
+      rst.addEventListener('click', () => setColorByKey(c.key, c.def));
       colorInputs[c.key] = inp;
       colorContainer.appendChild(row);
     });
@@ -1223,13 +1299,21 @@
     function applyPalette(name) {
       const p = palettes[name];
       if (!p) return;
-      Object.entries(p).forEach(([k, hex]) => {
-        customMaterials[k].color.set(hex);
-        if (colorInputs[k]) colorInputs[k].value = hex;
-      });
+      Object.entries(p).forEach(([k, hex]) => setColorByKey(k, hex));
     }
 
-    document.getElementById('btn-reset-colors').onclick = () => applyPalette('originale');
+    document.getElementById('floor-parquet').onclick = () => setGroundFloorMode('parquet');
+    document.getElementById('floor-orig').onclick = () => setGroundFloorMode('orig');
+    document.querySelectorAll('[data-wood]').forEach(b => {
+      b.onclick = () => {
+        setGroundFloorMode('parquet');
+        setColorByKey('pavParquet', b.dataset.wood);
+      };
+    });
+    document.getElementById('btn-reset-colors').onclick = () => {
+      setGroundFloorMode('parquet');
+      applyPalette('originale');
+    };
 
     // =========================================================
     // 10. ILLUMINAZIONE & ETICHETTE 3D
@@ -1260,7 +1344,7 @@
     addLamp(-1.20, 3.45, 6.35, 1.5, 4.0);
 
     const labelsData = [
-      { text: 'Soggiorno', sub: '2,67 × 3,24 m • H 4,01 m', pos: new THREE.Vector3(1.50, 1.4, 1.8) },
+      { text: 'Soggiorno', sub: '2,67 × 3,24 m • Parquet trasv. 19 cm', pos: new THREE.Vector3(1.50, 1.4, 1.8) },
       { text: 'Tavolo Sotto Arco', sub: '150 × 55 cm (a parete)', pos: new THREE.Vector3(0.95, 1.55, 3.55) },
       { text: 'Cucina', sub: 'L 2,75 m • H 3,83 m', pos: new THREE.Vector3(0.95, 1.5, 5.4) },
       { text: 'Scala (Vuoto)', sub: 'L 0,81 m', pos: new THREE.Vector3(2.34, 1.5, 6.8) },
@@ -1296,7 +1380,7 @@
     // =========================================================
     const presets = {
       plastico:  { pos: [7.5, 7.3, 3.0],  target: [0.5, 1.4, 5.5],  cutE: true,  cutW: false, ceil: false },
-      soggiorno: { pos: [2.25, 1.65, 0.45], target: [0.95, 1.35, 3.6], cutE: false, cutW: false, ceil: true },
+      soggiorno: { pos: [2.25, 1.65, 0.45], target: [0.95, 1.20, 3.6], cutE: false, cutW: false, ceil: true },
       arco:      { pos: [2.10, 1.65, 2.05], target: [0.85, 1.15, 4.3], cutE: false, cutW: false, ceil: true },
       cucina:    { pos: [2.05, 1.65, 4.45], target: [0.15, 1.25, 5.85], cutE: false, cutW: false, ceil: true },
       nicchia:   { pos: [0.75, 1.55, 4.46], target: [2.70, 1.45, 4.46], cutE: false, cutW: false, ceil: true },
