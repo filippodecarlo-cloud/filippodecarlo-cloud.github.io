@@ -8,19 +8,9 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #12141a; color: #f0f2f5; user-select: none; }
     #canvas-container { width: 100vw; height: 100vh; position: relative; }
-    #ui-panel {
-      position: absolute; top: 12px; left: 12px; width: 336px;
-      background: rgba(18, 21, 28, 0.93); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.13); border-radius: 14px;
-      box-shadow: 0 14px 36px rgba(0,0,0,0.55); z-index: 10; transition: transform 0.25s ease;
-      max-height: calc(100vh - 24px); display: flex; flex-direction: column; overflow: hidden;
-    }
+    #ui-panel { position: absolute; top: 12px; left: 12px; width: 336px; background: rgba(18,21,28,0.93); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.55); z-index: 10; transition: transform 0.25s ease; max-height: calc(100vh - 24px); display: flex; flex-direction: column; overflow: hidden; }
     #ui-panel.collapsed { transform: translateX(-356px); }
-    #toggle-ui {
-      position: absolute; top: 12px; left: 12px; z-index: 9;
-      background: rgba(18, 21, 28, 0.9); color: #fff; border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px; padding: 8px 13px; cursor: pointer; font-size: 13px; font-weight: 600;
-    }
+    #toggle-ui { position: absolute; top: 12px; left: 12px; z-index: 9; background: rgba(18,21,28,0.9); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 13px; cursor: pointer; font-size: 13px; font-weight: 600; }
     .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px 9px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .panel-header h1 { font-size: 13.5px; font-weight: 700; color: #fff; }
     .panel-header span { font-size: 10.5px; color: #e2a04f; display: block; margin-top: 2px; }
@@ -86,7 +76,7 @@
 
   <div id="ui-panel">
     <div class="panel-header">
-      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Bagno, Parquet & Luci</span></div>
+      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Doccia lato corto dx</span></div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
 
@@ -399,8 +389,8 @@
 
     // --- GEOMETRIA STRUTTURALE ---
     const H_SOG = 4.01, H_CUC = 3.83, Y_SOP = 1.58, T_WALL = 0.16;
-    const X_EST = 2.75, X_SOP_W = -1.95, X_BATH_E = -0.50;
-    const Z_BATH_N = 5.80, Z_BATH_S = 6.90, Z_SOP_N = 7.00, Z_SUD = 9.50;
+    const X_EST = 2.75, X_SOP_W = -1.95;
+    const Z_BATH_N = 5.80, Z_SOP_N = 7.00, Z_SUD = 9.50;
     const Z_STAIR_START = 5.45, Z_STAIR_END = 8.20;
 
     // Pavimenti Piano Terra
@@ -547,7 +537,7 @@
       }
     }
 
-    // --- BAGNO SOPPALCO (SPECIFICHE ARCHITETTO: 1,45 × 1,10 m) ---
+    // --- BAGNO SOPPALCO (1,45 × 1,10 m — RUBINETTO DOCCIA SUL LATO CORTO A DESTRA ENTRANDO!) ---
     {
       const bathH = H_CUC - Y_SOP, tileH = 2.12;
       addBox(0.18, bathH, 0.10, -1.86, Y_SOP + bathH / 2, 6.95, customMaterials.pareti);
@@ -562,9 +552,9 @@
 
       createDoor({ id: 'bagno', label: 'Bagno', w: 0.60, h: 1.88, t: 0.04, pivotPos: [-1.78, Y_SOP, 6.96], panelOffset: [0.30, 0.94, 0], openAngle: -Math.PI * 0.46, mat: customMaterials.infissi });
 
-      // 1) Piatto doccia 110×70 + Box doppia anta SALOON apribile + blocco rubinetteria a parete
+      // 1) Piatto doccia 110×70 + Box doppia anta SALOON apribile
       addBox(0.70, 0.045, 1.10, -0.85, Y_SOP + 0.035, 6.35, matCeramic);
-      addBox(0.09, 0.008, 0.18, -0.66, Y_SOP + 0.06, 6.35, matChrome);
+      addBox(0.18, 0.008, 0.09, -0.85, Y_SOP + 0.06, 6.72, matChrome); // piletta lato corto Sud
       addBox(0.03, 1.92, 0.03, -1.20, Y_SOP + 1.01, 5.82, matChrome);
       addBox(0.03, 1.92, 0.03, -1.20, Y_SOP + 1.01, 6.88, matChrome);
       function createSaloonWing(pivotZ, dirZ, openAngle) {
@@ -580,12 +570,15 @@
       }
       createSaloonWing(5.83, +1, Math.PI * 0.45);
       createSaloonWing(6.87, -1, -Math.PI * 0.45);
-      addBox(0.025, 0.22, 0.12, -0.525, Y_SOP + 1.08, 6.35, matChrome);
-      const mL = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.07, 10), matChrome); mL.rotation.z = Math.PI / 2; mL.position.set(-0.56, Y_SOP + 1.04, 6.35); scene.add(mL);
-      const dK = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.05, 10), matChrome); dK.rotation.z = Math.PI / 2; dK.position.set(-0.55, Y_SOP + 1.14, 6.35); scene.add(dK);
-      const sR = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.85, 10), matChrome); sR.position.set(-0.555, Y_SOP + 1.55, 6.20); scene.add(sR);
-      const sA = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.30, 10), matChrome); sA.rotation.z = Math.PI / 2; sA.position.set(-0.66, Y_SOP + 1.98, 6.35); scene.add(sA);
-      const sH = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.018, 20), matChrome); sH.position.set(-0.79, Y_SOP + 1.96, 6.35); scene.add(sH);
+
+      // Blocco rubinetteria doccia + saliscendi + soffione sul LATO CORTO A DESTRA ENTRANDO (parete Sud Z = 6.88)!
+      addBox(0.12, 0.22, 0.025, -0.85, Y_SOP + 1.08, 6.872, matChrome); // placca incasso
+      const mL = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.07, 10), matChrome); mL.rotation.x = Math.PI / 2; mL.position.set(-0.85, Y_SOP + 1.04, 6.835); scene.add(mL);
+      const dK = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.05, 10), matChrome); dK.rotation.x = Math.PI / 2; dK.position.set(-0.85, Y_SOP + 1.14, 6.845); scene.add(dK);
+      const sR = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.85, 10), matChrome); sR.position.set(-0.67, Y_SOP + 1.55, 6.84); scene.add(sR); // asta saliscendi lato angolo
+      const sD = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.012, 0.14, 10), matChrome); sD.rotation.x = 0.55; sD.position.set(-0.67, Y_SOP + 1.66, 6.79); scene.add(sD); // doccetta
+      const sA = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 10), matChrome); sA.rotation.x = Math.PI / 2; sA.position.set(-0.85, Y_SOP + 1.98, 6.71); scene.add(sA); // braccio soffione
+      const sH = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.018, 20), matChrome); sH.position.set(-0.85, Y_SOP + 1.96, 6.55); scene.add(sH); // soffione a pioggia
 
       // 2) WC compatto max 50 cm (Serie 500 / Alight) + cassetta alta a zaino con tubo cromato
       const wcB = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.40, 18), matCeramic);
@@ -949,7 +942,7 @@
       { text:'Scala (Vuoto)', sub:'L 0,81 m', pos:new THREE.Vector3(2.34, 1.5, 6.8) },
       { text:'Soppalco / Letto 150×200', sub:'4,80 × 2,50 m', pos:new THREE.Vector3(-0.35, 2.55, 8.70) },
       { text:'Finestra Corte + Fan Coil', sub:'Spazio libero 1,00 m', pos:new THREE.Vector3(-1.60, 2.55, 7.50) },
-      { text:'Bagno 1,45×1,10', sub:'Doccia Saloon 110×70 • Twin Ø35 • WC 50', pos:new THREE.Vector3(-1.22, 2.88, 6.35) },
+      { text:'Bagno 1,45×1,10', sub:'Doccia Saloon • Rubinetto lato corto dx', pos:new THREE.Vector3(-1.22, 2.88, 6.35) },
       { text:'Lavatoio Oblò', sub:'Pilozzo 34×56 cm', pos:new THREE.Vector3(3.12, 2.65, 9.04) }
     ].map(item => {
       const el = document.createElement('div'); el.className = 'label-3d';
@@ -966,14 +959,14 @@
     }
 
     const presets = {
-      plastico:  { pos:[7.5,7.3,3.0],   target:[0.5,1.4,5.5],    cutE:true,  cutW:false, ceil:false },
-      bagno:     { pos:[-1.42,2.88,7.62], target:[-1.18,2.38,6.18], cutE:false, cutW:false, ceil:true },
-      soggiorno: { pos:[2.32,1.70,0.42], target:[0.95,1.55,3.8], cutE:false, cutW:false, ceil:true },
-      arco:      { pos:[2.15,1.68,2.05], target:[0.90,1.35,4.4], cutE:false, cutW:false, ceil:true },
-      cucina:    { pos:[2.05,1.68,4.45], target:[0.15,1.30,5.85], cutE:false, cutW:false, ceil:true },
-      nicchia:   { pos:[0.75,1.55,4.46], target:[2.70,1.45,4.46], cutE:false, cutW:false, ceil:true },
-      soppalco:  { pos:[1.95,3.05,8.20], target:[-0.85,2.25,8.35], cutE:false, cutW:false, ceil:true },
-      lavatoio:  { pos:[1.95,3.05,8.75], target:[3.20,2.65,9.04], cutE:false, cutW:false, ceil:true }
+      plastico:  { pos:[7.5,7.3,3.0],     target:[0.5,1.4,5.5],    cutE:true,  cutW:false, ceil:false },
+      bagno:     { pos:[-1.45,2.85,6.05], target:[-0.95,2.45,6.78], cutE:false, cutW:false, ceil:true },
+      soggiorno: { pos:[2.32,1.70,0.42],  target:[0.95,1.55,3.8],  cutE:false, cutW:false, ceil:true },
+      arco:      { pos:[2.15,1.68,2.05],  target:[0.90,1.35,4.4],  cutE:false, cutW:false, ceil:true },
+      cucina:    { pos:[2.05,1.68,4.45],  target:[0.15,1.30,5.85], cutE:false, cutW:false, ceil:true },
+      nicchia:   { pos:[0.75,1.55,4.46],  target:[2.70,1.45,4.46], cutE:false, cutW:false, ceil:true },
+      soppalco:  { pos:[1.95,3.05,8.20],  target:[-0.85,2.25,8.35], cutE:false, cutW:false, ceil:true },
+      lavatoio:  { pos:[1.95,3.05,8.75],  target:[3.20,2.65,9.04], cutE:false, cutW:false, ceil:true }
     };
     let camAnim = null;
     function goToView(key) {
