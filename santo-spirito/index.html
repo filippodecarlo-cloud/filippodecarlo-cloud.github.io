@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Soluzioni Nicchia)</title>
+  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Specchio Reale)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #12141a; color: #f0f2f5; user-select: none; }
@@ -77,7 +77,7 @@
 
   <div id="ui-panel">
     <div class="panel-header">
-      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • 5 Idee per la Nicchia</span></div>
+      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Specchio Riflettente Reale</span></div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
 
@@ -92,10 +92,10 @@
       <div class="highlight-box">
         <div class="section-title" style="margin-top:0; color:#f4a259;">🧱 Soluzioni Nicchia Scavata</div>
         <div class="btn-grid">
-          <button class="btn full active" data-niche="finestra_mensole">🌿 Finestra Luminosa + Mensole</button>
+          <button class="btn full" data-niche="finestra_mensole">🌿 Finestra Luminosa + Mensole</button>
           <button class="btn" data-niche="finestra">☀️ Finta Finestra</button>
           <button class="btn" data-niche="ante">🚪 Ante / Vetrinetta</button>
-          <button class="btn" data-niche="specchio">🪞 Specchio + LED</button>
+          <button class="btn active" data-niche="specchio">🪞 Specchio + LED</button>
           <button class="btn" data-niche="orig">🧱 Originale Scavata</button>
         </div>
         <label class="toggle-row" style="margin-top:4px; padding-bottom:0;">
@@ -219,19 +219,20 @@
     <div></div><button class="pad-btn" data-move="fwd">▲</button><div></div>
     <button class="pad-btn" data-move="left">◀</button><button class="pad-btn" data-move="back">▼</button><button class="pad-btn" data-move="right">▶</button>
   </div>
-  <div id="help-bar">Confronta le 5 soluzioni della nicchia in alto a sinistra • Regola la luce nicchia nella scheda 💡 Luci</div>
+  <div id="help-bar">Ruota la camera davanti allo specchio per vedere il riflesso reale della piantina e della stanza!</div>
 
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { TransformControls } from 'three/addons/controls/TransformControls.js';
+    import { Reflector } from 'three/addons/objects/Reflector.js';
 
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x101319);
 
     const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.06, 65);
-    camera.position.set(0.72, 1.60, 4.55);
+    camera.position.set(0.78, 1.62, 4.78);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -383,11 +384,9 @@
       legnoMobili: new THREE.MeshStandardMaterial({ map: texWood, color: 0x8f562e, roughness: 0.52 })
     };
 
-    // Materiali Nicchia con DoubleSide per visibilità garantita da ogni angolazione
     const matNicheCols = new THREE.MeshStandardMaterial({ map: texBrickPainted, color: 0xf4f1ea, roughness: 0.88 });
     const matNicheOpal = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff3de, emissiveIntensity: 1.35, roughness: 0.25, side: THREE.DoubleSide });
     const matFluted    = new THREE.MeshStandardMaterial({ map: makeFlutedGlassTex(), color: 0xffffff, emissive: 0xffe5bd, emissiveIntensity: 0.70, roughness: 0.28, side: THREE.DoubleSide });
-    const matMirror    = new THREE.MeshStandardMaterial({ color: 0xdbe6ef, metalness: 0.92, roughness: 0.06, side: THREE.DoubleSide });
     const matPlant     = new THREE.MeshStandardMaterial({ color: 0x3f6e42, roughness: 0.8 });
 
     const matLightWood = new THREE.MeshStandardMaterial({ color: 0xd9c2a3, roughness: 0.62 });
@@ -478,7 +477,7 @@
     addBox(0.28, 0.18, 0.04, 2.42, 1.75, 0.02, matWhite);
 
     // =========================================================
-    // PARETE EST CON VERA NICCHIA SCAVATA (30 cm) + 5 SOLUZIONI CORRETTE
+    // PARETE EST CON VERA NICCHIA SCAVATA (30 cm) + 5 SOLUZIONI (SPECCHIO REFLECTOR REALE!)
     // =========================================================
     addBox(T_WALL, H_SOG, 3.40, X_EST + T_WALL / 2, H_SOG / 2, 1.70, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, H_CUC, 3.20, X_EST + T_WALL / 2, H_CUC / 2, 7.05, customMaterials.pareti, wallEastGroup);
@@ -488,7 +487,6 @@
     const nicheVariants = {};
     const nicheCenterZ = 4.46, nicheBaseY = 1.15, nicheR = 0.70;
     {
-      // Muro scavato con apertura semicircolare reale (X: 2.75 -> 3.05, profondo 30 cm!)
       const ws = new THREE.Shape();
       ws.moveTo(3.40, 0); ws.lineTo(5.45, 0); ws.lineTo(5.45, H_CUC); ws.lineTo(3.40, H_CUC); ws.lineTo(3.40, 0);
       const hole = new THREE.Path();
@@ -503,22 +501,20 @@
         customMaterials.pareti
       );
       carvedWall.rotation.y = -Math.PI / 2;
-      carvedWall.position.set(3.05, 0, 0); // occupa X: 2.75 -> 3.05, Z: 3.40 -> 5.45
+      carvedWall.position.set(3.05, 0, 0);
       carvedWall.castShadow = true; carvedWall.receiveShadow = true;
       wallEastGroup.add(carvedWall);
 
-      // Fondo chiuso dietro lo scavo (X = 3.05) + davanzale interno a filo (X: 2.75 -> 3.04)
       addBox(0.06, 1.10, 1.65, 3.08, 1.55, nicheCenterZ, customMaterials.pareti, wallEastGroup);
       addBox(0.29, 0.032, nicheR * 2 + 0.02, 2.895, nicheBaseY - 0.015, nicheCenterZ, customMaterials.infissi, wallEastGroup);
 
-      // LE DUE COLONNE DI MATTONCINI ARRETRATE DENTRO LO SCAVO (X: 2.81 -> 3.035)
-      // Non escono mai fuori dal muro (X >= 2.81) e non compenetrano mai finestra o ante!
+      // Le due colonne incassate dentro lo scavo (X: 2.81 -> 3.035)
       const colsGrp = new THREE.Group();
       addBox(0.225, 0.66, 0.19, 2.922, nicheBaseY + 0.33, nicheCenterZ - 0.35, matNicheCols, colsGrp);
       addBox(0.225, 0.66, 0.19, 2.922, nicheBaseY + 0.33, nicheCenterZ + 0.30, matNicheCols, colsGrp);
       wallEastGroup.add(colsGrp);
 
-      // --- VARIANTE 1: ORIGINALE SCAVATA (Mensole + micro-faretto dentro lo scavo) ---
+      // --- VARIANTE 1: ORIGINALE SCAVATA ---
       const vOrig = new THREE.Group();
       addBox(0.22, 0.025, 0.46, 2.92, nicheBaseY + 0.22, nicheCenterZ - 0.025, customMaterials.infissi, vOrig);
       addBox(0.22, 0.025, 0.46, 2.92, nicheBaseY + 0.45, nicheCenterZ - 0.025, customMaterials.infissi, vOrig);
@@ -529,7 +525,7 @@
       microSpot.position.set(2.89, nicheBaseY + nicheR - 0.015, nicheCenterZ); vOrig.add(microSpot);
       wallEastGroup.add(vOrig); nicheVariants.orig = vOrig;
 
-      // --- VARIANTE 2: FINTA FINESTRA LUMINOSA (Vetro opalino a X = 2.785, davanti alle colonne!) ---
+      // --- VARIANTE 2: FINTA FINESTRA LUMINOSA ---
       const vWin = new THREE.Group();
       const winDisk = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.005, 36, 0, Math.PI), matNicheOpal);
       winDisk.rotation.y = -Math.PI / 2; winDisk.position.set(2.785, nicheBaseY, nicheCenterZ); vWin.add(winDisk);
@@ -542,7 +538,7 @@
       addBox(0.024, 0.024, 1.24, 2.768, nicheBaseY + 0.32, nicheCenterZ, matWhite, vWin);
       wallEastGroup.add(vWin); nicheVariants.finestra = vWin;
 
-      // --- VARIANTE 3: FINESTRA LUMINOSA SUL FONDO + MENSOLE APPOGGIAROBA (Ibrida) ---
+      // --- VARIANTE 3: FINESTRA LUMINOSA SUL FONDO + MENSOLE ---
       const vHyb = new THREE.Group();
       const backOpal = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.004, 36, 0, Math.PI), matNicheOpal);
       backOpal.rotation.y = -Math.PI / 2; backOpal.position.set(3.042, nicheBaseY, nicheCenterZ); vHyb.add(backOpal);
@@ -558,7 +554,7 @@
       cup.position.set(2.90, nicheBaseY + 0.49, nicheCenterZ + 0.04); vHyb.add(cup);
       wallEastGroup.add(vHyb); nicheVariants.finestra_mensole = vHyb;
 
-      // --- VARIANTE 4: CHIUSURA CON ANTE + LUNETTA IN VETRO CANNETTATO (A filo muro X = 2.77) ---
+      // --- VARIANTE 4: ANTE + LUNETTA IN VETRO CANNETTATO ---
       const vAnte = new THREE.Group();
       addBox(0.024, 0.34, 1.32, 2.772, nicheBaseY + 0.17, nicheCenterZ, customMaterials.pareti, vAnte);
       addBox(0.028, 0.34, 0.008, 2.770, nicheBaseY + 0.17, nicheCenterZ - 0.26, matMetal, vAnte);
@@ -577,17 +573,31 @@
       addBox(0.030, 0.026, halfW * 2 + 0.03, 2.772, nicheBaseY + yCut, nicheCenterZ, matLightWood, vAnte);
       wallEastGroup.add(vAnte); nicheVariants.ante = vAnte;
 
-      // --- VARIANTE 5: SPECCHIO AD ARCO + GOLA LED PERIMETRALE + MENSOLA ---
+      // --- VARIANTE 5: VERO SPECCHIO AD ARCO (REFLECTOR IN TEMPO REALE!) + GOLA LED + PIANTINA ---
       const vMir = new THREE.Group();
-      const mirDisk = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.008, 36, 0, Math.PI), matMirror);
-      mirDisk.rotation.y = -Math.PI / 2; mirDisk.position.set(3.040, nicheBaseY, nicheCenterZ); vMir.add(mirDisk);
+      const mirReflector = new Reflector(new THREE.CircleGeometry(nicheR - 0.006, 36, 0, Math.PI), {
+        clipBias: 0.003,
+        textureWidth: 768,
+        textureHeight: 768,
+        color: 0xdde5ea
+      });
+      mirReflector.rotation.y = -Math.PI / 2;
+      mirReflector.position.set(3.038, nicheBaseY, nicheCenterZ);
+      vMir.add(mirReflector);
+
+      // Gola LED perimetrale lungo la curva dell'arco
       const ledHalo = new THREE.Mesh(new THREE.TorusGeometry(nicheR - 0.016, 0.014, 8, 36, Math.PI), matNicheOpal);
       ledHalo.rotation.y = -Math.PI / 2; ledHalo.position.set(2.785, nicheBaseY, nicheCenterZ); vMir.add(ledHalo);
+      // Mensolina rovere + piantina + vasetto in primo piano (che ora si specchiano davvero!)
       addBox(0.26, 0.030, nicheR * 2 - 0.02, 2.90, nicheBaseY + 0.016, nicheCenterZ, matLightWood, vMir);
-      const pot2 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.04, 0.09, 14), matBrass);
-      pot2.position.set(2.90, nicheBaseY + 0.075, nicheCenterZ - 0.02); vMir.add(pot2);
-      const b2 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.07, 1), matPlant);
-      b2.position.set(2.90, nicheBaseY + 0.15, nicheCenterZ - 0.02); vMir.add(b2);
+      const pot2 = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.042, 0.095, 16), matBrass);
+      pot2.position.set(2.88, nicheBaseY + 0.078, nicheCenterZ - 0.02); vMir.add(pot2);
+      const b2 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.08, 1), matPlant);
+      b2.position.set(2.88, nicheBaseY + 0.165, nicheCenterZ - 0.02); vMir.add(b2);
+      const b3 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.055, 1), matPlant);
+      b3.position.set(2.85, nicheBaseY + 0.145, nicheCenterZ + 0.04); vMir.add(b3);
+      const vase = new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.038, 0.15, 14), matCeramic);
+      vase.position.set(2.89, nicheBaseY + 0.105, nicheCenterZ + 0.48); vMir.add(vase);
       wallEastGroup.add(vMir); nicheVariants.specchio = vMir;
     }
 
@@ -599,7 +609,7 @@
         if (mode === 'finestra') { nc.on = true; nc.pct = 100; nc.kelvin = 4200; }
         else if (mode === 'finestra_mensole') { nc.on = true; nc.pct = 90; nc.kelvin = 3800; }
         else if (mode === 'ante') { nc.on = true; nc.pct = 55; nc.kelvin = 2800; }
-        else if (mode === 'specchio') { nc.on = true; nc.pct = 75; nc.kelvin = 3000; }
+        else if (mode === 'specchio') { nc.on = true; nc.pct = 80; nc.kelvin = 3000; }
         else { nc.on = true; nc.pct = 70; nc.kelvin = 2700; }
         if (mixerWidgets.niche) mixerWidgets.niche.syncCard();
       }
@@ -693,7 +703,7 @@
       }
     }
 
-    // --- BAGNO SOPPALCO (1,45 × 1,10 m — RUBINETTO DOCCIA SUL LATO CORTO DESTRO!) ---
+    // --- BAGNO SOPPALCO (CON SPECCHIO RIFLETTENTE REALE ANCHE IN BAGNO!) ---
     {
       const bathH = H_CUC - Y_SOP, tileH = 2.12;
       addBox(0.18, bathH, 0.10, -1.86, Y_SOP + bathH / 2, 6.95, customMaterials.pareti);
@@ -749,7 +759,8 @@
       const wSp = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.17, 10), matChrome); wSp.rotation.z = Math.PI / 2; wSp.position.set(-1.84, Y_SOP + 1.03, 6.62); scene.add(wSp);
       const wLv = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.06, 10), matChrome); wLv.rotation.z = Math.PI / 2; wLv.position.set(-1.90, Y_SOP + 1.03, 6.56); scene.add(wLv);
       const mH = new THREE.Mesh(new THREE.TorusGeometry(0.21, 0.014, 10, 28), matBathMirrorHalo); mH.rotation.y = Math.PI / 2; mH.position.set(-1.93, Y_SOP + 1.44, 6.62); scene.add(mH);
-      const mG = new THREE.Mesh(new THREE.CircleGeometry(0.195, 24), matMirror); mG.rotation.y = Math.PI / 2; mG.position.set(-1.92, Y_SOP + 1.44, 6.62); scene.add(mG);
+      const bathMirror = new Reflector(new THREE.CircleGeometry(0.195, 28), { clipBias: 0.003, textureWidth: 512, textureHeight: 512, color: 0xdce4ea });
+      bathMirror.rotation.y = Math.PI / 2; bathMirror.position.set(-1.92, Y_SOP + 1.44, 6.62); scene.add(bathMirror);
     }
 
     // --- ARREDI INTERATTIVI ---
@@ -948,7 +959,7 @@
       addBox(0.025, 0.012, 0.56, 0.05, 1.61, 5.27, lm, grp);
       const l = new THREE.PointLight(0xffe8c8, 2.0, 3.6, 1.7); l.position.set(0.28, 1.44, 5.95); grp.add(l); lights.push({ light: l, w: 1 });
     }});
-    registerCircuit({ id: 'niche', name: '☀️ Luce Nicchia / Finta Finestra', maxIntensity: 3.0, defaultOn: true, defaultPct: 90, defaultKelvin: 3800, buildFn: (grp, lights, em) => {
+    registerCircuit({ id: 'niche', name: '☀️ Luce Nicchia / Finta Finestra', maxIntensity: 3.0, defaultOn: true, defaultPct: 80, defaultKelvin: 3000, buildFn: (grp, lights, em) => {
       em.push(matNicheOpal, matFluted);
       const l = new THREE.PointLight(0xfff1dc, 2.4, 5.8, 1.45);
       l.position.set(2.42, 1.52, nicheCenterZ); grp.add(l);
@@ -977,7 +988,7 @@
     }
 
     const lightPresets = {
-      architettonico: { uplight:{on:true,pct:80,k:3000,vis:true}, pendant:{on:true,pct:80,k:2700,vis:true}, track:{on:false,pct:60,k:3000,vis:false}, sconces:{on:true,pct:60,k:2800,vis:true}, kitchenled:{on:true,pct:85,k:3200,vis:true}, niche:{on:true,pct:90,k:3800,vis:true}, lamps:{on:true,pct:65,k:2600,vis:true}, upper:{on:true,pct:85,k:3000,vis:true} },
+      architettonico: { uplight:{on:true,pct:80,k:3000,vis:true}, pendant:{on:true,pct:80,k:2700,vis:true}, track:{on:false,pct:60,k:3000,vis:false}, sconces:{on:true,pct:60,k:2800,vis:true}, kitchenled:{on:true,pct:85,k:3200,vis:true}, niche:{on:true,pct:80,k:3000,vis:true}, lamps:{on:true,pct:65,k:2600,vis:true}, upper:{on:true,pct:85,k:3000,vis:true} },
       diurno: { uplight:{on:true,pct:100,k:4200,vis:true}, pendant:{on:true,pct:75,k:3600,vis:true}, track:{on:true,pct:90,k:4000,vis:true}, sconces:{on:true,pct:70,k:3800,vis:true}, kitchenled:{on:true,pct:100,k:4000,vis:true}, niche:{on:true,pct:100,k:4400,vis:true}, lamps:{on:false,pct:40,k:3000,vis:true}, upper:{on:true,pct:95,k:3800,vis:true} },
       cena: { uplight:{on:true,pct:32,k:2600,vis:true}, pendant:{on:true,pct:95,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:35,k:2500,vis:true}, kitchenled:{on:true,pct:40,k:2700,vis:true}, niche:{on:true,pct:65,k:2500,vis:true}, lamps:{on:true,pct:75,k:2400,vis:true}, upper:{on:true,pct:50,k:2600,vis:true} },
       relax: { uplight:{on:true,pct:25,k:2500,vis:true}, pendant:{on:false,pct:30,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:45,k:2400,vis:true}, kitchenled:{on:false,pct:20,k:2700,vis:true}, niche:{on:true,pct:45,k:2400,vis:true}, lamps:{on:true,pct:85,k:2300,vis:true}, upper:{on:true,pct:55,k:2600,vis:true} },
@@ -1118,7 +1129,7 @@
     const labelEls = [
       { text:'Soggiorno (Cieco)', sub:'2,67 × 3,24 m • H 4,01 m', pos:new THREE.Vector3(1.50, 1.4, 1.8) },
       { text:'Tavolo Sotto Arco', sub:'150 × 55 cm', pos:new THREE.Vector3(0.95, 1.55, 3.55) },
-      { text:'Nicchia Scavata (5 Soluzioni)', sub:'Prof. 30 cm • Colonne incassate', pos:new THREE.Vector3(2.85, 1.95, 4.46) },
+      { text:'Nicchia Scavata (5 Soluzioni)', sub:'Prof. 30 cm • Specchio reale', pos:new THREE.Vector3(2.85, 1.95, 4.46) },
       { text:'Scrivania Ribaltabile', sub:'100 × 48 cm su misura', pos:new THREE.Vector3(1.62, 2.55, 7.58) },
       { text:'Soppalco / Letto 150×200', sub:'4,80 × 2,50 m', pos:new THREE.Vector3(-0.35, 2.55, 8.70) },
       { text:'Finestra Corte + Fan Coil', sub:'Spazio libero 1,00 m', pos:new THREE.Vector3(-1.60, 2.55, 7.50) },
@@ -1140,7 +1151,7 @@
 
     const presets = {
       plastico:  { pos:[7.5,7.3,3.0],     target:[0.5,1.4,5.5],    cutE:true,  cutW:false, ceil:false },
-      nicchia:   { pos:[0.72,1.60,4.55],  target:[2.90,1.48,4.46], cutE:false, cutW:false, ceil:true },
+      nicchia:   { pos:[0.78,1.62,4.78],  target:[2.90,1.48,4.46], cutE:false, cutW:false, ceil:true },
       cucina:    { pos:[1.85,1.68,4.05],  target:[0.45,1.32,5.65], cutE:false, cutW:false, ceil:true },
       soggiorno: { pos:[2.32,1.70,0.42],  target:[0.95,1.55,3.8],  cutE:false, cutW:false, ceil:true },
       arco:      { pos:[2.15,1.68,2.05],  target:[0.90,1.35,4.4],  cutE:false, cutW:false, ceil:true },
@@ -1180,7 +1191,7 @@
       } else {
         controls.enabled = true;
         const d = new THREE.Vector3(); camera.getWorldDirection(d); controls.target.copy(camera.position).add(d.multiplyScalar(2.5));
-        help.textContent = 'Confronta le 5 soluzioni della nicchia in alto a sinistra • Regola la luce nicchia nella scheda 💡 Luci';
+        help.textContent = 'Ruota la camera davanti allo specchio per vedere il riflesso reale della piantina e della stanza!';
       }
     }
 
@@ -1273,7 +1284,7 @@
     setEnvMode('real');
     applyLightPreset('architettonico');
     updateNicheBrickPaint(true);
-    setNicheMode('finestra_mensole');
+    setNicheMode('specchio');
     goToView('nicchia');
 
     // --- LOOP DI RENDERING ---
