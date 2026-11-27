@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Scrivania Ribaltabile)</title>
+  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Soluzioni Nicchia)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #12141a; color: #f0f2f5; user-select: none; }
     #canvas-container { width: 100vw; height: 100vh; position: relative; }
-    #ui-panel { position: absolute; top: 12px; left: 12px; width: 336px; background: rgba(18,21,28,0.93); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.55); z-index: 10; transition: transform 0.25s ease; max-height: calc(100vh - 24px); display: flex; flex-direction: column; overflow: hidden; }
-    #ui-panel.collapsed { transform: translateX(-356px); }
+    #ui-panel { position: absolute; top: 12px; left: 12px; width: 340px; background: rgba(18,21,28,0.93); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.55); z-index: 10; transition: transform 0.25s ease; max-height: calc(100vh - 24px); display: flex; flex-direction: column; overflow: hidden; }
+    #ui-panel.collapsed { transform: translateX(-360px); }
     #toggle-ui { position: absolute; top: 12px; left: 12px; z-index: 9; background: rgba(18,21,28,0.9); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 13px; cursor: pointer; font-size: 13px; font-weight: 600; }
     .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px 9px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .panel-header h1 { font-size: 13.5px; font-weight: 700; color: #fff; }
@@ -32,6 +32,7 @@
     .btn.full { grid-column: 1 / -1; }
     .btn.danger { background: rgba(214,69,69,0.22); border-color: rgba(214,69,69,0.45); }
     .btn.danger:hover { background: rgba(214,69,69,0.4); }
+    .highlight-box { background: rgba(244,162,89,0.09); border: 1px solid rgba(244,162,89,0.35); border-radius: 10px; padding: 8px 9px; margin-bottom: 8px; }
     .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 12px; color: #d7dde8; cursor: pointer; }
     .toggle-row input[type="checkbox"] { accent-color: #d97736; width: 15px; height: 15px; cursor: pointer; }
     .light-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.09); border-radius: 9px; padding: 7px 9px; margin-bottom: 6px; }
@@ -76,7 +77,7 @@
 
   <div id="ui-panel">
     <div class="panel-header">
-      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Postazione Soppalco</span></div>
+      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • 5 Idee per la Nicchia</span></div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
 
@@ -88,32 +89,50 @@
     </div>
 
     <div class="tab-content active" id="tab-nav">
+      <div class="highlight-box">
+        <div class="section-title" style="margin-top:0; color:#f4a259;">🧱 Soluzioni Nicchia Scavata</div>
+        <div class="btn-grid">
+          <button class="btn full active" data-niche="finestra_mensole">🌿 Finestra Luminosa + Mensole</button>
+          <button class="btn" data-niche="finestra">☀️ Finta Finestra</button>
+          <button class="btn" data-niche="ante">🚪 Ante / Vetrinetta</button>
+          <button class="btn" data-niche="specchio">🪞 Specchio + LED</button>
+          <button class="btn" data-niche="orig">🧱 Originale Scavata</button>
+        </div>
+        <label class="toggle-row" style="margin-top:4px; padding-bottom:0;">
+          <span>Vernicia colonne color parete</span>
+          <input type="checkbox" id="chk-paint-brick" checked />
+        </label>
+      </div>
+
       <div class="section-title">Modalità</div>
       <div class="btn-grid">
         <button class="btn active" id="mode-orbit">🔄 Orbita 3D</button>
         <button class="btn" id="mode-fp">🚶 Cammina (1ª P.)</button>
       </div>
+
       <div class="section-title">Viste Rapide</div>
       <div class="btn-grid">
         <button class="btn full" data-view="plastico">🏠 Vista Plastico (Sezione)</button>
-        <button class="btn" data-view="scrivania">💻 Scrivania Soppalco</button>
-        <button class="btn" data-view="bagno">🚿 Bagno</button>
+        <button class="btn" data-view="nicchia">🧱 Nicchia (Focus)</button>
+        <button class="btn" data-view="cucina">🍳 Cucina</button>
         <button class="btn" data-view="soggiorno">🛋️ Soggiorno</button>
         <button class="btn" data-view="arco">🍽️ Arco & Tavolo</button>
-        <button class="btn" data-view="cucina">🍳 Cucina</button>
-        <button class="btn" data-view="nicchia">🧱 Nicchia Mattoni</button>
+        <button class="btn" data-view="scrivania">💻 Scrivania Soppalco</button>
         <button class="btn" data-view="soppalco">🛏️ Soppalco / Letto</button>
+        <button class="btn" data-view="bagno">🚿 Bagno</button>
         <button class="btn" data-view="lavatoio">🧺 Lavatoio (Oblò)</button>
       </div>
+
       <div class="section-title">Elementi Apribili (Porte, Saloon, Scrivania)</div>
       <div class="btn-grid">
-        <button class="btn full active" id="btn-desk-fold">💻 Scrivania: Aperta (Clicca per ribaltare)</button>
+        <button class="btn full active" id="btn-desk-fold">💻 Scrivania: Aperta (Ribalta)</button>
         <button class="btn full" id="btn-saloon">🚿 Ante Doccia Saloon (Apri/Chiudi)</button>
         <button class="btn" data-door="ingresso">🚪 Ingresso</button>
         <button class="btn" data-door="bagno">🚪 Porta Bagno</button>
         <button class="btn" data-door="lavatoio">🚪 Lavatoio</button>
         <button class="btn" data-door="ripostiglio">🚪 Ripostiglio</button>
       </div>
+
       <div class="section-title">Visualizzazione</div>
       <label class="toggle-row"><span>Mostra Soffitto e Travi</span><input type="checkbox" id="chk-ceiling" checked /></label>
       <label class="toggle-row"><span>Nascondi Parete Est (Scala)</span><input type="checkbox" id="chk-cut-east" /></label>
@@ -200,7 +219,7 @@
     <div></div><button class="pad-btn" data-move="fwd">▲</button><div></div>
     <button class="pad-btn" data-move="left">◀</button><button class="pad-btn" data-move="back">▼</button><button class="pad-btn" data-move="right">▶</button>
   </div>
-  <div id="help-bar">Usa 💻 Scrivania nel menu per ribaltarla • Clicca mobili per spostarli/nasconderli • Clicca porte per aprirle</div>
+  <div id="help-bar">Confronta le 5 soluzioni della nicchia in alto a sinistra • Regola la luce nicchia nella scheda 💡 Luci</div>
 
   <script type="module">
     import * as THREE from 'three';
@@ -211,8 +230,8 @@
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x101319);
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.06, 65);
-    camera.position.set(0.35, 3.15, 8.65);
+    const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.06, 65);
+    camera.position.set(0.72, 1.60, 4.55);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -225,7 +244,7 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true; controls.dampingFactor = 0.07;
-    controls.target.set(1.60, 2.25, 7.50);
+    controls.target.set(2.90, 1.48, 4.46);
     controls.maxDistance = 22; controls.minDistance = 0.25;
 
     const transformControls = new TransformControls(camera, renderer.domElement);
@@ -295,16 +314,32 @@
       }
       const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t;
     }
-    function makeBrickTexture() {
+    function makeBrickTex(painted = false) {
       const c = document.createElement('canvas'); c.width = 256; c.height = 256;
-      const ctx = c.getContext('2d'); ctx.fillStyle = '#d2c9bd'; ctx.fillRect(0, 0, 256, 256);
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = painted ? '#dcdad5' : '#d2c9bd'; ctx.fillRect(0, 0, 256, 256);
       const rh = 256 / 9, cw = 256 / 3;
       for (let r = 0; r < 9; r++) for (let col = -1; col <= 3; col++) {
-        const s = 152 + Math.floor(Math.random() * 34);
-        ctx.fillStyle = `rgb(${s},${Math.floor(s * 0.43)},${Math.floor(s * 0.30)})`;
+        if (painted) {
+          const s = 238 + Math.floor(Math.random() * 14);
+          ctx.fillStyle = `rgb(${s},${s},${s})`;
+        } else {
+          const s = 152 + Math.floor(Math.random() * 34);
+          ctx.fillStyle = `rgb(${s},${Math.floor(s * 0.43)},${Math.floor(s * 0.30)})`;
+        }
         ctx.fillRect(col * cw + (r % 2) * (cw / 2) + 2, r * rh + 2, cw - 4, rh - 4);
       }
       const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t;
+    }
+    function makeFlutedGlassTex() {
+      const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+      const ctx = c.getContext('2d');
+      for (let x = 0; x < 256; x += 8) {
+        const g = ctx.createLinearGradient(x, 0, x + 8, 0);
+        g.addColorStop(0, '#cfd8de'); g.addColorStop(0.5, '#ffffff'); g.addColorStop(1, '#c3ced6');
+        ctx.fillStyle = g; ctx.fillRect(x, 0, 8, 256);
+      }
+      const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 1); t.colorSpace = THREE.SRGBColorSpace; return t;
     }
     function makeMajolicaTexture() {
       const c = document.createElement('canvas'); c.width = 256; c.height = 64;
@@ -320,6 +355,8 @@
     const texCotto = makeNeutralTileTex(4, 4, 150, 24); texCotto.repeat.set(3.2, 3.8);
     const texKitchenFloor = makeNeutralTileTex(5, 5, 145, 14); texKitchenFloor.repeat.set(3.2, 4.5);
     const texWood = makeNeutralWoodTex(5);
+    const texBrickRed = makeBrickTex(false);
+    const texBrickPainted = makeBrickTex(true);
 
     const matParquetSogg = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(2.78, 3.46), color: 0xc49a6c, roughness: 0.52 });
     const matParquetCuc  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.15, 3.60), color: 0xc49a6c, roughness: 0.52 });
@@ -346,7 +383,13 @@
       legnoMobili: new THREE.MeshStandardMaterial({ map: texWood, color: 0x8f562e, roughness: 0.52 })
     };
 
-    const matBrick = new THREE.MeshStandardMaterial({ map: makeBrickTexture(), roughness: 0.85 });
+    // Materiali Nicchia con DoubleSide per visibilità garantita da ogni angolazione
+    const matNicheCols = new THREE.MeshStandardMaterial({ map: texBrickPainted, color: 0xf4f1ea, roughness: 0.88 });
+    const matNicheOpal = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff3de, emissiveIntensity: 1.35, roughness: 0.25, side: THREE.DoubleSide });
+    const matFluted    = new THREE.MeshStandardMaterial({ map: makeFlutedGlassTex(), color: 0xffffff, emissive: 0xffe5bd, emissiveIntensity: 0.70, roughness: 0.28, side: THREE.DoubleSide });
+    const matMirror    = new THREE.MeshStandardMaterial({ color: 0xdbe6ef, metalness: 0.92, roughness: 0.06, side: THREE.DoubleSide });
+    const matPlant     = new THREE.MeshStandardMaterial({ color: 0x3f6e42, roughness: 0.8 });
+
     const matLightWood = new THREE.MeshStandardMaterial({ color: 0xd9c2a3, roughness: 0.62 });
     const matWhite = new THREE.MeshStandardMaterial({ color: 0xf8f8f6, roughness: 0.42 });
     const matCeramic = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.18, metalness: 0.05 });
@@ -395,7 +438,7 @@
     const Z_BATH_N = 5.80, Z_SOP_N = 7.00, Z_SUD = 9.50;
     const Z_STAIR_START = 5.45, Z_STAIR_END = 8.20;
 
-    // Pavimenti Piano Terra (sfalsamento 1mm per eliminare ogni z-fighting sotto l'arco!)
+    // Pavimenti Piano Terra
     const floorSoggMesh = addBox(2.78, 0.12, 3.46, 1.37, -0.060, 1.73, matParquetSogg);
     const floorCucMesh  = addBox(3.15, 0.12, 3.60, 1.18, -0.061, 5.24, matParquetCuc);
     const floorRipMesh  = addBox(4.70, 0.12, 2.55, 0.40, -0.062, 8.25, matParquetRip);
@@ -434,27 +477,138 @@
     addBox(0.36, 0.73, 0.09, 1.91, 2.825, -0.02, matGlassDark);
     addBox(0.28, 0.18, 0.04, 2.42, 1.75, 0.02, matWhite);
 
-    // Parete Est + Nicchia 2 Colonne Mattoni + Nicchia Lavatoio Oblò
+    // =========================================================
+    // PARETE EST CON VERA NICCHIA SCAVATA (30 cm) + 5 SOLUZIONI CORRETTE
+    // =========================================================
     addBox(T_WALL, H_SOG, 3.40, X_EST + T_WALL / 2, H_SOG / 2, 1.70, customMaterials.pareti, wallEastGroup);
-    addBox(T_WALL, H_CUC, 5.25, X_EST + T_WALL / 2, H_CUC / 2, 6.025, customMaterials.pareti, wallEastGroup);
+    addBox(T_WALL, H_CUC, 3.20, X_EST + T_WALL / 2, H_CUC / 2, 7.05, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, Y_SOP, 0.85, X_EST + T_WALL / 2, Y_SOP / 2, 9.075, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, 0.40, 0.85, X_EST + T_WALL / 2, H_CUC - 0.20, 9.075, customMaterials.pareti, wallEastGroup);
 
-    { // Nicchia 2 colonne mattoncini rossi
-      const nz = 4.46, ny = 1.15, nr = 0.70, g = new THREE.Group();
-      const back = new THREE.Mesh(new THREE.CircleGeometry(nr, 32, 0, Math.PI), customMaterials.pareti);
-      back.rotation.y = -Math.PI / 2; back.position.set(2.742, ny, nz); g.add(back);
-      const rim = new THREE.Mesh(new THREE.TorusGeometry(nr, 0.036, 12, 32, Math.PI), customMaterials.infissi);
-      rim.rotation.y = -Math.PI / 2; rim.position.set(2.69, ny, nz); rim.castShadow = true; g.add(rim);
-      addBox(0.24, 0.045, nr * 2 + 0.14, 2.64, ny - 0.02, nz, customMaterials.infissi, g);
-      addBox(0.19, 0.56, 0.20, 2.66, ny + 0.28, nz - 0.34, matBrick, g);
-      addBox(0.19, 0.62, 0.20, 2.66, ny + 0.31, nz + 0.28, matBrick, g);
-      addBox(0.16, 0.028, 0.44, 2.66, ny + 0.22, nz - 0.03, customMaterials.infissi, g);
-      addBox(0.16, 0.028, 0.44, 2.66, ny + 0.46, nz - 0.03, customMaterials.infissi, g);
-      const bot = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.033, 0.21, 10), new THREE.MeshStandardMaterial({ color: 0x1e4a28, roughness: 0.2 }));
-      bot.position.set(2.65, ny + 0.58, nz - 0.08); g.add(bot);
-      addBox(0.11, 0.16, 0.13, 2.65, ny + 0.09, nz + 0.50, matMetal, g);
-      wallEastGroup.add(g);
+    const nicheVariants = {};
+    const nicheCenterZ = 4.46, nicheBaseY = 1.15, nicheR = 0.70;
+    {
+      // Muro scavato con apertura semicircolare reale (X: 2.75 -> 3.05, profondo 30 cm!)
+      const ws = new THREE.Shape();
+      ws.moveTo(3.40, 0); ws.lineTo(5.45, 0); ws.lineTo(5.45, H_CUC); ws.lineTo(3.40, H_CUC); ws.lineTo(3.40, 0);
+      const hole = new THREE.Path();
+      hole.moveTo(nicheCenterZ - nicheR, nicheBaseY);
+      hole.absarc(nicheCenterZ, nicheBaseY, nicheR, Math.PI, 0, true);
+      hole.lineTo(nicheCenterZ - nicheR, nicheBaseY);
+      hole.closePath();
+      ws.holes.push(hole);
+
+      const carvedWall = new THREE.Mesh(
+        new THREE.ExtrudeGeometry(ws, { depth: 0.30, bevelEnabled: false, curveSegments: 36 }),
+        customMaterials.pareti
+      );
+      carvedWall.rotation.y = -Math.PI / 2;
+      carvedWall.position.set(3.05, 0, 0); // occupa X: 2.75 -> 3.05, Z: 3.40 -> 5.45
+      carvedWall.castShadow = true; carvedWall.receiveShadow = true;
+      wallEastGroup.add(carvedWall);
+
+      // Fondo chiuso dietro lo scavo (X = 3.05) + davanzale interno a filo (X: 2.75 -> 3.04)
+      addBox(0.06, 1.10, 1.65, 3.08, 1.55, nicheCenterZ, customMaterials.pareti, wallEastGroup);
+      addBox(0.29, 0.032, nicheR * 2 + 0.02, 2.895, nicheBaseY - 0.015, nicheCenterZ, customMaterials.infissi, wallEastGroup);
+
+      // LE DUE COLONNE DI MATTONCINI ARRETRATE DENTRO LO SCAVO (X: 2.81 -> 3.035)
+      // Non escono mai fuori dal muro (X >= 2.81) e non compenetrano mai finestra o ante!
+      const colsGrp = new THREE.Group();
+      addBox(0.225, 0.66, 0.19, 2.922, nicheBaseY + 0.33, nicheCenterZ - 0.35, matNicheCols, colsGrp);
+      addBox(0.225, 0.66, 0.19, 2.922, nicheBaseY + 0.33, nicheCenterZ + 0.30, matNicheCols, colsGrp);
+      wallEastGroup.add(colsGrp);
+
+      // --- VARIANTE 1: ORIGINALE SCAVATA (Mensole + micro-faretto dentro lo scavo) ---
+      const vOrig = new THREE.Group();
+      addBox(0.22, 0.025, 0.46, 2.92, nicheBaseY + 0.22, nicheCenterZ - 0.025, customMaterials.infissi, vOrig);
+      addBox(0.22, 0.025, 0.46, 2.92, nicheBaseY + 0.45, nicheCenterZ - 0.025, customMaterials.infissi, vOrig);
+      const bot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.033, 0.20, 10), new THREE.MeshStandardMaterial({ color: 0x1e4a28, roughness: 0.2 }));
+      bot1.position.set(2.91, nicheBaseY + 0.56, nicheCenterZ - 0.08); vOrig.add(bot1);
+      addBox(0.11, 0.14, 0.12, 2.91, nicheBaseY + 0.08, nicheCenterZ + 0.50, matMetal, vOrig);
+      const microSpot = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.018, 12), matNicheOpal);
+      microSpot.position.set(2.89, nicheBaseY + nicheR - 0.015, nicheCenterZ); vOrig.add(microSpot);
+      wallEastGroup.add(vOrig); nicheVariants.orig = vOrig;
+
+      // --- VARIANTE 2: FINTA FINESTRA LUMINOSA (Vetro opalino a X = 2.785, davanti alle colonne!) ---
+      const vWin = new THREE.Group();
+      const winDisk = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.005, 36, 0, Math.PI), matNicheOpal);
+      winDisk.rotation.y = -Math.PI / 2; winDisk.position.set(2.785, nicheBaseY, nicheCenterZ); vWin.add(winDisk);
+      const winRim = new THREE.Mesh(new THREE.TorusGeometry(nicheR - 0.015, 0.020, 10, 36, Math.PI), matWhite);
+      winRim.rotation.y = -Math.PI / 2; winRim.position.set(2.768, nicheBaseY, nicheCenterZ); vWin.add(winRim);
+      addBox(0.028, 0.030, nicheR * 2, 2.768, nicheBaseY + 0.015, nicheCenterZ, matWhite, vWin);
+      addBox(0.024, 0.68, 0.024, 2.768, nicheBaseY + 0.34, nicheCenterZ, matWhite, vWin);
+      addBox(0.024, 0.58, 0.022, 2.768, nicheBaseY + 0.29, nicheCenterZ - 0.35, matWhite, vWin);
+      addBox(0.024, 0.58, 0.022, 2.768, nicheBaseY + 0.29, nicheCenterZ + 0.35, matWhite, vWin);
+      addBox(0.024, 0.024, 1.24, 2.768, nicheBaseY + 0.32, nicheCenterZ, matWhite, vWin);
+      wallEastGroup.add(vWin); nicheVariants.finestra = vWin;
+
+      // --- VARIANTE 3: FINESTRA LUMINOSA SUL FONDO + MENSOLE APPOGGIAROBA (Ibrida) ---
+      const vHyb = new THREE.Group();
+      const backOpal = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.004, 36, 0, Math.PI), matNicheOpal);
+      backOpal.rotation.y = -Math.PI / 2; backOpal.position.set(3.042, nicheBaseY, nicheCenterZ); vHyb.add(backOpal);
+      addBox(0.22, 0.024, 0.46, 2.91, nicheBaseY + 0.22, nicheCenterZ - 0.025, matLightWood, vHyb);
+      addBox(0.22, 0.024, 0.46, 2.91, nicheBaseY + 0.44, nicheCenterZ - 0.025, matLightWood, vHyb);
+      const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.042, 0.09, 14), matCeramic);
+      pot.position.set(2.90, nicheBaseY + 0.05, nicheCenterZ + 0.50); vHyb.add(pot);
+      const bush = new THREE.Mesh(new THREE.DodecahedronGeometry(0.075, 1), matPlant);
+      bush.position.set(2.90, nicheBaseY + 0.13, nicheCenterZ + 0.50); vHyb.add(bush);
+      addBox(0.14, 0.16, 0.035, 2.90, nicheBaseY + 0.31, nicheCenterZ - 0.14, new THREE.MeshStandardMaterial({ color: 0xb85c38 }), vHyb);
+      addBox(0.14, 0.14, 0.035, 2.90, nicheBaseY + 0.30, nicheCenterZ - 0.09, new THREE.MeshStandardMaterial({ color: 0x3a5f7d }), vHyb);
+      const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.028, 0.08, 12), matCeramic);
+      cup.position.set(2.90, nicheBaseY + 0.49, nicheCenterZ + 0.04); vHyb.add(cup);
+      wallEastGroup.add(vHyb); nicheVariants.finestra_mensole = vHyb;
+
+      // --- VARIANTE 4: CHIUSURA CON ANTE + LUNETTA IN VETRO CANNETTATO (A filo muro X = 2.77) ---
+      const vAnte = new THREE.Group();
+      addBox(0.024, 0.34, 1.32, 2.772, nicheBaseY + 0.17, nicheCenterZ, customMaterials.pareti, vAnte);
+      addBox(0.028, 0.34, 0.008, 2.770, nicheBaseY + 0.17, nicheCenterZ - 0.26, matMetal, vAnte);
+      addBox(0.028, 0.34, 0.008, 2.770, nicheBaseY + 0.17, nicheCenterZ + 0.24, matMetal, vAnte);
+      [-0.42, -0.02, 0.40].forEach(dz => {
+        const knob = new THREE.Mesh(new THREE.SphereGeometry(0.015, 10, 10), matBrass);
+        knob.position.set(2.752, nicheBaseY + 0.26, nicheCenterZ + dz); vAnte.add(knob);
+      });
+      const yCut = 0.34, halfW = Math.sqrt(nicheR * nicheR - yCut * yCut);
+      const lunShape = new THREE.Shape();
+      lunShape.moveTo(-halfW, yCut);
+      lunShape.absarc(0, 0, nicheR - 0.008, Math.PI - Math.asin(yCut / nicheR), Math.asin(yCut / nicheR), true);
+      lunShape.closePath();
+      const lunMesh = new THREE.Mesh(new THREE.ShapeGeometry(lunShape, 28), matFluted);
+      lunMesh.rotation.y = -Math.PI / 2; lunMesh.position.set(2.775, nicheBaseY, nicheCenterZ); vAnte.add(lunMesh);
+      addBox(0.030, 0.026, halfW * 2 + 0.03, 2.772, nicheBaseY + yCut, nicheCenterZ, matLightWood, vAnte);
+      wallEastGroup.add(vAnte); nicheVariants.ante = vAnte;
+
+      // --- VARIANTE 5: SPECCHIO AD ARCO + GOLA LED PERIMETRALE + MENSOLA ---
+      const vMir = new THREE.Group();
+      const mirDisk = new THREE.Mesh(new THREE.CircleGeometry(nicheR - 0.008, 36, 0, Math.PI), matMirror);
+      mirDisk.rotation.y = -Math.PI / 2; mirDisk.position.set(3.040, nicheBaseY, nicheCenterZ); vMir.add(mirDisk);
+      const ledHalo = new THREE.Mesh(new THREE.TorusGeometry(nicheR - 0.016, 0.014, 8, 36, Math.PI), matNicheOpal);
+      ledHalo.rotation.y = -Math.PI / 2; ledHalo.position.set(2.785, nicheBaseY, nicheCenterZ); vMir.add(ledHalo);
+      addBox(0.26, 0.030, nicheR * 2 - 0.02, 2.90, nicheBaseY + 0.016, nicheCenterZ, matLightWood, vMir);
+      const pot2 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.04, 0.09, 14), matBrass);
+      pot2.position.set(2.90, nicheBaseY + 0.075, nicheCenterZ - 0.02); vMir.add(pot2);
+      const b2 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.07, 1), matPlant);
+      b2.position.set(2.90, nicheBaseY + 0.15, nicheCenterZ - 0.02); vMir.add(b2);
+      wallEastGroup.add(vMir); nicheVariants.specchio = vMir;
+    }
+
+    function setNicheMode(mode) {
+      Object.entries(nicheVariants).forEach(([k, grp]) => { grp.visible = (k === mode); });
+      document.querySelectorAll('[data-niche]').forEach(b => b.classList.toggle('active', b.dataset.niche === mode));
+      const nc = lightCircuits.niche;
+      if (nc) {
+        if (mode === 'finestra') { nc.on = true; nc.pct = 100; nc.kelvin = 4200; }
+        else if (mode === 'finestra_mensole') { nc.on = true; nc.pct = 90; nc.kelvin = 3800; }
+        else if (mode === 'ante') { nc.on = true; nc.pct = 55; nc.kelvin = 2800; }
+        else if (mode === 'specchio') { nc.on = true; nc.pct = 75; nc.kelvin = 3000; }
+        else { nc.on = true; nc.pct = 70; nc.kelvin = 2700; }
+        if (mixerWidgets.niche) mixerWidgets.niche.syncCard();
+      }
+    }
+
+    function updateNicheBrickPaint(painted) {
+      matNicheCols.map = painted ? texBrickPainted : texBrickRed;
+      matNicheCols.color.copy(painted ? customMaterials.pareti.color : new THREE.Color(0xffffff));
+      matNicheCols.needsUpdate = true;
     }
 
     { // Nicchia Lavatoio con Oblò
@@ -490,7 +644,7 @@
     addBox(T_WALL, H_CUC, 1.66, X_SOP_W - T_WALL / 2, H_CUC / 2, 8.75, customMaterials.pareti, wallWestGroup);
     addBox(4.95, H_CUC, T_WALL, 0.40, H_CUC / 2, Z_SUD + T_WALL / 2, customMaterials.pareti);
 
-    // Arco divisorio a tutto sesto (partenza a Y=0.002 per zero z-fighting)
+    // Arco divisorio a tutto sesto
     {
       const s = new THREE.Shape(); s.moveTo(-0.08, 0); s.lineTo(2.75, 0); s.lineTo(2.75, H_SOG); s.lineTo(-0.08, H_SOG); s.lineTo(-0.08, 0);
       const h = new THREE.Path(); h.moveTo(0.20, 0); h.lineTo(0.20, 1.96); h.absarc(1.34, 1.96, 1.14, Math.PI, 0, true); h.lineTo(2.48, 0); h.closePath();
@@ -571,7 +725,6 @@
       createSaloonWing(5.83, +1, Math.PI * 0.45);
       createSaloonWing(6.87, -1, -Math.PI * 0.45);
 
-      // Blocco rubinetteria doccia sul lato corto a destra entrando (parete Sud Z = 6.88)
       addBox(0.12, 0.22, 0.025, -0.85, Y_SOP + 1.08, 6.872, matChrome);
       const mL = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.07, 10), matChrome); mL.rotation.x = Math.PI / 2; mL.position.set(-0.85, Y_SOP + 1.04, 6.835); scene.add(mL);
       const dK = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.05, 10), matChrome); dK.rotation.x = Math.PI / 2; dK.position.set(-0.85, Y_SOP + 1.14, 6.845); scene.add(dK);
@@ -580,7 +733,6 @@
       const sA = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 10), matChrome); sA.rotation.x = Math.PI / 2; sA.position.set(-0.85, Y_SOP + 1.98, 6.71); scene.add(sA);
       const sH = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.018, 20), matChrome); sH.position.set(-0.85, Y_SOP + 1.96, 6.55); scene.add(sH);
 
-      // WC compatto ≤ 50 cm + cassetta alta a zaino
       const wcB = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.40, 18), matCeramic); wcB.position.set(-1.66, Y_SOP + 0.20, 6.08); wcB.scale.set(1.22, 1, 1.0); scene.add(wcB);
       addBox(0.24, 0.39, 0.32, -1.81, Y_SOP + 0.195, 6.08, matCeramic);
       const wcS = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.03, 18), matCeramic); wcS.position.set(-1.66, Y_SOP + 0.415, 6.08); wcS.scale.set(1.20, 1, 1.0); scene.add(wcS);
@@ -589,7 +741,6 @@
       const fpV = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 1.32, 10), matChrome); fpV.position.set(-1.90, Y_SOP + 0.98, 6.08); scene.add(fpV);
       const fpH = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.12, 10), matChrome); fpH.rotation.z = Math.PI / 2; fpH.position.set(-1.86, Y_SOP + 0.34, 6.08); scene.add(fpH);
 
-      // Lavabo Twin Ø 35 cm + rubinetteria a parete + specchio LED
       const twO = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.17, 26), matCeramic); twO.position.set(-1.75, Y_SOP + 0.85, 6.62); twO.castShadow = true; scene.add(twO);
       const twI = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.11, 0.04, 24), new THREE.MeshStandardMaterial({ color: 0xebe8e2, roughness: 0.25 })); twI.position.set(-1.75, Y_SOP + 0.925, 6.62); scene.add(twI);
       const siV = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.22, 12), matChrome); siV.position.set(-1.75, Y_SOP + 0.66, 6.62); scene.add(siV);
@@ -598,10 +749,10 @@
       const wSp = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.17, 10), matChrome); wSp.rotation.z = Math.PI / 2; wSp.position.set(-1.84, Y_SOP + 1.03, 6.62); scene.add(wSp);
       const wLv = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.06, 10), matChrome); wLv.rotation.z = Math.PI / 2; wLv.position.set(-1.90, Y_SOP + 1.03, 6.56); scene.add(wLv);
       const mH = new THREE.Mesh(new THREE.TorusGeometry(0.21, 0.014, 10, 28), matBathMirrorHalo); mH.rotation.y = Math.PI / 2; mH.position.set(-1.93, Y_SOP + 1.44, 6.62); scene.add(mH);
-      const mG = new THREE.Mesh(new THREE.CircleGeometry(0.195, 24), new THREE.MeshStandardMaterial({ color: 0xcbd9e6, metalness: 0.85, roughness: 0.1 })); mG.rotation.y = Math.PI / 2; mG.position.set(-1.92, Y_SOP + 1.44, 6.62); scene.add(mG);
+      const mG = new THREE.Mesh(new THREE.CircleGeometry(0.195, 24), matMirror); mG.rotation.y = Math.PI / 2; mG.position.set(-1.92, Y_SOP + 1.44, 6.62); scene.add(mG);
     }
 
-    // --- ARREDI INTERATTIVI (INCLUSA SCRIVANIA RIBALTABILE SU MISURA + SEDIA!) ---
+    // --- ARREDI INTERATTIVI ---
     function registerFurniture(id, name, pos, fn) {
       const grp = new THREE.Group(); grp.position.set(...pos); fn(grp);
       const item = { id, name, group: grp, initPos: new THREE.Vector3(...pos), initRotY: 0 };
@@ -609,44 +760,33 @@
       scene.add(grp); furnitureList.push(item); return item;
     }
 
-    // SCRIVANIA RIBALTABILE SU MISURA NELL'ANGOLO SOPPALCO LATO SCALE (100 × 48 cm)
     let deskPivot = null, deskLaptopGrp = null, deskFolded = false, deskCurAngle = 0;
     registerFurniture('scrivania', '💻 Scrivania Ribaltabile (100×48)', [1.88, Y_SOP, 7.58], g => {
-      // Fascia/supporto da falegname ancorata internamente alla balaustra lato scale
       addBox(0.032, 0.14, 1.00, 0.016, 0.69, 0, customMaterials.scala, g);
-      // Cerniere cromate
       [-0.36, 0.36].forEach(cz => addBox(0.03, 0.02, 0.06, 0, 0.74, cz, matChrome, g));
-      // Piano ribaltabile sul pivot Z (ruota verso il basso contro la balaustra!)
       deskPivot = new THREE.Group(); deskPivot.position.set(0, 0.74, 0); g.add(deskPivot);
       addBox(0.48, 0.032, 1.00, -0.24, 0, 0, matLightWood, deskPivot);
-      // Due staffe pieghevoli a scomparsa sotto il piano
       [-0.36, 0.36].forEach(sz => addBox(0.36, 0.025, 0.022, -0.20, -0.028, sz, matMetal, deskPivot));
-      // Computer portatile aperto + mouse (spariscono automaticamente quando il piano si ribalta!)
       deskLaptopGrp = new THREE.Group(); deskLaptopGrp.position.set(-0.24, 0.016, -0.04); deskPivot.add(deskLaptopGrp);
-      addBox(0.24, 0.012, 0.34, 0, 0.006, 0, matChrome, deskLaptopGrp); // base laptop
-      addBox(0.14, 0.004, 0.28, 0.01, 0.013, 0, matMetal, deskLaptopGrp); // tastiera
+      addBox(0.24, 0.012, 0.34, 0, 0.006, 0, matChrome, deskLaptopGrp);
+      addBox(0.14, 0.004, 0.28, 0.01, 0.013, 0, matMetal, deskLaptopGrp);
       const lid = new THREE.Group(); lid.position.set(0.115, 0.012, 0); lid.rotation.z = -0.30; deskLaptopGrp.add(lid);
-      addBox(0.008, 0.22, 0.34, 0, 0.11, 0, matChrome, lid); // scocca schermo
-      addBox(0.004, 0.195, 0.315, -0.004, 0.112, 0, matScreen, lid); // display acceso
-      // Mouse wireless accanto al portatile
+      addBox(0.008, 0.22, 0.34, 0, 0.11, 0, matChrome, lid);
+      addBox(0.004, 0.195, 0.315, -0.004, 0.112, 0, matScreen, lid);
       const mouse = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.024, 0.055), matMetal); mouse.position.set(-0.02, 0.012, 0.28); deskLaptopGrp.add(mouse);
     });
-
     function toggleDeskFold() {
       deskFolded = !deskFolded;
       const b = document.getElementById('btn-desk-fold');
       b.classList.toggle('active', !deskFolded);
-      b.textContent = deskFolded ? '💻 Scrivania: Chiusa (Clicca per aprire)' : '💻 Scrivania: Aperta (Clicca per ribaltare)';
+      b.textContent = deskFolded ? '💻 Scrivania: Chiusa (Apri)' : '💻 Scrivania: Aperta (Ribalta)';
     }
 
-    // SEDIA POSTAZIONE DI LAVORO SOPPALCO (separata e nascondibile/spostabile!)
     registerFurniture('sediascrivania', '🪑 Sedia Scrivania Soppalco', [1.20, Y_SOP, 7.56], g => {
-      // Seduta e schienale rivolti verso +X (verso la scrivania)
       addBox(0.42, 0.045, 0.42, 0, 0.46, 0, customMaterials.divano, g);
       addBox(0.045, 0.34, 0.40, -0.19, 0.65, 0, customMaterials.divano, g);
       [[-0.17,-0.17],[0.17,-0.17],[-0.17,0.17],[0.17,0.17]].forEach(([lx,lz]) => addBox(0.032, 0.45, 0.032, lx, 0.225, lz, matMetal, g));
     });
-
     registerFurniture('armadio', 'Armadio Ingresso', [0.32, 0, 0.36], g => {
       addBox(0.60, 2.38, 0.65, 0, 1.19, 0, customMaterials.legnoMobili, g);
       addBox(0.64, 0.07, 0.68, 0, 2.40, 0, customMaterials.legnoMobili, g);
@@ -753,7 +893,7 @@
       const col = kelvinToColor(c.kelvin), active = c.on && c.fixtureVisible, f = active ? c.pct / 100 : 0;
       c.fixtureGroup.visible = c.fixtureVisible;
       c.lights.forEach(i => { i.light.color.copy(col); i.light.intensity = c.maxIntensity * (i.w ?? 1) * f; });
-      c.emissives.forEach(m => { m.emissive.copy(col); m.emissiveIntensity = active ? 0.35 + f * 1.45 : 0; });
+      c.emissives.forEach(m => { m.emissive.copy(col); m.emissiveIntensity = active ? 0.30 + f * 1.45 : 0; });
     }
 
     registerCircuit({ id: 'uplight', name: '✨ LED Indiretto Soffitto & Arco', maxIntensity: 3.4, defaultOn: true, defaultPct: 80, defaultKelvin: 3000, buildFn: (grp, lights, em) => {
@@ -808,10 +948,11 @@
       addBox(0.025, 0.012, 0.56, 0.05, 1.61, 5.27, lm, grp);
       const l = new THREE.PointLight(0xffe8c8, 2.0, 3.6, 1.7); l.position.set(0.28, 1.44, 5.95); grp.add(l); lights.push({ light: l, w: 1 });
     }});
-    registerCircuit({ id: 'niche', name: '🧱 Luce d\'Accento Nicchia Mattoni', maxIntensity: 1.4, defaultOn: true, defaultPct: 90, defaultKelvin: 2700, buildFn: (grp, lights, em) => {
-      const dm = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffc77d, emissiveIntensity: 1.5 }); em.push(dm);
-      const s = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.02, 10), dm); s.position.set(2.65, 1.81, 4.46); grp.add(s);
-      const l = new THREE.PointLight(0xffc77d, 1.2, 2.6, 1.8); l.position.set(2.50, 1.68, 4.46); grp.add(l); lights.push({ light: l, w: 1 });
+    registerCircuit({ id: 'niche', name: '☀️ Luce Nicchia / Finta Finestra', maxIntensity: 3.0, defaultOn: true, defaultPct: 90, defaultKelvin: 3800, buildFn: (grp, lights, em) => {
+      em.push(matNicheOpal, matFluted);
+      const l = new THREE.PointLight(0xfff1dc, 2.4, 5.8, 1.45);
+      l.position.set(2.42, 1.52, nicheCenterZ); grp.add(l);
+      lights.push({ light: l, w: 1 });
     }});
     registerCircuit({ id: 'lamps', name: '🛋️ Abat-Jour Mensola Divano', maxIntensity: 1.8, defaultOn: true, defaultPct: 70, defaultKelvin: 2500, buildFn: (grp, lights, em) => {
       em.push(matAbatJour);
@@ -836,12 +977,12 @@
     }
 
     const lightPresets = {
-      architettonico: { uplight:{on:true,pct:80,k:3000,vis:true}, pendant:{on:true,pct:80,k:2700,vis:true}, track:{on:false,pct:60,k:3000,vis:false}, sconces:{on:true,pct:60,k:2800,vis:true}, kitchenled:{on:true,pct:85,k:3200,vis:true}, niche:{on:true,pct:90,k:2700,vis:true}, lamps:{on:true,pct:65,k:2600,vis:true}, upper:{on:true,pct:85,k:3000,vis:true} },
-      diurno: { uplight:{on:true,pct:100,k:4200,vis:true}, pendant:{on:true,pct:75,k:3600,vis:true}, track:{on:true,pct:90,k:4000,vis:true}, sconces:{on:true,pct:70,k:3800,vis:true}, kitchenled:{on:true,pct:100,k:4000,vis:true}, niche:{on:true,pct:70,k:3200,vis:true}, lamps:{on:false,pct:40,k:3000,vis:true}, upper:{on:true,pct:95,k:3800,vis:true} },
-      cena: { uplight:{on:true,pct:32,k:2600,vis:true}, pendant:{on:true,pct:95,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:35,k:2500,vis:true}, kitchenled:{on:true,pct:40,k:2700,vis:true}, niche:{on:true,pct:100,k:2500,vis:true}, lamps:{on:true,pct:75,k:2400,vis:true}, upper:{on:true,pct:50,k:2600,vis:true} },
-      relax: { uplight:{on:true,pct:25,k:2500,vis:true}, pendant:{on:false,pct:30,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:45,k:2400,vis:true}, kitchenled:{on:false,pct:20,k:2700,vis:true}, niche:{on:true,pct:80,k:2400,vis:true}, lamps:{on:true,pct:85,k:2300,vis:true}, upper:{on:true,pct:55,k:2600,vis:true} },
-      operativo: { uplight:{on:true,pct:75,k:3500,vis:true}, pendant:{on:true,pct:90,k:3300,vis:true}, track:{on:true,pct:100,k:3500,vis:true}, sconces:{on:false,pct:50,k:3200,vis:true}, kitchenled:{on:true,pct:100,k:3800,vis:true}, niche:{on:true,pct:80,k:3000,vis:true}, lamps:{on:false,pct:40,k:2800,vis:true}, upper:{on:true,pct:95,k:3400,vis:true} },
-      buio: { uplight:{on:false,pct:0,k:3000,vis:true}, pendant:{on:false,pct:0,k:2700,vis:true}, track:{on:false,pct:0,k:3000,vis:true}, sconces:{on:false,pct:0,k:2800,vis:true}, kitchenled:{on:false,pct:0,k:3200,vis:true}, niche:{on:false,pct:0,k:2700,vis:true}, lamps:{on:false,pct:0,k:2600,vis:true}, upper:{on:false,pct:0,k:2800,vis:true} }
+      architettonico: { uplight:{on:true,pct:80,k:3000,vis:true}, pendant:{on:true,pct:80,k:2700,vis:true}, track:{on:false,pct:60,k:3000,vis:false}, sconces:{on:true,pct:60,k:2800,vis:true}, kitchenled:{on:true,pct:85,k:3200,vis:true}, niche:{on:true,pct:90,k:3800,vis:true}, lamps:{on:true,pct:65,k:2600,vis:true}, upper:{on:true,pct:85,k:3000,vis:true} },
+      diurno: { uplight:{on:true,pct:100,k:4200,vis:true}, pendant:{on:true,pct:75,k:3600,vis:true}, track:{on:true,pct:90,k:4000,vis:true}, sconces:{on:true,pct:70,k:3800,vis:true}, kitchenled:{on:true,pct:100,k:4000,vis:true}, niche:{on:true,pct:100,k:4400,vis:true}, lamps:{on:false,pct:40,k:3000,vis:true}, upper:{on:true,pct:95,k:3800,vis:true} },
+      cena: { uplight:{on:true,pct:32,k:2600,vis:true}, pendant:{on:true,pct:95,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:35,k:2500,vis:true}, kitchenled:{on:true,pct:40,k:2700,vis:true}, niche:{on:true,pct:65,k:2500,vis:true}, lamps:{on:true,pct:75,k:2400,vis:true}, upper:{on:true,pct:50,k:2600,vis:true} },
+      relax: { uplight:{on:true,pct:25,k:2500,vis:true}, pendant:{on:false,pct:30,k:2400,vis:true}, track:{on:false,pct:0,k:2700,vis:false}, sconces:{on:true,pct:45,k:2400,vis:true}, kitchenled:{on:false,pct:20,k:2700,vis:true}, niche:{on:true,pct:45,k:2400,vis:true}, lamps:{on:true,pct:85,k:2300,vis:true}, upper:{on:true,pct:55,k:2600,vis:true} },
+      operativo: { uplight:{on:true,pct:75,k:3500,vis:true}, pendant:{on:true,pct:90,k:3300,vis:true}, track:{on:true,pct:100,k:3500,vis:true}, sconces:{on:false,pct:50,k:3200,vis:true}, kitchenled:{on:true,pct:100,k:3800,vis:true}, niche:{on:true,pct:95,k:4000,vis:true}, lamps:{on:false,pct:40,k:2800,vis:true}, upper:{on:true,pct:95,k:3400,vis:true} },
+      buio: { uplight:{on:false,pct:0,k:3000,vis:true}, pendant:{on:false,pct:0,k:2700,vis:true}, track:{on:false,pct:0,k:3000,vis:true}, sconces:{on:false,pct:0,k:2800,vis:true}, kitchenled:{on:false,pct:0,k:3200,vis:true}, niche:{on:false,pct:0,k:3800,vis:true}, lamps:{on:false,pct:0,k:2600,vis:true}, upper:{on:false,pct:0,k:2800,vis:true} }
     };
 
     const mixerEl = document.getElementById('lights-mixer'), mixerWidgets = {};
@@ -938,7 +1079,10 @@
       else if (key === 'bagnoTile') {
         matGresBathFloor.color.set(hex);
         matGresBathWall.color.copy(new THREE.Color(hex).lerp(new THREE.Color(0xffffff), 0.16));
-      } else if (customMaterials[key]) customMaterials[key].color.set(hex);
+      } else if (customMaterials[key]) {
+        customMaterials[key].color.set(hex);
+        if (key === 'pareti' && document.getElementById('chk-paint-brick').checked) matNicheCols.color.set(hex);
+      }
       if (colorInputs[key]) colorInputs[key].value = hex;
     }
     const colorConfig = [
@@ -974,7 +1118,7 @@
     const labelEls = [
       { text:'Soggiorno (Cieco)', sub:'2,67 × 3,24 m • H 4,01 m', pos:new THREE.Vector3(1.50, 1.4, 1.8) },
       { text:'Tavolo Sotto Arco', sub:'150 × 55 cm', pos:new THREE.Vector3(0.95, 1.55, 3.55) },
-      { text:'Cucina', sub:'L 2,75 m • H 3,83 m', pos:new THREE.Vector3(0.95, 1.5, 5.4) },
+      { text:'Nicchia Scavata (5 Soluzioni)', sub:'Prof. 30 cm • Colonne incassate', pos:new THREE.Vector3(2.85, 1.95, 4.46) },
       { text:'Scrivania Ribaltabile', sub:'100 × 48 cm su misura', pos:new THREE.Vector3(1.62, 2.55, 7.58) },
       { text:'Soppalco / Letto 150×200', sub:'4,80 × 2,50 m', pos:new THREE.Vector3(-0.35, 2.55, 8.70) },
       { text:'Finestra Corte + Fan Coil', sub:'Spazio libero 1,00 m', pos:new THREE.Vector3(-1.60, 2.55, 7.50) },
@@ -996,13 +1140,13 @@
 
     const presets = {
       plastico:  { pos:[7.5,7.3,3.0],     target:[0.5,1.4,5.5],    cutE:true,  cutW:false, ceil:false },
-      scrivania: { pos:[0.30,3.15,8.65],  target:[1.65,2.22,7.52], cutE:false, cutW:false, ceil:true },
-      bagno:     { pos:[-1.45,2.85,6.05], target:[-0.95,2.45,6.78], cutE:false, cutW:false, ceil:true },
+      nicchia:   { pos:[0.72,1.60,4.55],  target:[2.90,1.48,4.46], cutE:false, cutW:false, ceil:true },
+      cucina:    { pos:[1.85,1.68,4.05],  target:[0.45,1.32,5.65], cutE:false, cutW:false, ceil:true },
       soggiorno: { pos:[2.32,1.70,0.42],  target:[0.95,1.55,3.8],  cutE:false, cutW:false, ceil:true },
       arco:      { pos:[2.15,1.68,2.05],  target:[0.90,1.35,4.4],  cutE:false, cutW:false, ceil:true },
-      cucina:    { pos:[2.05,1.68,4.45],  target:[0.15,1.30,5.85], cutE:false, cutW:false, ceil:true },
-      nicchia:   { pos:[0.75,1.55,4.46],  target:[2.70,1.45,4.46], cutE:false, cutW:false, ceil:true },
+      scrivania: { pos:[0.30,3.15,8.65],  target:[1.65,2.22,7.52], cutE:false, cutW:false, ceil:true },
       soppalco:  { pos:[1.95,3.05,8.20],  target:[-0.85,2.25,8.35], cutE:false, cutW:false, ceil:true },
+      bagno:     { pos:[-1.45,2.85,6.05], target:[-0.95,2.45,6.78], cutE:false, cutW:false, ceil:true },
       lavatoio:  { pos:[1.95,3.05,8.75],  target:[3.20,2.65,9.04], cutE:false, cutW:false, ceil:true }
     };
     let camAnim = null;
@@ -1036,7 +1180,7 @@
       } else {
         controls.enabled = true;
         const d = new THREE.Vector3(); camera.getWorldDirection(d); controls.target.copy(camera.position).add(d.multiplyScalar(2.5));
-        help.textContent = 'Usa 💻 Scrivania nel menu per ribaltarla • Clicca mobili per spostarli/nasconderli • Clicca porte per aprirle';
+        help.textContent = 'Confronta le 5 soluzioni della nicchia in alto a sinistra • Regola la luce nicchia nella scheda 💡 Luci';
       }
     }
 
@@ -1090,6 +1234,8 @@
       document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === id));
     }
     document.querySelectorAll('.tab-btn').forEach(b => { b.onclick = () => activateTab(b.dataset.tab); });
+    document.querySelectorAll('[data-niche]').forEach(b => { b.onclick = () => setNicheMode(b.dataset.niche); });
+    document.getElementById('chk-paint-brick').onchange = e => updateNicheBrickPaint(e.target.checked);
     document.getElementById('mode-orbit').onclick = () => setMode('orbit');
     document.getElementById('mode-fp').onclick = () => setMode('fp');
     document.querySelectorAll('[data-view]').forEach(b => { b.onclick = () => goToView(b.dataset.view); });
@@ -1126,7 +1272,9 @@
 
     setEnvMode('real');
     applyLightPreset('architettonico');
-    goToView('scrivania');
+    updateNicheBrickPaint(true);
+    setNicheMode('finestra_mensole');
+    goToView('nicchia');
 
     // --- LOOP DI RENDERING ---
     const clock = new THREE.Clock();
@@ -1137,7 +1285,6 @@
         d.currentAngle = THREE.MathUtils.lerp(d.currentAngle, d.isOpen ? d.openAngle : 0, 0.14);
         d.pivot.rotation.y = d.currentAngle;
       }
-      // Animazione fluida ribaltamento piano scrivania
       if (deskPivot) {
         const targetDesk = deskFolded ? Math.PI * 0.48 : 0;
         deskCurAngle = THREE.MathUtils.lerp(deskCurAngle, targetDesk, 0.14);
