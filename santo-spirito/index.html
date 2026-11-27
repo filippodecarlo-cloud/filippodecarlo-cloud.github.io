@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Progetto Completo)</title>
+  <title>Modello 3D Interattivo – P.zza S. Spirito 3 (Scrivania Ribaltabile)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #12141a; color: #f0f2f5; user-select: none; }
@@ -76,7 +76,7 @@
 
   <div id="ui-panel">
     <div class="panel-header">
-      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Doccia lato corto dx</span></div>
+      <div><h1>P.zza S. Spirito 3 – Firenze</h1><span>Soluzione D • Postazione Soppalco</span></div>
       <button class="close-btn" id="close-ui" title="Nascondi pannello">×</button>
     </div>
 
@@ -96,19 +96,21 @@
       <div class="section-title">Viste Rapide</div>
       <div class="btn-grid">
         <button class="btn full" data-view="plastico">🏠 Vista Plastico (Sezione)</button>
-        <button class="btn" data-view="bagno">🚿 Bagno (Nuovo!)</button>
+        <button class="btn" data-view="scrivania">💻 Scrivania Soppalco</button>
+        <button class="btn" data-view="bagno">🚿 Bagno</button>
         <button class="btn" data-view="soggiorno">🛋️ Soggiorno</button>
         <button class="btn" data-view="arco">🍽️ Arco & Tavolo</button>
         <button class="btn" data-view="cucina">🍳 Cucina</button>
         <button class="btn" data-view="nicchia">🧱 Nicchia Mattoni</button>
         <button class="btn" data-view="soppalco">🛏️ Soppalco / Letto</button>
-        <button class="btn full" data-view="lavatoio">🧺 Lavatoio (Oblò)</button>
+        <button class="btn" data-view="lavatoio">🧺 Lavatoio (Oblò)</button>
       </div>
-      <div class="section-title">Porte & Box Doccia (o cliccali nel 3D)</div>
+      <div class="section-title">Elementi Apribili (Porte, Saloon, Scrivania)</div>
       <div class="btn-grid">
+        <button class="btn full active" id="btn-desk-fold">💻 Scrivania: Aperta (Clicca per ribaltare)</button>
+        <button class="btn full" id="btn-saloon">🚿 Ante Doccia Saloon (Apri/Chiudi)</button>
         <button class="btn" data-door="ingresso">🚪 Ingresso</button>
         <button class="btn" data-door="bagno">🚪 Porta Bagno</button>
-        <button class="btn full" id="btn-saloon">🚿 Ante Doccia Saloon (Apri/Chiudi)</button>
         <button class="btn" data-door="lavatoio">🚪 Lavatoio</button>
         <button class="btn" data-door="ripostiglio">🚪 Ripostiglio</button>
       </div>
@@ -147,6 +149,7 @@
           <button class="btn" id="gizmo-rotate">↻ Ruota</button>
           <button class="btn" id="btn-rot90">+90°</button>
         </div>
+        <button class="btn full" id="btn-desk-sel-fold" style="display:none; width:100%; margin-bottom:6px;">⤓ Ribalta / Apri Piano Scrivania</button>
         <label class="toggle-row" style="padding:2px 0 6px;"><span>Sposta anche in altezza (Y)</span><input type="checkbox" id="chk-move-y" /></label>
         <div class="btn-grid">
           <button class="btn" id="btn-hide-sel">👁️ Nascondi</button>
@@ -197,7 +200,7 @@
     <div></div><button class="pad-btn" data-move="fwd">▲</button><div></div>
     <button class="pad-btn" data-move="left">◀</button><button class="pad-btn" data-move="back">▼</button><button class="pad-btn" data-move="right">▶</button>
   </div>
-  <div id="help-bar">Clicca sui vetri della doccia saloon o sulle porte per aprirle • Clicca mobili per spostarli</div>
+  <div id="help-bar">Usa 💻 Scrivania nel menu per ribaltarla • Clicca mobili per spostarli/nasconderli • Clicca porte per aprirle</div>
 
   <script type="module">
     import * as THREE from 'three';
@@ -209,7 +212,7 @@
     scene.background = new THREE.Color(0x101319);
 
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.06, 65);
-    camera.position.set(-1.42, 2.88, 7.62);
+    camera.position.set(0.35, 3.15, 8.65);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -222,7 +225,7 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true; controls.dampingFactor = 0.07;
-    controls.target.set(-1.18, 2.38, 6.18);
+    controls.target.set(1.60, 2.25, 7.50);
     controls.maxDistance = 22; controls.minDistance = 0.25;
 
     const transformControls = new TransformControls(camera, renderer.domElement);
@@ -267,9 +270,7 @@
         ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
       }
       ctx.strokeStyle = 'rgba(170,162,152,0.14)'; ctx.lineWidth = 2;
-      for (let v = 0; v < 5; v++) {
-        ctx.beginPath(); ctx.moveTo(0, v * 110 + 30); ctx.bezierCurveTo(170, v * 110 + 10, 340, v * 110 + 60, 512, v * 110 + 35); ctx.stroke();
-      }
+      for (let v = 0; v < 5; v++) { ctx.beginPath(); ctx.moveTo(0, v * 110 + 30); ctx.bezierCurveTo(170, v * 110 + 10, 340, v * 110 + 60, 512, v * 110 + 35); ctx.stroke(); }
       ctx.fillStyle = 'rgba(145,140,132,0.34)'; ctx.fillRect(0, 0, 512, 1.5); ctx.fillRect(0, 256, 512, 1.5); ctx.fillRect(0, 0, 1.5, 512);
       const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); t.colorSpace = THREE.SRGBColorSpace; return t;
     }
@@ -320,7 +321,7 @@
     const texKitchenFloor = makeNeutralTileTex(5, 5, 145, 14); texKitchenFloor.repeat.set(3.2, 4.5);
     const texWood = makeNeutralWoodTex(5);
 
-    const matParquetSogg = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(2.78, 3.44), color: 0xc49a6c, roughness: 0.52 });
+    const matParquetSogg = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(2.78, 3.46), color: 0xc49a6c, roughness: 0.52 });
     const matParquetCuc  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.15, 3.60), color: 0xc49a6c, roughness: 0.52 });
     const matParquetRip  = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(4.70, 2.55), color: 0xc49a6c, roughness: 0.52 });
     const matParquetSop1 = new THREE.MeshStandardMaterial({ map: makeSizedParquetTex(3.87, 2.50), color: 0xc49a6c, roughness: 0.52 });
@@ -358,6 +359,7 @@
     const matMajolica = new THREE.MeshStandardMaterial({ map: makeMajolicaTexture(), roughness: 0.3 });
     const matBathMirrorHalo = new THREE.MeshStandardMaterial({ color: 0xffe4b8, emissive: 0xffd28a, emissiveIntensity: 0.9 });
     const matAbatJour = new THREE.MeshStandardMaterial({ color: 0xf7e7c8, emissive: 0xffb35c, emissiveIntensity: 0.8, roughness: 0.65 });
+    const matScreen = new THREE.MeshStandardMaterial({ color: 0x6ea8e5, emissive: 0x3f7ec4, emissiveIntensity: 0.75, roughness: 0.2 });
 
     const ceilingGroup = new THREE.Group(), wallEastGroup = new THREE.Group(), wallWestGroup = new THREE.Group();
     const doors = {}, doorList = [], saloonDoors = [], furnitureList = [];
@@ -393,10 +395,10 @@
     const Z_BATH_N = 5.80, Z_SOP_N = 7.00, Z_SUD = 9.50;
     const Z_STAIR_START = 5.45, Z_STAIR_END = 8.20;
 
-    // Pavimenti Piano Terra
-    const floorSoggMesh = addBox(2.78, 0.12, 3.44, 1.37, -0.06, 1.72, matParquetSogg);
-    const floorCucMesh  = addBox(3.15, 0.12, 3.60, 1.18, -0.06, 5.24, matParquetCuc);
-    const floorRipMesh  = addBox(4.70, 0.12, 2.55, 0.40, -0.06, 8.25, matParquetRip);
+    // Pavimenti Piano Terra (sfalsamento 1mm per eliminare ogni z-fighting sotto l'arco!)
+    const floorSoggMesh = addBox(2.78, 0.12, 3.46, 1.37, -0.060, 1.73, matParquetSogg);
+    const floorCucMesh  = addBox(3.15, 0.12, 3.60, 1.18, -0.061, 5.24, matParquetCuc);
+    const floorRipMesh  = addBox(4.70, 0.12, 2.55, 0.40, -0.062, 8.25, matParquetRip);
     function setGroundFloorMode(mode) {
       const isP = mode === 'parquet';
       floorSoggMesh.material = isP ? matParquetSogg : matOrigCotto;
@@ -438,7 +440,7 @@
     addBox(T_WALL, Y_SOP, 0.85, X_EST + T_WALL / 2, Y_SOP / 2, 9.075, customMaterials.pareti, wallEastGroup);
     addBox(T_WALL, 0.40, 0.85, X_EST + T_WALL / 2, H_CUC - 0.20, 9.075, customMaterials.pareti, wallEastGroup);
 
-    { // Nicchia ad arco con 2 colonne di mattoncini rossi
+    { // Nicchia 2 colonne mattoncini rossi
       const nz = 4.46, ny = 1.15, nr = 0.70, g = new THREE.Group();
       const back = new THREE.Mesh(new THREE.CircleGeometry(nr, 32, 0, Math.PI), customMaterials.pareti);
       back.rotation.y = -Math.PI / 2; back.position.set(2.742, ny, nz); g.add(back);
@@ -455,7 +457,7 @@
       wallEastGroup.add(g);
     }
 
-    { // Nicchia Lavatoio con Oblò (0,55 × 0,85 m, pilozzo 34×56 cm)
+    { // Nicchia Lavatoio con Oblò
       const g = new THREE.Group();
       addBox(0.62, 2.25, 0.10, 3.06, Y_SOP + 1.125, 8.60, customMaterials.pareti, g);
       addBox(0.62, 2.25, 0.12, 3.06, Y_SOP + 1.125, 9.48, customMaterials.pareti, g);
@@ -488,13 +490,13 @@
     addBox(T_WALL, H_CUC, 1.66, X_SOP_W - T_WALL / 2, H_CUC / 2, 8.75, customMaterials.pareti, wallWestGroup);
     addBox(4.95, H_CUC, T_WALL, 0.40, H_CUC / 2, Z_SUD + T_WALL / 2, customMaterials.pareti);
 
-    // Arco divisorio a tutto sesto
+    // Arco divisorio a tutto sesto (partenza a Y=0.002 per zero z-fighting)
     {
       const s = new THREE.Shape(); s.moveTo(-0.08, 0); s.lineTo(2.75, 0); s.lineTo(2.75, H_SOG); s.lineTo(-0.08, H_SOG); s.lineTo(-0.08, 0);
       const h = new THREE.Path(); h.moveTo(0.20, 0); h.lineTo(0.20, 1.96); h.absarc(1.34, 1.96, 1.14, Math.PI, 0, true); h.lineTo(2.48, 0); h.closePath();
       s.holes.push(h);
       const m = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: 0.40, bevelEnabled: false, curveSegments: 32 }), customMaterials.pareti);
-      m.position.set(0, 0, 3.24); m.castShadow = true; m.receiveShadow = true; scene.add(m);
+      m.position.set(0, 0.002, 3.24); m.castShadow = true; m.receiveShadow = true; scene.add(m);
       const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 2.40, 12), customMaterials.infissi);
       rod.rotation.z = Math.PI / 2; rod.position.set(1.34, 3.28, 3.20); scene.add(rod);
       addBox(0.24, 0.34, 0.16, 1.34, 3.34, 3.72, matLightWood);
@@ -537,13 +539,12 @@
       }
     }
 
-    // --- BAGNO SOPPALCO (1,45 × 1,10 m — RUBINETTO DOCCIA SUL LATO CORTO A DESTRA ENTRANDO!) ---
+    // --- BAGNO SOPPALCO (1,45 × 1,10 m — RUBINETTO DOCCIA SUL LATO CORTO DESTRO!) ---
     {
       const bathH = H_CUC - Y_SOP, tileH = 2.12;
       addBox(0.18, bathH, 0.10, -1.86, Y_SOP + bathH / 2, 6.95, customMaterials.pareti);
       addBox(0.75, bathH, 0.10, -0.80, Y_SOP + bathH / 2, 6.95, customMaterials.pareti);
       addBox(0.62, 0.37, 0.10, -1.48, Y_SOP + bathH - 0.185, 6.95, customMaterials.pareti);
-      // Rivestimento pareti coordinate Grès Avorio/Crema
       addBox(1.44, tileH, 0.015, -1.225, Y_SOP + tileH / 2, 5.808, matGresBathWall, wallWestGroup);
       addBox(0.015, tileH, 1.10, -1.942, Y_SOP + tileH / 2, 6.35,  matGresBathWall, wallWestGroup);
       addBox(0.015, tileH, 1.10, -0.508, Y_SOP + tileH / 2, 6.35,  matGresBathWall, wallWestGroup);
@@ -552,9 +553,8 @@
 
       createDoor({ id: 'bagno', label: 'Bagno', w: 0.60, h: 1.88, t: 0.04, pivotPos: [-1.78, Y_SOP, 6.96], panelOffset: [0.30, 0.94, 0], openAngle: -Math.PI * 0.46, mat: customMaterials.infissi });
 
-      // 1) Piatto doccia 110×70 + Box doppia anta SALOON apribile
       addBox(0.70, 0.045, 1.10, -0.85, Y_SOP + 0.035, 6.35, matCeramic);
-      addBox(0.18, 0.008, 0.09, -0.85, Y_SOP + 0.06, 6.72, matChrome); // piletta lato corto Sud
+      addBox(0.18, 0.008, 0.09, -0.85, Y_SOP + 0.06, 6.72, matChrome);
       addBox(0.03, 1.92, 0.03, -1.20, Y_SOP + 1.01, 5.82, matChrome);
       addBox(0.03, 1.92, 0.03, -1.20, Y_SOP + 1.01, 6.88, matChrome);
       function createSaloonWing(pivotZ, dirZ, openAngle) {
@@ -571,31 +571,27 @@
       createSaloonWing(5.83, +1, Math.PI * 0.45);
       createSaloonWing(6.87, -1, -Math.PI * 0.45);
 
-      // Blocco rubinetteria doccia + saliscendi + soffione sul LATO CORTO A DESTRA ENTRANDO (parete Sud Z = 6.88)!
-      addBox(0.12, 0.22, 0.025, -0.85, Y_SOP + 1.08, 6.872, matChrome); // placca incasso
+      // Blocco rubinetteria doccia sul lato corto a destra entrando (parete Sud Z = 6.88)
+      addBox(0.12, 0.22, 0.025, -0.85, Y_SOP + 1.08, 6.872, matChrome);
       const mL = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.07, 10), matChrome); mL.rotation.x = Math.PI / 2; mL.position.set(-0.85, Y_SOP + 1.04, 6.835); scene.add(mL);
       const dK = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.05, 10), matChrome); dK.rotation.x = Math.PI / 2; dK.position.set(-0.85, Y_SOP + 1.14, 6.845); scene.add(dK);
-      const sR = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.85, 10), matChrome); sR.position.set(-0.67, Y_SOP + 1.55, 6.84); scene.add(sR); // asta saliscendi lato angolo
-      const sD = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.012, 0.14, 10), matChrome); sD.rotation.x = 0.55; sD.position.set(-0.67, Y_SOP + 1.66, 6.79); scene.add(sD); // doccetta
-      const sA = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 10), matChrome); sA.rotation.x = Math.PI / 2; sA.position.set(-0.85, Y_SOP + 1.98, 6.71); scene.add(sA); // braccio soffione
-      const sH = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.018, 20), matChrome); sH.position.set(-0.85, Y_SOP + 1.96, 6.55); scene.add(sH); // soffione a pioggia
+      const sR = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.85, 10), matChrome); sR.position.set(-0.67, Y_SOP + 1.55, 6.84); scene.add(sR);
+      const sD = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.012, 0.14, 10), matChrome); sD.rotation.x = 0.55; sD.position.set(-0.67, Y_SOP + 1.66, 6.79); scene.add(sD);
+      const sA = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 10), matChrome); sA.rotation.x = Math.PI / 2; sA.position.set(-0.85, Y_SOP + 1.98, 6.71); scene.add(sA);
+      const sH = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.018, 20), matChrome); sH.position.set(-0.85, Y_SOP + 1.96, 6.55); scene.add(sH);
 
-      // 2) WC compatto max 50 cm (Serie 500 / Alight) + cassetta alta a zaino con tubo cromato
-      const wcB = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.40, 18), matCeramic);
-      wcB.position.set(-1.66, Y_SOP + 0.20, 6.08); wcB.scale.set(1.22, 1, 1.0); scene.add(wcB);
+      // WC compatto ≤ 50 cm + cassetta alta a zaino
+      const wcB = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.40, 18), matCeramic); wcB.position.set(-1.66, Y_SOP + 0.20, 6.08); wcB.scale.set(1.22, 1, 1.0); scene.add(wcB);
       addBox(0.24, 0.39, 0.32, -1.81, Y_SOP + 0.195, 6.08, matCeramic);
-      const wcS = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.03, 18), matCeramic);
-      wcS.position.set(-1.66, Y_SOP + 0.415, 6.08); wcS.scale.set(1.20, 1, 1.0); scene.add(wcS);
+      const wcS = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.03, 18), matCeramic); wcS.position.set(-1.66, Y_SOP + 0.415, 6.08); wcS.scale.set(1.20, 1, 1.0); scene.add(wcS);
       addBox(0.15, 0.34, 0.38, -1.86, Y_SOP + 1.78, 6.08, matCeramic);
       addBox(0.02, 0.05, 0.09, -1.78, Y_SOP + 1.80, 6.08, matChrome);
       const fpV = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 1.32, 10), matChrome); fpV.position.set(-1.90, Y_SOP + 0.98, 6.08); scene.add(fpV);
       const fpH = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.12, 10), matChrome); fpH.rotation.z = Math.PI / 2; fpH.position.set(-1.86, Y_SOP + 0.34, 6.08); scene.add(fpH);
 
-      // 3) Lavabo cilindrico Ø 35 cm (tipo Flaminia Twin) + rubinetteria a parete + specchio LED
-      const twO = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.17, 26), matCeramic);
-      twO.position.set(-1.75, Y_SOP + 0.85, 6.62); twO.castShadow = true; scene.add(twO);
-      const twI = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.11, 0.04, 24), new THREE.MeshStandardMaterial({ color: 0xebe8e2, roughness: 0.25 }));
-      twI.position.set(-1.75, Y_SOP + 0.925, 6.62); scene.add(twI);
+      // Lavabo Twin Ø 35 cm + rubinetteria a parete + specchio LED
+      const twO = new THREE.Mesh(new THREE.CylinderGeometry(0.175, 0.175, 0.17, 26), matCeramic); twO.position.set(-1.75, Y_SOP + 0.85, 6.62); twO.castShadow = true; scene.add(twO);
+      const twI = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.11, 0.04, 24), new THREE.MeshStandardMaterial({ color: 0xebe8e2, roughness: 0.25 })); twI.position.set(-1.75, Y_SOP + 0.925, 6.62); scene.add(twI);
       const siV = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.22, 12), matChrome); siV.position.set(-1.75, Y_SOP + 0.66, 6.62); scene.add(siV);
       const siH = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.20, 12), matChrome); siH.rotation.z = Math.PI / 2; siH.position.set(-1.84, Y_SOP + 0.58, 6.62); scene.add(siH);
       addBox(0.016, 0.09, 0.18, -1.932, Y_SOP + 1.03, 6.62, matChrome);
@@ -605,13 +601,52 @@
       const mG = new THREE.Mesh(new THREE.CircleGeometry(0.195, 24), new THREE.MeshStandardMaterial({ color: 0xcbd9e6, metalness: 0.85, roughness: 0.1 })); mG.rotation.y = Math.PI / 2; mG.position.set(-1.92, Y_SOP + 1.44, 6.62); scene.add(mG);
     }
 
-    // --- ARREDI INTERATTIVI ---
+    // --- ARREDI INTERATTIVI (INCLUSA SCRIVANIA RIBALTABILE SU MISURA + SEDIA!) ---
     function registerFurniture(id, name, pos, fn) {
       const grp = new THREE.Group(); grp.position.set(...pos); fn(grp);
       const item = { id, name, group: grp, initPos: new THREE.Vector3(...pos), initRotY: 0 };
       grp.traverse(ch => { if (ch.isMesh) ch.userData.furnitureItem = item; });
       scene.add(grp); furnitureList.push(item); return item;
     }
+
+    // SCRIVANIA RIBALTABILE SU MISURA NELL'ANGOLO SOPPALCO LATO SCALE (100 × 48 cm)
+    let deskPivot = null, deskLaptopGrp = null, deskFolded = false, deskCurAngle = 0;
+    registerFurniture('scrivania', '💻 Scrivania Ribaltabile (100×48)', [1.88, Y_SOP, 7.58], g => {
+      // Fascia/supporto da falegname ancorata internamente alla balaustra lato scale
+      addBox(0.032, 0.14, 1.00, 0.016, 0.69, 0, customMaterials.scala, g);
+      // Cerniere cromate
+      [-0.36, 0.36].forEach(cz => addBox(0.03, 0.02, 0.06, 0, 0.74, cz, matChrome, g));
+      // Piano ribaltabile sul pivot Z (ruota verso il basso contro la balaustra!)
+      deskPivot = new THREE.Group(); deskPivot.position.set(0, 0.74, 0); g.add(deskPivot);
+      addBox(0.48, 0.032, 1.00, -0.24, 0, 0, matLightWood, deskPivot);
+      // Due staffe pieghevoli a scomparsa sotto il piano
+      [-0.36, 0.36].forEach(sz => addBox(0.36, 0.025, 0.022, -0.20, -0.028, sz, matMetal, deskPivot));
+      // Computer portatile aperto + mouse (spariscono automaticamente quando il piano si ribalta!)
+      deskLaptopGrp = new THREE.Group(); deskLaptopGrp.position.set(-0.24, 0.016, -0.04); deskPivot.add(deskLaptopGrp);
+      addBox(0.24, 0.012, 0.34, 0, 0.006, 0, matChrome, deskLaptopGrp); // base laptop
+      addBox(0.14, 0.004, 0.28, 0.01, 0.013, 0, matMetal, deskLaptopGrp); // tastiera
+      const lid = new THREE.Group(); lid.position.set(0.115, 0.012, 0); lid.rotation.z = -0.30; deskLaptopGrp.add(lid);
+      addBox(0.008, 0.22, 0.34, 0, 0.11, 0, matChrome, lid); // scocca schermo
+      addBox(0.004, 0.195, 0.315, -0.004, 0.112, 0, matScreen, lid); // display acceso
+      // Mouse wireless accanto al portatile
+      const mouse = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.024, 0.055), matMetal); mouse.position.set(-0.02, 0.012, 0.28); deskLaptopGrp.add(mouse);
+    });
+
+    function toggleDeskFold() {
+      deskFolded = !deskFolded;
+      const b = document.getElementById('btn-desk-fold');
+      b.classList.toggle('active', !deskFolded);
+      b.textContent = deskFolded ? '💻 Scrivania: Chiusa (Clicca per aprire)' : '💻 Scrivania: Aperta (Clicca per ribaltare)';
+    }
+
+    // SEDIA POSTAZIONE DI LAVORO SOPPALCO (separata e nascondibile/spostabile!)
+    registerFurniture('sediascrivania', '🪑 Sedia Scrivania Soppalco', [1.20, Y_SOP, 7.56], g => {
+      // Seduta e schienale rivolti verso +X (verso la scrivania)
+      addBox(0.42, 0.045, 0.42, 0, 0.46, 0, customMaterials.divano, g);
+      addBox(0.045, 0.34, 0.40, -0.19, 0.65, 0, customMaterials.divano, g);
+      [[-0.17,-0.17],[0.17,-0.17],[-0.17,0.17],[0.17,0.17]].forEach(([lx,lz]) => addBox(0.032, 0.45, 0.032, lx, 0.225, lz, matMetal, g));
+    });
+
     registerFurniture('armadio', 'Armadio Ingresso', [0.32, 0, 0.36], g => {
       addBox(0.60, 2.38, 0.65, 0, 1.19, 0, customMaterials.legnoMobili, g);
       addBox(0.64, 0.07, 0.68, 0, 2.40, 0, customMaterials.legnoMobili, g);
@@ -782,13 +817,13 @@
       em.push(matAbatJour);
       const l = new THREE.PointLight(0xffb563, 1.5, 4.8, 1.6); l.position.set(0.50, 1.22, 1.98); grp.add(l); lights.push({ light: l, w: 1 });
     }});
-    registerCircuit({ id: 'upper', name: '🛏️ Scala, Soppalco & Bagno', maxIntensity: 2.4, defaultOn: true, defaultPct: 85, defaultKelvin: 3000, buildFn: (grp, lights, em) => {
+    registerCircuit({ id: 'upper', name: '🛏️ Scala, Soppalco & Bagno', maxIntensity: 2.5, defaultOn: true, defaultPct: 85, defaultKelvin: 3000, buildFn: (grp, lights, em) => {
       const sm = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffcf8f, emissiveIntensity: 1.4 }); em.push(sm, matBathMirrorHalo);
       for (let i = 0; i < 5; i++) addBox(0.015, 0.035, 0.075, 2.735, 0.25 + (i / 4.5) * Y_SOP, Z_STAIR_START + 0.35 + i * 0.55, sm, grp);
       addBox(0.07, 0.16, 0.24, -1.91, Y_SOP + 1.35, 8.73, matWhite, grp);
       addBox(0.05, 0.015, 0.22, -1.91, Y_SOP + 1.435, 8.73, sm, grp);
       const bp = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.03, 16), sm); bp.position.set(-1.18, H_CUC - 0.14, 6.35); grp.add(bp);
-      const lS = new THREE.PointLight(0xffcf8f, 2.0, 6.5, 1.5); lS.position.set(0.15, Y_SOP + 1.75, 8.35); grp.add(lS);
+      const lS = new THREE.PointLight(0xffcf8f, 2.2, 6.8, 1.45); lS.position.set(0.55, Y_SOP + 1.75, 8.10); grp.add(lS);
       const lB = new THREE.PointLight(0xfff1dc, 2.1, 4.2, 1.5); lB.position.set(-1.25, Y_SOP + 1.82, 6.35); grp.add(lB);
       lights.push({ light: lS, w: 1 }, { light: lB, w: 0.95 });
     }});
@@ -848,6 +883,7 @@
       selectionBox.setFromObject(item.group); selectionBox.visible = true;
       document.getElementById('sel-panel').style.display = 'block';
       document.getElementById('sel-title').textContent = item.name;
+      document.getElementById('btn-desk-sel-fold').style.display = item.id === 'scrivania' ? 'block' : 'none';
       refreshFurnitureListUI();
     }
     function deselectFurniture() {
@@ -914,7 +950,7 @@
       { key: 'infissi', label: 'Infissi e Porte', def: '#452b1b' },
       { key: 'scala', label: 'Scala e Balaustra', def: '#3a2417' },
       { key: 'cucinaMob', label: 'Mobili Cucina', def: '#7ea4b3' },
-      { key: 'divano', label: 'Divano Letto', def: '#4b709c' },
+      { key: 'divano', label: 'Divano & Sedia', def: '#4b709c' },
       { key: 'legnoMobili', label: 'Armadio e Legni', def: '#8f562e' }
     ];
     const palettes = {
@@ -939,7 +975,7 @@
       { text:'Soggiorno (Cieco)', sub:'2,67 × 3,24 m • H 4,01 m', pos:new THREE.Vector3(1.50, 1.4, 1.8) },
       { text:'Tavolo Sotto Arco', sub:'150 × 55 cm', pos:new THREE.Vector3(0.95, 1.55, 3.55) },
       { text:'Cucina', sub:'L 2,75 m • H 3,83 m', pos:new THREE.Vector3(0.95, 1.5, 5.4) },
-      { text:'Scala (Vuoto)', sub:'L 0,81 m', pos:new THREE.Vector3(2.34, 1.5, 6.8) },
+      { text:'Scrivania Ribaltabile', sub:'100 × 48 cm su misura', pos:new THREE.Vector3(1.62, 2.55, 7.58) },
       { text:'Soppalco / Letto 150×200', sub:'4,80 × 2,50 m', pos:new THREE.Vector3(-0.35, 2.55, 8.70) },
       { text:'Finestra Corte + Fan Coil', sub:'Spazio libero 1,00 m', pos:new THREE.Vector3(-1.60, 2.55, 7.50) },
       { text:'Bagno 1,45×1,10', sub:'Doccia Saloon • Rubinetto lato corto dx', pos:new THREE.Vector3(-1.22, 2.88, 6.35) },
@@ -960,6 +996,7 @@
 
     const presets = {
       plastico:  { pos:[7.5,7.3,3.0],     target:[0.5,1.4,5.5],    cutE:true,  cutW:false, ceil:false },
+      scrivania: { pos:[0.30,3.15,8.65],  target:[1.65,2.22,7.52], cutE:false, cutW:false, ceil:true },
       bagno:     { pos:[-1.45,2.85,6.05], target:[-0.95,2.45,6.78], cutE:false, cutW:false, ceil:true },
       soggiorno: { pos:[2.32,1.70,0.42],  target:[0.95,1.55,3.8],  cutE:false, cutW:false, ceil:true },
       arco:      { pos:[2.15,1.68,2.05],  target:[0.90,1.35,4.4],  cutE:false, cutW:false, ceil:true },
@@ -999,7 +1036,7 @@
       } else {
         controls.enabled = true;
         const d = new THREE.Vector3(); camera.getWorldDirection(d); controls.target.copy(camera.position).add(d.multiplyScalar(2.5));
-        help.textContent = 'Clicca sui vetri della doccia saloon o sulle porte per aprirle • Clicca mobili per spostarli';
+        help.textContent = 'Usa 💻 Scrivania nel menu per ribaltarla • Clicca mobili per spostarli/nasconderli • Clicca porte per aprirle';
       }
     }
 
@@ -1058,6 +1095,8 @@
     document.querySelectorAll('[data-view]').forEach(b => { b.onclick = () => goToView(b.dataset.view); });
     document.querySelectorAll('[data-door]').forEach(b => { b.onclick = () => toggleDoor(b.dataset.door); });
     document.getElementById('btn-saloon').onclick = toggleSaloon;
+    document.getElementById('btn-desk-fold').onclick = toggleDeskFold;
+    document.getElementById('btn-desk-sel-fold').onclick = toggleDeskFold;
     document.querySelectorAll('[data-env]').forEach(b => { b.onclick = () => setEnvMode(b.dataset.env); });
     document.querySelectorAll('[data-lpreset]').forEach(b => { b.onclick = () => applyLightPreset(b.dataset.lpreset); });
     document.querySelectorAll('[data-palette]').forEach(b => { b.onclick = () => applyPalette(b.dataset.palette); });
@@ -1087,7 +1126,7 @@
 
     setEnvMode('real');
     applyLightPreset('architettonico');
-    goToView('bagno');
+    goToView('scrivania');
 
     // --- LOOP DI RENDERING ---
     const clock = new THREE.Clock();
@@ -1097,6 +1136,13 @@
       for (const d of doorList) {
         d.currentAngle = THREE.MathUtils.lerp(d.currentAngle, d.isOpen ? d.openAngle : 0, 0.14);
         d.pivot.rotation.y = d.currentAngle;
+      }
+      // Animazione fluida ribaltamento piano scrivania
+      if (deskPivot) {
+        const targetDesk = deskFolded ? Math.PI * 0.48 : 0;
+        deskCurAngle = THREE.MathUtils.lerp(deskCurAngle, targetDesk, 0.14);
+        deskPivot.rotation.z = deskCurAngle;
+        if (deskLaptopGrp) deskLaptopGrp.visible = !deskFolded && deskCurAngle < 0.22;
       }
       if (selectedItem && selectionBox.visible) selectionBox.setFromObject(selectedItem.group);
       if (navMode === 'fp') updateFirstPerson(dt);
